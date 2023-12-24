@@ -3,8 +3,8 @@ main:
    - title: "About"
      url: index.html
    - title: "Research"
-     url:
+     url: /research/
    - title: "Teaching"
-     url:
-  # - title: "Sitemap"
-  #   url: /sitemap/
+     url: /teaching/
+   - title: "Other"
+     url: /other/

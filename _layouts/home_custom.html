@@ -1,0 +1,19 @@
+---
+layout: splash
+---
+
+<div style="width: 100%; padding-top: 2.5%">
+    <div style="width: 25%; float:left">
+        <div class="author__avatar_big">
+            <img src="{{ site.author.avatar | relative_url }}" alt="{{ site.author.name }}" itemprop="image" class="u-photo">
+        </div>
+    </div>
+
+    <div style="width: 70%; float: right">
+        {{site.author.bio}}
+        <div style="width: 100%; float: left; clear: both">
+            <h3 class="archive__subtitle">{{ site.data.ui-text[site.locale].news | default: "News" }}</h3>
+            {{ content }}
+            </div>
+    </div>
+</div>

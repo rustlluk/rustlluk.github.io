@@ -30,7 +30,7 @@ masthead_title           : # overrides the website title displayed in the masthe
 # breadcrumbs            : false # true, false (default)
 words_per_minute         : 200
 comments:
-  provider               : # false (default), "disqus", "discourse", "facebook", "staticman", "staticman_v2", "utterances", "giscus", "custom"
+  provider               : "disqus" # false (default), "disqus", "discourse", "facebook", "staticman", "staticman_v2", "utterances", "giscus", "custom"
   disqus:
     shortname            : # https://help.disqus.com/customer/portal/articles/466208-what-s-a-shortname-
   discourse:
@@ -104,10 +104,13 @@ analytics:
 
 # Site Author
 author:
-  name             : "Your Name"
-  avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "I am an **amazing** person."
-  location         : "Somewhere"
+  name             : "Lukas Rustler"
+  avatar           : "/assets/images/me.jpg" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
+  bio              : "My name is Lukas Rustler. I am currently Ph.D. student at the Department of Cybernetics, 
+  Czech Technical University in Prague under the supervision of <a href='https://sites.google.com/site/matejhof/'>
+  doc. Mgr. Matěj Hoffmann, Ph.D.</a> I am interested in active multimodal perception for grasping and manipulation, 
+  safe human-robot interaction, and multimodal calibration."
+  location         :
   email            :
   links:
     - label: "Email"
@@ -154,7 +157,7 @@ footer:
       icon: "fab fa-fw fa-instagram"
       url: "https://instagram.com/rustlik"
     - label: "Google Scholar"
-      icon: "fab fa-fw fa-google"
+      icon: "fab fa-fw fa-google-scholar"
       url: "https://scholar.google.com/citations?user=Au8deJkAAAAJ&hl=en"
 
 
@@ -293,6 +296,6 @@ defaults:
       layout: single
       author_profile: true
       read_time: true
-      comments: # true
+      comments: true
       share: true
       related: true
