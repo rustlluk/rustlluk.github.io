@@ -6,7 +6,7 @@ author_profile: false
 <!--  {% for p in sitepages %}-->
 <!--    {{ p.content}}-->
 <!--{% endfor %}-->
-<div style="overflow-y: auto; height:400px">
+<div style="overflow-y: auto; height:300px">
     {% capture my_include %}{% include_relative _pages/news.md %}{% endcapture %}
     {{ my_include | markdownify }}
 </div>

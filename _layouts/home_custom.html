@@ -9,11 +9,11 @@ layout: splash
         </div>
     </div>
 
-    <div style="width: 70%; float: right">
+    <div style="width: 75%; float: right">
         {{site.author.bio}}
-        <div style="width: 100%; float: left; clear: both">
-            <h3 class="archive__subtitle">{{ site.data.ui-text[site.locale].news | default: "News" }}</h3>
-            {{ content }}
-            </div>
+    </div>
+    <div style="width: 100%; float: left; clear: both">
+        <h3 class="archive__subtitle">{{ site.data.ui-text[site.locale].news | default: "News" }}</h3>
+        {{ content }}
     </div>
 </div>
