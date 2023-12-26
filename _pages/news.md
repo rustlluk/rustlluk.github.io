@@ -9,5 +9,5 @@
 - **23.-27.5.2022** I attended ICRA 2022 in Philadelphia, USA and presented our paper
   *Active Visuo-Haptic Object Shape Completion*.
 - **1.2.2022** I started my Ph.D. student journey.
-- **31.1.2022** Our paper *Active Visuo-Haptic Object Shape Completion* got accepted to RA-L and
+- **31.1.2022** Our paper [*Active Visuo-Haptic Object Shape Completion*](https://lukasrustler.cz/research/actvh/) got accepted to RA-L and
   ICRA 2022!
