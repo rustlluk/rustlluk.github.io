@@ -1,6 +1,6 @@
 - **1.-5.10.2023** I attended IROS 2023 in Detroit, USA and presented our paper
   *Efficient Visuo-Haptic Object Shape Completion for Robot Manipulation*.
-- **21.6.2023** Our paper *Efficient Visuo-Haptic Object Shape Completion for Robot Manipulation*
+- **21.6.2023** Our paper [*Efficient Visuo-Haptic Object Shape Completion for Robot Manipulation*](https://lukasrustler.cz/research/vishac/) 
   got accepted to IROS 2023!
 - **29.5.-2.6.2023** I attended ICRA 2023 in London, UK.
 - **12.9.-21.12.2022** I had the possibility to visit the 

@@ -28,4 +28,5 @@ industrial manipulator (dual-arm setup with Yaskawa-Motoman MA1400).
 - [arXiv](https://drive.google.com/file/d/1iiIgpIlK2S5aXLhQlaLMu0ujcuXZ73gc/view?usp=sharing)
 - [Code](https://github.com/ctu-vras/multirobot-calibration)
 
+# Accompanying Video
 {% include video id="ZZHztHF6eNs" provider="youtube" %}
