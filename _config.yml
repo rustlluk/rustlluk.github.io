@@ -300,3 +300,8 @@ defaults:
       share: true
       related: true
       show_date: true
+
+collections:
+  pycub:
+    output: true
+    permalink: /:collection/:path/

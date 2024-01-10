@@ -1,0 +1,7 @@
+pyCub
+============
+
+.. automodule:: pycub
+   :members:
+   :undoc-members:
+   :show-inheritance:

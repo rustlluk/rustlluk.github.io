@@ -1,0 +1,21 @@
+.. mdinclude:: ../README.md
+
+icub_pybullet
+=============
+
+.. toctree::
+   :maxdepth: 4
+
+   pycub
+   utils
+   visualizer
+
+examples
+=============
+
+.. toctree::
+   :maxdepth: 4
+
+   push_the_ball_cartesian
+   push_the_ball_pure_joints
+   skin_test
