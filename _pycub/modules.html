@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -15,9 +15,9 @@
   
         <script src="static/jquery.js?v=5d32c60e"></script>
         <script src="static/sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="./" id="documentation_options" src="static/documentation_options.js?v=b3ba4146"></script>
+        <script src="static/documentation_options.js?v=5929fcd5"></script>
         <script src="static/doctools.js?v=888ff710"></script>
-        <script src="static/sphinx_highlight.js?v=4825356b"></script>
+        <script src="static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -54,7 +54,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#id1">Docker</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id2">Installation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#docker-pycharm">Docker + PyCharm</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#deploy-py-parameters">Deploy.py Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#deploy-parameters">Deploy Parameters</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#faq">FAQ</a></li>
 </ul>
 </li>
@@ -99,13 +99,13 @@
            <div itemprop="articleBody">
              
   <section id="readme">
-<h1>README<a class="headerlink" href="#readme" title="Permalink to this heading"></a></h1>
+<h1>README<a class="headerlink" href="#readme" title="Link to this heading"></a></h1>
 <ul class="simple">
 <li><p>this repo contains code for iCub simulation in PyBullet</p></li>
 <li><p>it provides also dockerfile for easy setup of the environment</p></li>
 </ul>
 <section id="known-bugs">
-<h2>Known bugs<a class="headerlink" href="#known-bugs" title="Permalink to this heading"></a></h2>
+<h2>Known bugs<a class="headerlink" href="#known-bugs" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><p>visualization with skin dies after ~65k steps</p>
 <ul>
@@ -115,29 +115,37 @@
 </ul>
 </section>
 <section id="installation">
-<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading"></a></h2>
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
 <ol class="arabic simple">
-<li><p>Use Docker</p>
+<li><p>Install dependencies</p>
 <ul class="simple">
+<li><p>use Docker</p>
+<ul>
 <li><p>see <a class="reference external" href="#docker">Docker</a> section</p></li>
 </ul>
 </li>
 <li><p>or install python3 and <code class="docutils literal notranslate"><span class="pre">pip3</span> <span class="pre">install</span> <span class="pre">pybullet</span> <span class="pre">numpy</span> <span class="pre">scipy</span> <span class="pre">open3d</span></code></p></li>
+</ul>
+</li>
+<li><p>Pull this repository</p></li>
+<li><p>try run some example, e.g., <code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">PATH_TO_THE_REPOSITORY/icub_pybullet/examples/push_the_ball_cartesian.py</span></code></p></li>
 </ol>
 </section>
 <section id="examples">
-<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h2>
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="icub_pybullet/examples/push_the_ball_pure_joints.py">push_the_ball_pure_joints.py</a> contains an example that
 shows how to control the robot in joint space</p></li>
 <li><p><a class="reference external" href="icub_pybullet/examples/push_the_ball_cartesian.py">push_the_ball_cartesian.py</a> contains an example that
 shows how to control the robot in Cartesian space</p></li>
+<li><p><a class="reference external" href="icub_pybullet/examples/skin_test.py">skin_test.py</a> contains an example with balls falling the robot and skin
+should turn green on the places where contact occurs. You may want to slow the simulation a little bit to see that :)</p></li>
 </ul>
 </section>
 <section id="information">
-<h2>Information<a class="headerlink" href="#information" title="Permalink to this heading"></a></h2>
+<h2>Information<a class="headerlink" href="#information" title="Link to this heading"></a></h2>
 <ul class="simple">
-<li><p>documentation can be found at <a class="reference external" href="lukasrustler.cz/pycub">lukasrustler.cz/pycub</a> or in <a class="reference external" href="documentation/pycub.pdf">pycub.pdf</a></p></li>
+<li><p>documentation can be found at <a class="reference external" href="https://lukasrustler.cz/pycub">lukasrustler.cz/pycub</a> or in <a class="reference external" href="documentation/pyCub.pdf">pyCub.pdf</a></p></li>
 <li><p>simulator code is in <a class="reference external" href="icub_pybullet/pycub.py">pycub.py</a></p>
 <ul>
 <li><p>it uses PyBullet for simulation and provides high-level interface</p></li>
@@ -158,12 +166,15 @@ pycub.motion_done() with check_collision=False to ignore collision checks, e.g.,
 of collision state</p></li>
 </ul>
 </li>
+<li><p>until the repository is installed as a packages, examples contains line <code class="docutils literal notranslate"><span class="pre">sys.path.insert(0,</span> <span class="pre">os.path.dirname(os.path.dirname(os.path.abspath(__file__))))</span></code>
+so that python can find the necessary modules. To avoid that, you can run all codes from <code class="docutils literal notranslate"><span class="pre">icub_pybullet</span></code> folder or use PyCharm (or other IDE)</p></li>
 </ul>
 </section>
 <section id="id1">
-<h2>Docker<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
+<h2>Docker<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://github.com/rustlluk/easy-docker">https://github.com/rustlluk/easy-docker</a> is utilized to use Docker</p>
 <section id="id2">
-<h3>Installation<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h3>
+<h3>Installation<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
 <ul>
 <li><p>install <a class="reference external" href="https://docs.docker.com/engine/install/ubuntu/">docker-engine</a>
 (<strong>DO NOT INSTALL DOCKER DESKTOP</strong>), do <a class="reference external" href="https://docs.docker.com/engine/install/linux-postinstall/">post-installation steps</a>
@@ -209,7 +220,7 @@ sudo usermod -aG docker $USER
 </pre></div>
 </div>
 </li>
-<li><p>run the docker (see <a class="reference external" href="#docker-how-to">Docker how-to</a> for more parameters)</p>
+<li><p>run the docker (see <a class="reference external" href="#deploy-parameters">Parameters</a> for more parameters)</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">SOME_PATH</span><span class="o">/</span><span class="n">pycub_ws</span><span class="o">/</span><span class="n">Docker</span>
 </pre></div>
 </div>
@@ -224,7 +235,7 @@ sudo usermod -aG docker $USER
 </ul>
 </section>
 <section id="docker-pycharm">
-<h3>Docker + PyCharm<a class="headerlink" href="#docker-pycharm" title="Permalink to this heading"></a></h3>
+<h3>Docker + PyCharm<a class="headerlink" href="#docker-pycharm" title="Link to this heading"></a></h3>
 <ol class="arabic simple">
 <li><p>Either run pycharm from docker</p></li>
 <li><p>In your local docker:</p>
@@ -257,8 +268,8 @@ Python -&gt; Edit environment variables -&gt; add DISPLAY with the same value as
 </li>
 </ul>
 </section>
-<section id="deploy-py-parameters">
-<h3>Deploy.py Parameters<a class="headerlink" href="#deploy-py-parameters" title="Permalink to this heading"></a></h3>
+<section id="deploy-parameters">
+<h3>Deploy Parameters<a class="headerlink" href="#deploy-parameters" title="Link to this heading"></a></h3>
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">cd</span></code> to folder with Dockerfile</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">./deploy.py</span></code></p>
@@ -318,7 +329,7 @@ properly.</p>
 </ul>
 </section>
 <section id="faq">
-<h3>FAQ<a class="headerlink" href="#faq" title="Permalink to this heading"></a></h3>
+<h3>FAQ<a class="headerlink" href="#faq" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p><strong>applications do not run on your screen</strong> (or you have some strange screen
 related errors)</p>
@@ -358,7 +369,7 @@ by yourself and can not pull it</p>
 </section>
 </section>
 <section id="icub-pybullet">
-<h1>icub_pybullet<a class="headerlink" href="#icub-pybullet" title="Permalink to this heading"></a></h1>
+<h1>icub_pybullet<a class="headerlink" href="#icub-pybullet" title="Link to this heading"></a></h1>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="pycub.html">pyCub</a><ul>
@@ -461,7 +472,7 @@ by yourself and can not pull it</p>
 </div>
 </section>
 <section id="id3">
-<h1>examples<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h1>
+<h1>examples<a class="headerlink" href="#id3" title="Link to this heading"></a></h1>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="push_the_ball_cartesian.html">push_the_ball_cartesian</a><ul>
