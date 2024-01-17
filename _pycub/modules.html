@@ -51,8 +51,8 @@
 <li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#examples">Examples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#information">Information</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id1">Docker</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id2">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">Docker</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">Installation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#docker-pycharm">Docker + PyCharm</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#deploy-parameters">Deploy Parameters</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#faq">FAQ</a></li>
@@ -60,13 +60,14 @@
 </li>
 </ul>
 </li>
+<li><a class="reference internal" href="#presentation">Presentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="#icub-pybullet">icub_pybullet</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="pycub.html">pyCub</a></li>
 <li class="toctree-l2"><a class="reference internal" href="utils.html">utils</a></li>
 <li class="toctree-l2"><a class="reference internal" href="visualizer.html">visualizer</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="#id3">examples</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="#id6">Examples</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="push_the_ball_cartesian.html">push_the_ball_cartesian</a></li>
 <li class="toctree-l2"><a class="reference internal" href="push_the_ball_pure_joints.html">push_the_ball_pure_joints</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skin_test.html">skin_test</a></li>
@@ -100,10 +101,7 @@
              
   <section id="readme">
 <h1>README<a class="headerlink" href="#readme" title="Link to this heading"></a></h1>
-<ul class="simple">
-<li><p>this repo contains code for iCub simulation in PyBullet</p></li>
-<li><p>it provides also dockerfile for easy setup of the environment</p></li>
-</ul>
+<p>pyCub is iCub humanoid robot simulator written in Python. It uses PyBullet for simulation and Open3D for visualization.</p>
 <section id="known-bugs">
 <h2>Known bugs<a class="headerlink" href="#known-bugs" title="Link to this heading"></a></h2>
 <ul class="simple">
@@ -124,11 +122,24 @@
 <li><p>see <a class="reference external" href="#docker">Docker</a> section</p></li>
 </ul>
 </li>
-<li><p>or install python3 and <code class="docutils literal notranslate"><span class="pre">pip3</span> <span class="pre">install</span> <span class="pre">pybullet</span> <span class="pre">numpy</span> <span class="pre">scipy</span> <span class="pre">open3d</span></code></p></li>
+<li><p>or install python3 (3.8 and higher; tested in 3.11) and <code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">-m</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">pybullet</span> <span class="pre">numpy</span> <span class="pre">scipy</span> <span class="pre">open3d</span></code></p>
+<ul>
+<li><p>open3d 0.16.0 and higher is required</p>
+<ul>
+<li><p>you may need to upgrade pip first: <code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">-m</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">--upgrade</span> <span class="pre">pip</span></code></p></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li><p>Pull this repository</p></li>
 <li><p>try run some example, e.g., <code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">PATH_TO_THE_REPOSITORY/icub_pybullet/examples/push_the_ball_cartesian.py</span></code></p></li>
+<li><p>(optional, but recommended) add <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">PYTHONPATH=$PYTHONPATH:PATH_TO_THE_REPOSITORY/icub_pybullet</span></code> to your <code class="docutils literal notranslate"><span class="pre">~/.bashrc</span></code> file</p>
+<ul class="simple">
+<li><p>this will allow you to run scripts from any location</p></li>
+</ul>
+</li>
 </ol>
 </section>
 <section id="examples">
@@ -146,6 +157,7 @@ should turn green on the places where contact occurs. You may want to slow the s
 <h2>Information<a class="headerlink" href="#information" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><p>documentation can be found at <a class="reference external" href="https://lukasrustler.cz/pycub">lukasrustler.cz/pycub</a> or in <a class="reference external" href="documentation/pyCub.pdf">pyCub.pdf</a></p></li>
+<li><p>presentation with description of functionality can be found at <a class="reference external" href="https://lukasrustler.cz/pycub/pyCub_presentation.pdf">pyCub presentation</a></p></li>
 <li><p>simulator code is in <a class="reference external" href="icub_pybullet/pycub.py">pycub.py</a></p>
 <ul>
 <li><p>it uses PyBullet for simulation and provides high-level interface</p></li>
@@ -166,15 +178,20 @@ pycub.motion_done() with check_collision=False to ignore collision checks, e.g.,
 of collision state</p></li>
 </ul>
 </li>
-<li><p>until the repository is installed as a packages, examples contains line <code class="docutils literal notranslate"><span class="pre">sys.path.insert(0,</span> <span class="pre">os.path.dirname(os.path.dirname(os.path.abspath(__file__))))</span></code>
-so that python can find the necessary modules. To avoid that, you can run all codes from <code class="docutils literal notranslate"><span class="pre">icub_pybullet</span></code> folder or use PyCharm (or other IDE)</p></li>
+<li><p>until you add <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">PYTHONPATH=$PYTHONPATH:PATH_TO_THE_REPOSITORY/icub_pybullet</span></code> to your <code class="docutils literal notranslate"><span class="pre">~/.bashrc</span></code> file
+(or change PYTHONPATH everytime you open a new terminal) you have to add something like <code class="docutils literal notranslate"><span class="pre">sys.path.append(0,</span> <span class="pre">&quot;PATH_TO_THE_REPOSITORY/icub_pybullet&quot;)</span></code>
+to every file you want to run</p>
+<ul>
+<li><p>scripts in <a class="reference external" href="icub_pybullet/examples">examples</a> folder already contain such line, so the examples can be run easily</p></li>
+</ul>
+</li>
 </ul>
 </section>
-<section id="id1">
-<h2>Docker<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
-<p><a class="reference external" href="https://github.com/rustlluk/easy-docker">https://github.com/rustlluk/easy-docker</a> is utilized to use Docker</p>
 <section id="id2">
-<h3>Installation<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<h2>Docker<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://github.com/rustlluk/easy-docker">https://github.com/rustlluk/easy-docker</a> is utilized to use Docker</p>
+<section id="id3">
+<h3>Installation<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
 <ul>
 <li><p>install <a class="reference external" href="https://docs.docker.com/engine/install/ubuntu/">docker-engine</a>
 (<strong>DO NOT INSTALL DOCKER DESKTOP</strong>), do <a class="reference external" href="https://docs.docker.com/engine/install/linux-postinstall/">post-installation steps</a>
@@ -216,29 +233,34 @@ sudo usermod -aG docker $USER
 </div>
 </li>
 <li><p>(optionally) rename it to be called the same as in docker</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mv</span> <span class="n">SOME_PATH</span><span class="o">/</span><span class="n">pycub</span> <span class="n">SOME_PATH</span><span class="o">/</span><span class="n">pycub_ws</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mv</span> <span class="n">PATH_TO_THE_REPOSITORY</span><span class="o">/</span><span class="n">pycub</span> <span class="n">SOME_PATH</span><span class="o">/</span><span class="n">pycub_ws</span>
 </pre></div>
 </div>
 </li>
-<li><p>run the docker (see <a class="reference external" href="#deploy-parameters">Parameters</a> for more parameters)</p>
+<li><p>build the docker (see <a class="reference external" href="#deploy-parameters">Parameters</a> for more parameters)</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">SOME_PATH</span><span class="o">/</span><span class="n">pycub_ws</span><span class="o">/</span><span class="n">Docker</span>
-</pre></div>
-</div>
-<ul>
-<li><p>to build it on your computer:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">deploy</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">b</span> <span class="o">-</span><span class="n">p</span> <span class="n">SOME_PATH</span><span class="o">/</span><span class="n">pycub_ws</span> <span class="o">-</span><span class="n">c</span> <span class="n">pycub</span>
+<span class="o">./</span><span class="n">deploy</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">b</span> <span class="o">-</span><span class="n">p</span> <span class="n">PATH_TO_THE_REPOSITORY</span><span class="o">/</span><span class="n">pycub_ws</span> <span class="o">-</span><span class="n">c</span> <span class="n">pycub</span>
 </pre></div>
 </div>
 </li>
-</ul>
+<li><p>after you built the container, you can run it next time as</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">deploy</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">e</span> <span class="o">-</span><span class="n">c</span> <span class="n">pycub</span>
+</pre></div>
+</div>
+</li>
+<li><p>if you want to open new terminal in existing container, run</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">deploy</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">c</span> <span class="n">pycub</span> <span class="o">-</span><span class="n">t</span>
+</pre></div>
+</div>
 </li>
 </ul>
 </section>
 <section id="docker-pycharm">
 <h3>Docker + PyCharm<a class="headerlink" href="#docker-pycharm" title="Link to this heading"></a></h3>
+<p>You have two option:</p>
 <ol class="arabic simple">
 <li><p>Either run pycharm from docker</p></li>
-<li><p>In your local docker:</p>
+<li><p>Open your pycharm on your host machine:</p>
 <ul class="simple">
 <li><p>add ssh interpreter</p>
 <ul>
@@ -368,6 +390,10 @@ by yourself and can not pull it</p>
 </section>
 </section>
 </section>
+<section id="presentation">
+<h1>Presentation<a class="headerlink" href="#presentation" title="Link to this heading"></a></h1>
+<p>View the <a class="reference external" href="pyCub_presentation.pdf">Presentation with description of functionality</a>.</p>
+</section>
 <section id="icub-pybullet">
 <h1>icub_pybullet<a class="headerlink" href="#icub-pybullet" title="Link to this heading"></a></h1>
 <div class="toctree-wrapper compound">
@@ -471,8 +497,8 @@ by yourself and can not pull it</p>
 </ul>
 </div>
 </section>
-<section id="id3">
-<h1>examples<a class="headerlink" href="#id3" title="Link to this heading"></a></h1>
+<section id="id6">
+<h1>Examples<a class="headerlink" href="#id6" title="Link to this heading"></a></h1>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="push_the_ball_cartesian.html">push_the_ball_cartesian</a><ul>

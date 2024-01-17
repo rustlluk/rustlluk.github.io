@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -14,9 +14,9 @@
   
         <script src="../_static/jquery.js?v=5d32c60e"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=b3ba4146"></script>
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
         <script src="../_static/doctools.js?v=888ff710"></script>
-        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
@@ -44,8 +44,9 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../modules.html">README</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html#presentation">Presentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../modules.html#icub-pybullet">icub_pybullet</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../modules.html#id3">examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html#id6">Examples</a></li>
 </ul>
 
         </div>
@@ -80,7 +81,9 @@
 <span class="kn">import</span> <span class="nn">open3d.visualization.rendering</span> <span class="k">as</span> <span class="nn">rendering</span>
 
 
-<div class="viewcode-block" id="Visualizer"><a class="viewcode-back" href="../visualizer.html#visualizer.Visualizer">[docs]</a><span class="k">class</span> <span class="nc">Visualizer</span><span class="p">:</span>
+<div class="viewcode-block" id="Visualizer">
+<a class="viewcode-back" href="../visualizer.html#visualizer.Visualizer">[docs]</a>
+<span class="k">class</span> <span class="nc">Visualizer</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Class to help with custom rendering&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -183,7 +186,9 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">eyes</span><span class="o">.</span><span class="n">r_eye</span><span class="p">:</span>
             <span class="n">show_callbacks</span><span class="p">[</span><span class="mi">1</span><span class="p">]()</span>
 
-<div class="viewcode-block" id="Visualizer.show_first"><a class="viewcode-back" href="../visualizer.html#visualizer.Visualizer.show_first">[docs]</a>    <span class="k">def</span> <span class="nf">show_first</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">urdf_name</span><span class="o">=</span><span class="s2">&quot;robot&quot;</span><span class="p">):</span>
+<div class="viewcode-block" id="Visualizer.show_first">
+<a class="viewcode-back" href="../visualizer.html#visualizer.Visualizer.show_first">[docs]</a>
+    <span class="k">def</span> <span class="nf">show_first</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">urdf_name</span><span class="o">=</span><span class="s2">&quot;robot&quot;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Show the first batch of meshes in the visualizer. It loads the meshes and saves the to dict for quicker use later</span>
 
@@ -227,7 +232,10 @@
                 <span class="k">else</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">fpath_to_skin</span><span class="p">[</span><span class="n">f_path</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="Visualizer.show_mesh"><a class="viewcode-back" href="../visualizer.html#visualizer.Visualizer.show_mesh">[docs]</a>    <span class="k">def</span> <span class="nf">show_mesh</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="Visualizer.show_mesh">
+<a class="viewcode-back" href="../visualizer.html#visualizer.Visualizer.show_mesh">[docs]</a>
+    <span class="k">def</span> <span class="nf">show_mesh</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Function to parse info about meshes from PyBullet</span>
 
@@ -264,7 +272,10 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">vis</span><span class="o">.</span><span class="n">add_geometry</span><span class="p">(</span><span class="n">f_path</span><span class="o">+</span><span class="s2">&quot;_skin&quot;</span><span class="p">,</span> <span class="n">geometry</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">skin_point_clouds</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">fpath_to_skin</span><span class="p">[</span><span class="n">f_path</span><span class="p">]],</span> <span class="n">material</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">mat</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">vis</span><span class="o">.</span><span class="n">set_geometry_transform</span><span class="p">(</span><span class="n">f_path</span><span class="o">+</span><span class="s2">&quot;_skin&quot;</span><span class="p">,</span> <span class="n">R</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Visualizer.read_info"><a class="viewcode-back" href="../visualizer.html#visualizer.Visualizer.read_info">[docs]</a>    <span class="k">def</span> <span class="nf">read_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj_id</span><span class="p">):</span>
+
+<div class="viewcode-block" id="Visualizer.read_info">
+<a class="viewcode-back" href="../visualizer.html#visualizer.Visualizer.read_info">[docs]</a>
+    <span class="k">def</span> <span class="nf">read_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj_id</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Read info from PyBullet</span>
 
@@ -308,7 +319,10 @@
 
         <span class="k">return</span> <span class="mi">0</span></div>
 
-<div class="viewcode-block" id="Visualizer.render"><a class="viewcode-back" href="../visualizer.html#visualizer.Visualizer.render">[docs]</a>    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="Visualizer.render">
+<a class="viewcode-back" href="../visualizer.html#visualizer.Visualizer.render">[docs]</a>
+    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Render all the things</span>
 
@@ -334,7 +348,10 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">is_alive</span> <span class="o">=</span> <span class="kc">False</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">gui</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="Visualizer.MenuCallback"><a class="viewcode-back" href="../visualizer.html#visualizer.Visualizer.MenuCallback">[docs]</a>    <span class="k">class</span> <span class="nc">MenuCallback</span><span class="p">:</span>
+
+<div class="viewcode-block" id="Visualizer.MenuCallback">
+<a class="viewcode-back" href="../visualizer.html#visualizer.Visualizer.MenuCallback">[docs]</a>
+    <span class="k">class</span> <span class="nc">MenuCallback</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Class to handle menu callbacks.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -384,7 +401,9 @@
                 <span class="n">eye</span> <span class="o">=</span> <span class="s2">&quot;l_eye&quot;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="mi">8</span> <span class="k">else</span> <span class="s2">&quot;r_eye&quot;</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">eye_windows</span><span class="p">[</span><span class="n">eye</span><span class="p">]</span><span class="o">.</span><span class="n">save_images_bool</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">eye_windows</span><span class="p">[</span><span class="n">eye</span><span class="p">]</span><span class="o">.</span><span class="n">save_images_bool</span>
 
-<div class="viewcode-block" id="Visualizer.MenuCallback.save_image"><a class="viewcode-back" href="../visualizer.html#visualizer.Visualizer.MenuCallback.save_image">[docs]</a>        <span class="k">def</span> <span class="nf">save_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">im</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
+<div class="viewcode-block" id="Visualizer.MenuCallback.save_image">
+<a class="viewcode-back" href="../visualizer.html#visualizer.Visualizer.MenuCallback.save_image">[docs]</a>
+        <span class="k">def</span> <span class="nf">save_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">im</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
 <span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Save the image. It shows FileDialog to find path for image save. It saves it with the current resolution</span>
 <span class="sd">            of the window.</span>
@@ -416,7 +435,10 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;File saved to </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="Visualizer.MenuCallback.wait_for_dialog_completion"><a class="viewcode-back" href="../visualizer.html#visualizer.Visualizer.MenuCallback.wait_for_dialog_completion">[docs]</a>        <span class="k">def</span> <span class="nf">wait_for_dialog_completion</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="Visualizer.MenuCallback.wait_for_dialog_completion">
+<a class="viewcode-back" href="../visualizer.html#visualizer.Visualizer.MenuCallback.wait_for_dialog_completion">[docs]</a>
+        <span class="k">def</span> <span class="nf">wait_for_dialog_completion</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Help function to keep the gui loop running</span>
 
@@ -425,11 +447,18 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">post_redraw</span><span class="p">()</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">gui</span><span class="o">.</span><span class="n">run_one_tick</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="Visualizer.MenuCallback.input_completed"><a class="viewcode-back" href="../visualizer.html#visualizer.Visualizer.MenuCallback.input_completed">[docs]</a>        <span class="k">def</span> <span class="nf">input_completed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">text</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">dialog_opened</span> <span class="o">=</span> <span class="kc">False</span></div></div>
 
-<div class="viewcode-block" id="Visualizer.find_xyz_rpy"><a class="viewcode-back" href="../visualizer.html#visualizer.Visualizer.find_xyz_rpy">[docs]</a>    <span class="k">def</span> <span class="nf">find_xyz_rpy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mesh_name</span><span class="p">,</span> <span class="n">urdf_name</span><span class="o">=</span><span class="s2">&quot;robot&quot;</span><span class="p">):</span>
+<div class="viewcode-block" id="Visualizer.MenuCallback.input_completed">
+<a class="viewcode-back" href="../visualizer.html#visualizer.Visualizer.MenuCallback.input_completed">[docs]</a>
+        <span class="k">def</span> <span class="nf">input_completed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">text</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dialog_opened</span> <span class="o">=</span> <span class="kc">False</span></div>
+</div>
+
+
+<div class="viewcode-block" id="Visualizer.find_xyz_rpy">
+<a class="viewcode-back" href="../visualizer.html#visualizer.Visualizer.find_xyz_rpy">[docs]</a>
+    <span class="k">def</span> <span class="nf">find_xyz_rpy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mesh_name</span><span class="p">,</span> <span class="n">urdf_name</span><span class="o">=</span><span class="s2">&quot;robot&quot;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Find the xyz, rpy and scales values.</span>
 
@@ -450,7 +479,10 @@
                         <span class="n">link_name</span> <span class="o">=</span> <span class="n">link</span><span class="o">.</span><span class="n">name</span>
                         <span class="k">return</span> <span class="n">xyz</span><span class="p">,</span> <span class="n">rpy</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">link_name</span></div>
 
-<div class="viewcode-block" id="Visualizer.EyeWindow"><a class="viewcode-back" href="../visualizer.html#visualizer.Visualizer.EyeWindow">[docs]</a>    <span class="k">class</span> <span class="nc">EyeWindow</span><span class="p">:</span>
+
+<div class="viewcode-block" id="Visualizer.EyeWindow">
+<a class="viewcode-back" href="../visualizer.html#visualizer.Visualizer.EyeWindow">[docs]</a>
+    <span class="k">class</span> <span class="nc">EyeWindow</span><span class="p">:</span>
 
         <span class="n">MENU_IDS</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;l_eye&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span> <span class="s2">&quot;r_eye&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">9</span><span class="p">]}</span>
         <span class="n">POSITIONS</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;l_eye&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">320</span><span class="p">,</span> <span class="mi">560</span><span class="p">],</span> <span class="s2">&quot;r_eye&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">560</span><span class="p">]}</span>
@@ -501,7 +533,9 @@
 
             <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">eye_windows</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">eye</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span>
 
-<div class="viewcode-block" id="Visualizer.EyeWindow.on_close"><a class="viewcode-back" href="../visualizer.html#visualizer.Visualizer.EyeWindow.on_close">[docs]</a>        <span class="k">def</span> <span class="nf">on_close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Visualizer.EyeWindow.on_close">
+<a class="viewcode-back" href="../visualizer.html#visualizer.Visualizer.EyeWindow.on_close">[docs]</a>
+        <span class="k">def</span> <span class="nf">on_close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Small function to delete the window from the parent class</span>
 
@@ -511,7 +545,10 @@
             <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">eye_windows</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">eye</span><span class="p">]</span>
             <span class="k">return</span> <span class="kc">True</span></div>
 
-<div class="viewcode-block" id="Visualizer.EyeWindow.on_mouse"><a class="viewcode-back" href="../visualizer.html#visualizer.Visualizer.EyeWindow.on_mouse">[docs]</a>        <span class="k">def</span> <span class="nf">on_mouse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+
+<div class="viewcode-block" id="Visualizer.EyeWindow.on_mouse">
+<a class="viewcode-back" href="../visualizer.html#visualizer.Visualizer.EyeWindow.on_mouse">[docs]</a>
+        <span class="k">def</span> <span class="nf">on_mouse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
 <span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Small function to ignore mouse events</span>
 
@@ -520,10 +557,16 @@
 <span class="sd">            &quot;&quot;&quot;</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">EventCallbackResult</span><span class="o">.</span><span class="n">CONSUMED</span></div>
 
-<div class="viewcode-block" id="Visualizer.EyeWindow.get_image"><a class="viewcode-back" href="../visualizer.html#visualizer.Visualizer.EyeWindow.get_image">[docs]</a>        <span class="k">def</span> <span class="nf">get_image</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="Visualizer.EyeWindow.get_image">
+<a class="viewcode-back" href="../visualizer.html#visualizer.Visualizer.EyeWindow.get_image">[docs]</a>
+        <span class="k">def</span> <span class="nf">get_image</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">vis</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">render_to_image</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_image</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Visualizer.EyeWindow.save_images"><a class="viewcode-back" href="../visualizer.html#visualizer.Visualizer.EyeWindow.save_images">[docs]</a>        <span class="k">def</span> <span class="nf">save_images</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="Visualizer.EyeWindow.save_images">
+<a class="viewcode-back" href="../visualizer.html#visualizer.Visualizer.EyeWindow.save_images">[docs]</a>
+        <span class="k">def</span> <span class="nf">save_images</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Function to save stream of images to file</span>
 
@@ -535,7 +578,10 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">img_counter</span> <span class="o">+=</span> <span class="mi">1</span>
             <span class="n">o3d</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">write_image</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_image</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Visualizer.EyeWindow.save_image"><a class="viewcode-back" href="../visualizer.html#visualizer.Visualizer.EyeWindow.save_image">[docs]</a>        <span class="k">def</span> <span class="nf">save_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">im</span><span class="p">):</span>
+
+<div class="viewcode-block" id="Visualizer.EyeWindow.save_image">
+<a class="viewcode-back" href="../visualizer.html#visualizer.Visualizer.EyeWindow.save_image">[docs]</a>
+        <span class="k">def</span> <span class="nf">save_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">im</span><span class="p">):</span>
 <span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Callback to get images from open3d</span>
 <span class="sd">            </span>
@@ -543,7 +589,10 @@
 <span class="sd">            :type im: o3d.geometry.Image</span>
 <span class="sd">            &quot;&quot;&quot;</span>
 
-            <span class="bp">self</span><span class="o">.</span><span class="n">last_image</span> <span class="o">=</span> <span class="n">im</span></div></div></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">last_image</span> <span class="o">=</span> <span class="n">im</span></div>
+</div>
+</div>
+
 </pre></div>
 
            </div>
