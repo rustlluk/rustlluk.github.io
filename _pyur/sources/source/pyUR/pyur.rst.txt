@@ -1,0 +1,7 @@
+pyur module
+===========
+
+.. automodule:: pyur
+   :members:
+   :undoc-members:
+   :show-inheritance:

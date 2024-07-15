@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>motion_interface &mdash; UR10e with AIRSKIN 0.9.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=1bc1ca25"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            UR10e with AIRSKIN
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">pyUR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html#bullet-ros">bullet_ros</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">UR10e with AIRSKIN</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">motion_interface</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for motion_interface</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Classes for robot movement</span>
+
+<span class="sd">Edited from official ROS tutorial by Lukas Rustler</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">rospy</span>
+<span class="kn">import</span> <span class="nn">moveit_commander</span>
+<span class="kn">import</span> <span class="nn">moveit_msgs.msg</span>
+<span class="kn">import</span> <span class="nn">geometry_msgs.msg</span>
+<span class="kn">from</span> <span class="nn">std_msgs.msg</span> <span class="kn">import</span> <span class="n">String</span>
+<span class="kn">from</span> <span class="nn">moveit_commander.conversions</span> <span class="kn">import</span> <span class="n">pose_to_list</span><span class="p">,</span> <span class="n">msg_to_string</span>
+<span class="kn">import</span> <span class="nn">tf</span>
+<span class="kn">from</span> <span class="nn">sensor_msgs.msg</span> <span class="kn">import</span> <span class="n">JointState</span>
+<span class="kn">import</span> <span class="nn">moveit_python</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">bullet_ros.srv</span> <span class="kn">import</span> <span class="n">grip</span><span class="p">,</span> <span class="n">gripRequest</span>
+
+
+<div class="viewcode-block" id="MoveGroupPythonInterface"><a class="viewcode-back" href="../source/bullet_ros/motion_interface.html#motion_interface.MoveGroupPythonInterface">[docs]</a><span class="k">class</span> <span class="nc">MoveGroupPythonInterface</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;MoveGroupPythonInterface&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group_</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MoveGroupPythonInterface</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="n">moveit_commander</span><span class="o">.</span><span class="n">roscpp_initialize</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+        <span class="n">robot_name</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;/robot_name&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">group_name</span> <span class="o">=</span> <span class="n">group_</span>
+        <span class="k">if</span> <span class="n">robot_name</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="n">robot</span> <span class="o">=</span> <span class="n">moveit_commander</span><span class="o">.</span><span class="n">RobotCommander</span><span class="p">(</span><span class="n">robot_description</span><span class="o">=</span><span class="n">robot_name</span><span class="o">+</span><span class="s2">&quot;/robot_description&quot;</span><span class="p">,</span> <span class="n">ns</span><span class="o">=</span><span class="n">robot_name</span><span class="p">)</span>
+            <span class="n">scene</span> <span class="o">=</span> <span class="n">moveit_commander</span><span class="o">.</span><span class="n">PlanningSceneInterface</span><span class="p">(</span><span class="n">ns</span><span class="o">=</span><span class="n">robot_name</span><span class="p">)</span>
+            <span class="n">group</span> <span class="o">=</span> <span class="n">moveit_commander</span><span class="o">.</span><span class="n">MoveGroupCommander</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">group_name</span><span class="p">,</span>
+                                                        <span class="n">robot_description</span><span class="o">=</span><span class="n">robot_name</span> <span class="o">+</span> <span class="s2">&quot;/robot_description&quot;</span><span class="p">,</span>
+                                                        <span class="n">ns</span><span class="o">=</span><span class="n">robot_name</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">planning_scene</span> <span class="o">=</span> <span class="n">moveit_python</span><span class="o">.</span><span class="n">planning_scene_interface</span><span class="o">.</span><span class="n">PlanningSceneInterface</span><span class="p">(</span><span class="s2">&quot;base_link&quot;</span><span class="p">,</span>
+                                                                                                <span class="n">ns</span><span class="o">=</span><span class="n">robot_name</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">robot</span> <span class="o">=</span> <span class="n">moveit_commander</span><span class="o">.</span><span class="n">RobotCommander</span><span class="p">()</span>
+            <span class="n">scene</span> <span class="o">=</span> <span class="n">moveit_commander</span><span class="o">.</span><span class="n">PlanningSceneInterface</span><span class="p">()</span>
+            <span class="n">group</span> <span class="o">=</span> <span class="n">moveit_commander</span><span class="o">.</span><span class="n">MoveGroupCommander</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">group_name</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">planning_scene</span> <span class="o">=</span> <span class="n">moveit_python</span><span class="o">.</span><span class="n">planning_scene_interface</span><span class="o">.</span><span class="n">PlanningSceneInterface</span><span class="p">(</span><span class="s2">&quot;base_link&quot;</span><span class="p">)</span>
+
+        <span class="n">display_trajectory_publisher</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="s1">&#39;/move_group/display_planned_path&#39;</span><span class="p">,</span>
+                                                       <span class="n">moveit_msgs</span><span class="o">.</span><span class="n">msg</span><span class="o">.</span><span class="n">DisplayTrajectory</span><span class="p">,</span>
+                                                       <span class="n">queue_size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+
+        <span class="n">planning_frame</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">get_planning_frame</span><span class="p">()</span>
+
+        <span class="c1"># We can also print the name of the end-effector link for this group:</span>
+        <span class="n">eef_link</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">get_end_effector_link</span><span class="p">()</span>
+
+        <span class="c1"># We can get a list of all the groups in the robot:</span>
+        <span class="n">group_names</span> <span class="o">=</span> <span class="n">robot</span><span class="o">.</span><span class="n">get_group_names</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">box_name</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">robot</span> <span class="o">=</span> <span class="n">robot</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scene</span> <span class="o">=</span> <span class="n">scene</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">group</span> <span class="o">=</span> <span class="n">group</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">display_trajectory_publisher</span> <span class="o">=</span> <span class="n">display_trajectory_publisher</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">planning_frame</span> <span class="o">=</span> <span class="n">planning_frame</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eef_link</span> <span class="o">=</span> <span class="n">eef_link</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">group_names</span> <span class="o">=</span> <span class="n">group_names</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">joint_positions</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">tr_exec_topic</span> <span class="o">=</span> <span class="s1">&#39;/trajectory_execution_event&#39;</span> <span class="k">if</span> <span class="n">robot_name</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span> <span class="k">else</span> <span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="o">+</span><span class="n">robot_name</span><span class="o">+</span><span class="s1">&#39;/trajectory_execution_event&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trajectory_event_publisher</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="n">tr_exec_topic</span><span class="p">,</span> <span class="n">String</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">ls</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">TransformListener</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">js_topic</span> <span class="o">=</span> <span class="s2">&quot;/joint_states&quot;</span> <span class="k">if</span> <span class="n">robot_name</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span> <span class="k">else</span> <span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="o">+</span><span class="n">robot_name</span><span class="o">+</span><span class="s2">&quot;/joint_states&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">gripper_service</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span><span class="s2">&quot;/robot/ur_hardware_interface/grip&quot;</span><span class="p">,</span> <span class="n">grip</span><span class="p">)</span>
+
+<div class="viewcode-block" id="MoveGroupPythonInterface.apply_planning_scene"><a class="viewcode-back" href="../source/bullet_ros/motion_interface.html#motion_interface.MoveGroupPythonInterface.apply_planning_scene">[docs]</a>    <span class="k">def</span> <span class="nf">apply_planning_scene</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scene_msg</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">_psi</span><span class="o">.</span><span class="n">apply_planning_scene</span><span class="p">(</span><span class="n">msg_to_string</span><span class="p">(</span><span class="n">scene_msg</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="MoveGroupPythonInterface.get_current_state"><a class="viewcode-back" href="../source/bullet_ros/motion_interface.html#motion_interface.MoveGroupPythonInterface.get_current_state">[docs]</a>    <span class="k">def</span> <span class="nf">get_current_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># stupid workaround to get joint states for the arm and not gripper/finger</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">wait_for_message</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">js_topic</span><span class="p">,</span> <span class="n">JointState</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">break</span>
+        <span class="n">joint_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">position</span><span class="p">)</span>
+        <span class="c1"># joint_values = joint_values[[2, 1, 0, 3, 4, 5]]</span>
+        <span class="n">joint_values</span> <span class="o">=</span> <span class="n">joint_values</span><span class="p">[:</span><span class="mi">6</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">joint_values</span></div>
+
+<div class="viewcode-block" id="MoveGroupPythonInterface.all_close"><a class="viewcode-back" href="../source/bullet_ros/motion_interface.html#motion_interface.MoveGroupPythonInterface.all_close">[docs]</a>    <span class="k">def</span> <span class="nf">all_close</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">goal</span><span class="p">,</span> <span class="n">actual</span><span class="p">,</span> <span class="n">tolerance</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convenience method for testing if a list of values are within a tolerance of their counterparts in another list</span>
+<span class="sd">        @param: goal         A list of floats, a Pose or a PoseStamped</span>
+<span class="sd">        @param: actual     A list of floats, a Pose or a PoseStamped</span>
+<span class="sd">        @param: tolerance  A float</span>
+<span class="sd">        @returns: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">goal</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">list</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">goal</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">actual</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">-</span> <span class="n">goal</span><span class="p">[</span><span class="n">index</span><span class="p">])</span> <span class="o">&gt;</span> <span class="n">tolerance</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">goal</span><span class="p">)</span> <span class="ow">is</span> <span class="n">geometry_msgs</span><span class="o">.</span><span class="n">msg</span><span class="o">.</span><span class="n">PoseStamped</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_close</span><span class="p">(</span><span class="n">goal</span><span class="o">.</span><span class="n">pose</span><span class="p">,</span> <span class="n">actual</span><span class="o">.</span><span class="n">pose</span><span class="p">,</span> <span class="n">tolerance</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">goal</span><span class="p">)</span> <span class="ow">is</span> <span class="n">geometry_msgs</span><span class="o">.</span><span class="n">msg</span><span class="o">.</span><span class="n">Pose</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_close</span><span class="p">(</span><span class="n">pose_to_list</span><span class="p">(</span><span class="n">goal</span><span class="p">),</span> <span class="n">pose_to_list</span><span class="p">(</span><span class="n">actual</span><span class="p">),</span> <span class="n">tolerance</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="MoveGroupPythonInterface.go_to_joint_position"><a class="viewcode-back" href="../source/bullet_ros/motion_interface.html#motion_interface.MoveGroupPythonInterface.go_to_joint_position">[docs]</a>    <span class="k">def</span> <span class="nf">go_to_joint_position</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">joint_goal</span><span class="p">,</span> <span class="n">wait</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">go</span><span class="p">(</span><span class="n">joint_goal</span><span class="p">,</span> <span class="n">wait</span><span class="o">=</span><span class="n">wait</span><span class="p">)</span>
+
+        <span class="n">current_joints</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">get_current_joint_values</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_close</span><span class="p">(</span><span class="n">joint_goal</span><span class="p">,</span> <span class="n">current_joints</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MoveGroupPythonInterface.plan_cartesian_path"><a class="viewcode-back" href="../source/bullet_ros/motion_interface.html#motion_interface.MoveGroupPythonInterface.plan_cartesian_path">[docs]</a>    <span class="k">def</span> <span class="nf">plan_cartesian_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wpose</span><span class="p">,</span> <span class="n">collisions</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; Cartesian Paths</span>
+<span class="sd">        ^^^^^^^^^^^^^^^</span>
+<span class="sd">        You can plan a Cartesian path directly by specifying a list of waypoints</span>
+<span class="sd">        for the end-effector to go through:&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">wpose</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">waypoints</span> <span class="o">=</span> <span class="n">wpose</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">waypoints</span> <span class="o">=</span> <span class="p">[</span><span class="n">wpose</span><span class="p">]</span>
+
+        <span class="c1"># We want the Cartesian path to be interpolated at a resolution of 1 cm</span>
+        <span class="c1"># which is why we will specify 0.01 as the eef_step in Cartesian</span>
+        <span class="c1"># translation.  We will disable the jump threshold by setting it to 0.0 disabling:</span>
+        <span class="p">(</span><span class="n">plan</span><span class="p">,</span> <span class="n">fraction</span><span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">compute_cartesian_path</span><span class="p">(</span>
+            <span class="n">waypoints</span><span class="p">,</span>  <span class="c1"># waypoints to follow</span>
+            <span class="mf">0.001</span><span class="p">,</span>  <span class="c1"># eef_step</span>
+            <span class="mf">0.0</span><span class="p">,</span>   <span class="c1"># jump_threshold</span>
+            <span class="n">avoid_collisions</span><span class="o">=</span><span class="n">collisions</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">plan</span><span class="p">,</span> <span class="n">fraction</span></div>
+
+<div class="viewcode-block" id="MoveGroupPythonInterface.get_ee_pose"><a class="viewcode-back" href="../source/bullet_ros/motion_interface.html#motion_interface.MoveGroupPythonInterface.get_ee_pose">[docs]</a>    <span class="k">def</span> <span class="nf">get_ee_pose</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">get_current_pose</span><span class="p">()</span><span class="o">.</span><span class="n">pose</span></div>
+
+<div class="viewcode-block" id="MoveGroupPythonInterface.display_trajectory"><a class="viewcode-back" href="../source/bullet_ros/motion_interface.html#motion_interface.MoveGroupPythonInterface.display_trajectory">[docs]</a>    <span class="k">def</span> <span class="nf">display_trajectory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plan</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; Display trajectory in Rviz, the following code is needed for proper displaying.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">display_trajectory</span> <span class="o">=</span> <span class="n">moveit_msgs</span><span class="o">.</span><span class="n">msg</span><span class="o">.</span><span class="n">DisplayTrajectory</span><span class="p">()</span>
+        <span class="n">display_trajectory</span><span class="o">.</span><span class="n">trajectory_start</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">robot</span><span class="o">.</span><span class="n">get_current_state</span><span class="p">()</span>
+        <span class="n">display_trajectory</span><span class="o">.</span><span class="n">trajectory</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">plan</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">display_trajectory_publisher</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">display_trajectory</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MoveGroupPythonInterface.execute_plan"><a class="viewcode-back" href="../source/bullet_ros/motion_interface.html#motion_interface.MoveGroupPythonInterface.execute_plan">[docs]</a>    <span class="k">def</span> <span class="nf">execute_plan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plan</span><span class="p">,</span> <span class="n">wait</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; **Note:** The robot&#39;s current joint state must be within some tolerance of the</span>
+<span class="sd">         first waypoint in the `RobotTrajectory`_ or ``execute()`` will fail&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">plan</span><span class="p">,</span> <span class="n">wait</span><span class="o">=</span><span class="n">wait</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MoveGroupPythonInterface.stop_robot"><a class="viewcode-back" href="../source/bullet_ros/motion_interface.html#motion_interface.MoveGroupPythonInterface.stop_robot">[docs]</a>    <span class="k">def</span> <span class="nf">stop_robot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MoveGroupPythonInterface.go_to_pose"><a class="viewcode-back" href="../source/bullet_ros/motion_interface.html#motion_interface.MoveGroupPythonInterface.go_to_pose">[docs]</a>    <span class="k">def</span> <span class="nf">go_to_pose</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pose</span><span class="p">,</span> <span class="n">wait</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pose</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">pose_goal</span> <span class="o">=</span> <span class="n">geometry_msgs</span><span class="o">.</span><span class="n">msg</span><span class="o">.</span><span class="n">Pose</span><span class="p">()</span>
+            <span class="n">pose_goal</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">pose</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">pose_goal</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">pose</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">pose_goal</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">pose</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+            <span class="n">pose_goal</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">pose</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+            <span class="n">pose_goal</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">pose</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+            <span class="n">pose_goal</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">pose</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+            <span class="n">pose_goal</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="n">pose</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pose</span><span class="p">,</span> <span class="n">geometry_msgs</span><span class="o">.</span><span class="n">msg</span><span class="o">.</span><span class="n">Pose</span><span class="p">):</span>
+            <span class="n">pose_goal</span> <span class="o">=</span> <span class="n">pose</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">clear_pose_targets</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">set_pose_target</span><span class="p">(</span><span class="n">pose_goal</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">go</span><span class="p">(</span><span class="n">wait</span><span class="o">=</span><span class="n">wait</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MoveGroupPythonInterface.open_gripper"><a class="viewcode-back" href="../source/bullet_ros/motion_interface.html#motion_interface.MoveGroupPythonInterface.open_gripper">[docs]</a>    <span class="k">def</span> <span class="nf">open_gripper</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gripper_service</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">gripRequest</span><span class="p">(</span><span class="mi">150</span><span class="p">,</span> <span class="mi">120</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="MoveGroupPythonInterface.close_gripper"><a class="viewcode-back" href="../source/bullet_ros/motion_interface.html#motion_interface.MoveGroupPythonInterface.close_gripper">[docs]</a>    <span class="k">def</span> <span class="nf">close_gripper</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gripper_service</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">gripRequest</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">120</span><span class="p">))</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Lukas Rustler.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

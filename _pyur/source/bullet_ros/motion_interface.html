@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>motion_interface module &mdash; UR10e with AIRSKIN 0.9.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=1bc1ca25"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            UR10e with AIRSKIN
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">pyUR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html#bullet-ros">bullet_ros</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">UR10e with AIRSKIN</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">motion_interface module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/source/bullet_ros/motion_interface.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-motion_interface">
+<span id="motion-interface-module"></span><h1>motion_interface module<a class="headerlink" href="#module-motion_interface" title="Permalink to this heading"></a></h1>
+<p>Classes for robot movement</p>
+<p>Edited from official ROS tutorial by Lukas Rustler</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="motion_interface.MoveGroupPythonInterface">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">motion_interface.</span></span><span class="sig-name descname"><span class="pre">MoveGroupPythonInterface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group_</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/motion_interface.html#MoveGroupPythonInterface"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#motion_interface.MoveGroupPythonInterface" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="motion_interface.MoveGroupPythonInterface.all_close">
+<span class="sig-name descname"><span class="pre">all_close</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">goal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">actual</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tolerance</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/motion_interface.html#MoveGroupPythonInterface.all_close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#motion_interface.MoveGroupPythonInterface.all_close" title="Permalink to this definition"></a></dt>
+<dd><p>Convenience method for testing if a list of values are within a tolerance of their counterparts in another list
+&#64;param: goal         A list of floats, a Pose or a PoseStamped
+&#64;param: actual     A list of floats, a Pose or a PoseStamped
+&#64;param: tolerance  A float
+&#64;returns: bool</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="motion_interface.MoveGroupPythonInterface.apply_planning_scene">
+<span class="sig-name descname"><span class="pre">apply_planning_scene</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scene_msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/motion_interface.html#MoveGroupPythonInterface.apply_planning_scene"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#motion_interface.MoveGroupPythonInterface.apply_planning_scene" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="motion_interface.MoveGroupPythonInterface.close_gripper">
+<span class="sig-name descname"><span class="pre">close_gripper</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/motion_interface.html#MoveGroupPythonInterface.close_gripper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#motion_interface.MoveGroupPythonInterface.close_gripper" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="motion_interface.MoveGroupPythonInterface.display_trajectory">
+<span class="sig-name descname"><span class="pre">display_trajectory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plan</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/motion_interface.html#MoveGroupPythonInterface.display_trajectory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#motion_interface.MoveGroupPythonInterface.display_trajectory" title="Permalink to this definition"></a></dt>
+<dd><p>Display trajectory in Rviz, the following code is needed for proper displaying.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="motion_interface.MoveGroupPythonInterface.execute_plan">
+<span class="sig-name descname"><span class="pre">execute_plan</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plan</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/motion_interface.html#MoveGroupPythonInterface.execute_plan"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#motion_interface.MoveGroupPythonInterface.execute_plan" title="Permalink to this definition"></a></dt>
+<dd><p><strong>Note:</strong> The robot’s current joint state must be within some tolerance of the
+first waypoint in the <a href="#id1"><span class="problematic" id="id2">`RobotTrajectory`_</span></a> or <code class="docutils literal notranslate"><span class="pre">execute()</span></code> will fail</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="motion_interface.MoveGroupPythonInterface.get_current_state">
+<span class="sig-name descname"><span class="pre">get_current_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/motion_interface.html#MoveGroupPythonInterface.get_current_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#motion_interface.MoveGroupPythonInterface.get_current_state" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="motion_interface.MoveGroupPythonInterface.get_ee_pose">
+<span class="sig-name descname"><span class="pre">get_ee_pose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/motion_interface.html#MoveGroupPythonInterface.get_ee_pose"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#motion_interface.MoveGroupPythonInterface.get_ee_pose" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="motion_interface.MoveGroupPythonInterface.go_to_joint_position">
+<span class="sig-name descname"><span class="pre">go_to_joint_position</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">joint_goal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/motion_interface.html#MoveGroupPythonInterface.go_to_joint_position"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#motion_interface.MoveGroupPythonInterface.go_to_joint_position" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="motion_interface.MoveGroupPythonInterface.go_to_pose">
+<span class="sig-name descname"><span class="pre">go_to_pose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pose</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/motion_interface.html#MoveGroupPythonInterface.go_to_pose"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#motion_interface.MoveGroupPythonInterface.go_to_pose" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="motion_interface.MoveGroupPythonInterface.open_gripper">
+<span class="sig-name descname"><span class="pre">open_gripper</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/motion_interface.html#MoveGroupPythonInterface.open_gripper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#motion_interface.MoveGroupPythonInterface.open_gripper" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="motion_interface.MoveGroupPythonInterface.plan_cartesian_path">
+<span class="sig-name descname"><span class="pre">plan_cartesian_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wpose</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">collisions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/motion_interface.html#MoveGroupPythonInterface.plan_cartesian_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#motion_interface.MoveGroupPythonInterface.plan_cartesian_path" title="Permalink to this definition"></a></dt>
+<dd><section id="cartesian-paths">
+<h2>Cartesian Paths<a class="headerlink" href="#cartesian-paths" title="Permalink to this heading"></a></h2>
+<p>You can plan a Cartesian path directly by specifying a list of waypoints
+for the end-effector to go through:</p>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="motion_interface.MoveGroupPythonInterface.stop_robot">
+<span class="sig-name descname"><span class="pre">stop_robot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/motion_interface.html#MoveGroupPythonInterface.stop_robot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#motion_interface.MoveGroupPythonInterface.stop_robot" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Lukas Rustler.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>robot_kinematics_interface module &mdash; UR10e with AIRSKIN 0.9.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=1bc1ca25"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            UR10e with AIRSKIN
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">pyUR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html#bullet-ros">bullet_ros</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">UR10e with AIRSKIN</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">robot_kinematics_interface module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/source/bullet_ros/robot_kinematics_interface.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-robot_kinematics_interface">
+<span id="robot-kinematics-interface-module"></span><h1>robot_kinematics_interface module<a class="headerlink" href="#module-robot_kinematics_interface" title="Permalink to this heading"></a></h1>
+<p>Copyright (c) 2018 Robert Bosch GmbH
+All rights reserved.</p>
+<p>This source code is licensed under the BSD-3-Clause license found in the
+LICENSE file in the root directory of this source tree.</p>
+<p>&#64;author: Jan Behrens</p>
+<p>This source code is derived from the dmp_gestures project
+(<a class="reference external" href="https://github.com/awesomebytes/dmp_gestures">https://github.com/awesomebytes/dmp_gestures</a>)
+Copyright (c) 2013, Willow Garage, Inc., licensed under the BSD license,
+cf. 3rd-party-licenses.txt file in the root directory of this source tree.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="robot_kinematics_interface.ForwardKinematics">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">robot_kinematics_interface.</span></span><span class="sig-name descname"><span class="pre">ForwardKinematics</span></span><a class="reference internal" href="../../_modules/robot_kinematics_interface.html#ForwardKinematics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#robot_kinematics_interface.ForwardKinematics" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Simplified interface to ask for forward kinematics</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="robot_kinematics_interface.ForwardKinematics.closeFK">
+<span class="sig-name descname"><span class="pre">closeFK</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/robot_kinematics_interface.html#ForwardKinematics.closeFK"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#robot_kinematics_interface.ForwardKinematics.closeFK" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="robot_kinematics_interface.ForwardKinematics.getCurrentFK">
+<span class="sig-name descname"><span class="pre">getCurrentFK</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fk_link_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'base_link'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/robot_kinematics_interface.html#ForwardKinematics.getCurrentFK"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#robot_kinematics_interface.ForwardKinematics.getCurrentFK" title="Permalink to this definition"></a></dt>
+<dd><p>Get the forward kinematics of a set of links in the current configuration</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="robot_kinematics_interface.ForwardKinematics.getFK">
+<span class="sig-name descname"><span class="pre">getFK</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fk_link_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">joint_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">positions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'base_link'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/robot_kinematics_interface.html#ForwardKinematics.getFK"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#robot_kinematics_interface.ForwardKinematics.getFK" title="Permalink to this definition"></a></dt>
+<dd><p>Get the forward kinematics of a joint configuration
+&#64;fk_link_names list of string or string : list of links that we want to get the forward kinematics from
+&#64;joint_names list of string : with the joint names to set a position to ask for the FK
+&#64;positions list of double : with the position of the joints
+&#64;frame_id string : the reference frame to be used</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="robot_kinematics_interface.InverseKinematics">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">robot_kinematics_interface.</span></span><span class="sig-name descname"><span class="pre">InverseKinematics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ik_srv</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/robot_kinematics_interface.html#InverseKinematics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#robot_kinematics_interface.InverseKinematics" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Simplified interface to ask for inverse kinematics</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="robot_kinematics_interface.InverseKinematics.closeIK">
+<span class="sig-name descname"><span class="pre">closeIK</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/robot_kinematics_interface.html#InverseKinematics.closeIK"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#robot_kinematics_interface.InverseKinematics.closeIK" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="robot_kinematics_interface.InverseKinematics.getIK">
+<span class="sig-name descname"><span class="pre">getIK</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ik_link_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pose</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">avoid_collisions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">robot_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">constraints</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/robot_kinematics_interface.html#InverseKinematics.getIK"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#robot_kinematics_interface.InverseKinematics.getIK" title="Permalink to this definition"></a></dt>
+<dd><p>Get the inverse kinematics for a group with a link a in pose in 3d world.
+&#64;group_name string group i.e. right_arm that will perform the IK
+&#64;ik_link_name string link that will be in the pose given to evaluate the IK
+&#64;pose PoseStamped that represents the pose (with frame_id!) of the link
+&#64;avoid_collisions Bool if we want solutions with collision avoidance
+&#64;attempts Int number of attempts to get an Ik as it can fail depending on what IK is being used
+&#64;robot_state RobotState the robot state where to start searching IK from (optional, current pose will be used
+if ignored)</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="robot_kinematics_interface.StateValidity">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">robot_kinematics_interface.</span></span><span class="sig-name descname"><span class="pre">StateValidity</span></span><a class="reference internal" href="../../_modules/robot_kinematics_interface.html#StateValidity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#robot_kinematics_interface.StateValidity" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="robot_kinematics_interface.StateValidity.close_SV">
+<span class="sig-name descname"><span class="pre">close_SV</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/robot_kinematics_interface.html#StateValidity.close_SV"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#robot_kinematics_interface.StateValidity.close_SV" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="robot_kinematics_interface.StateValidity.getStateValidity">
+<span class="sig-name descname"><span class="pre">getStateValidity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">robot_state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'both_arms_torso'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">constraints</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/robot_kinematics_interface.html#StateValidity.getStateValidity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#robot_kinematics_interface.StateValidity.getStateValidity" title="Permalink to this definition"></a></dt>
+<dd><p>Given a RobotState and a group name and an optional Constraints
+return the validity of the State</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Lukas Rustler.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+motion\_interface module
+========================
+
+.. automodule:: motion_interface
+   :members:
+   :undoc-members:
+   :show-inheritance:

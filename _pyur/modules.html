@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UR10e python simulator with virtual AIRSKIN &mdash; UR10e with AIRSKIN 0.9.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="static/jquery.js?v=5d32c60e"></script>
+        <script src="static/sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="./" id="documentation_options" src="static/documentation_options.js?v=1bc1ca25"></script>
+        <script src="static/doctools.js?v=888ff710"></script>
+        <script src="static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="&lt;no title&gt;" href="source/pyUR/index.html" />
+    <link rel="prev" title="Welcome to UR10e with AIRSKIN documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            UR10e with AIRSKIN
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">UR10e python simulator with virtual AIRSKIN</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#contents">Contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">Run</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ros-version">ROS version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#non-ros-version">Non-ROS version</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#pyur">pyUR</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="source/pyUR/modules.html">pyUR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/pyUR/modules.html#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#bullet-ros">bullet_ros</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="source/bullet_ros/modules.html">bullet_ros</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/bullet_ros/modules.html#examples">Examples</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">UR10e with AIRSKIN</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">UR10e python simulator with virtual AIRSKIN</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="sources/modules.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ur10e-python-simulator-with-virtual-airskin">
+<h1>UR10e python simulator with virtual AIRSKIN<a class="headerlink" href="#ur10e-python-simulator-with-virtual-airskin" title="Permalink to this heading"></a></h1>
+<p>This folder contains necessary files to run the simulation of the UR10e robot with virtual AIRSKIN.</p>
+<section id="contents">
+<h2>Contents<a class="headerlink" href="#contents" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="#installation">Installation</a></p></li>
+<li><p><a class="reference external" href="#code">Code</a></p></li>
+<li><p><a class="reference external" href="#run">Run</a></p></li>
+</ul>
+</section>
+<section id="id1">
+<h2>Installation<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
+<p>The installation is the same as for the <a class="reference external" href="https://github.com/ctu-vras/adaptive-skin">adaptive_skin</a> project. Please see
+the README there.</p>
+</section>
+<section id="id2">
+<h2>Code<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h2>
+<p>The documentation PDF can be found in <a class="reference external" href="documentation/pyUR.pdf">pyUR.pdf</a>.<span class="raw-html-m2r"><br></span>
+Online documentation is available at <a class="reference external" href="https://lukasrustler.cz/pyUR/">lukasrustler.cz/pyUR</a>.</p>
+</section>
+<section id="id3">
+<h2>Run<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>The simulator can be run in two mode:</dt><dd><ol class="arabic simple">
+<li><p>ROS version - real-time, high-level planners (MoveIt!, …)</p></li>
+<li><p>Native - much faster than real-time, only low-level control</p></li>
+</ol>
+</dd>
+</dl>
+<section id="ros-version">
+<h3>ROS version<a class="headerlink" href="#ros-version" title="Permalink to this heading"></a></h3>
+<ul>
+<li><p>install necessary things and build the workspace</p>
+<ul class="simple">
+<li><p>see <a class="reference external" href="#Installation">Installation</a></p></li>
+</ul>
+</li>
+<li><p>run the simulator</p>
+<ul>
+<li><p>in the terminal, run</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">roslaunch</span> <span class="n">bullet_ros</span> <span class="n">simulation</span><span class="o">.</span><span class="n">launch</span>
+</pre></div>
+</div>
+</li>
+<li><p>this will start the simulator and RVIZ with the robot
+#### Control the robot</p></li>
+<li><p>to test the connection etc. you can just move the robot in RVIZ and plan
+from there</p></li>
+<li><p>or, see <a class="reference external" href="src/ur10e_simulator/bullet_ros/scripts/examples.py">examples.py</a></p></li>
+<li><p>it shows how to control the robot, gripper. How to play trajectories and how
+to get IK without moving</p></li>
+<li><p>the simulated robot provides <code class="docutils literal notranslate"><span class="pre">position_controllers/ScaledJointTrajectoryController</span></code> and
+<code class="docutils literal notranslate"><span class="pre">velocity_controllers/JointGroupVelocityController</span></code>, i.e., waypoint controller through moveit or direct assignment
+of joint velocities to the joints</p></li>
+<li><p>the default is <code class="docutils literal notranslate"><span class="pre">ScaledJointTrajectoryController</span></code>. You need to switch with rosservice <code class="docutils literal notranslate"><span class="pre">/controller_manager/switch_controller</span></code>
+before running joint commands</p>
+<ul class="simple">
+<li><p>see <a class="reference external" href="src/ur10e_simulator/bullet_ros/scripts/examples.py">examples.py</a> for an example</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="non-ros-version">
+<h3>Non-ROS version<a class="headerlink" href="#non-ros-version" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>install necessary things</p>
+<ul>
+<li><p>see <a class="reference external" href="#Installation">Installation</a></p></li>
+</ul>
+</li>
+<li><p>you can run examples from <a class="reference external" href="src/ur10e_simulator/pyUR/examples">examples</a> folder</p>
+<ul>
+<li><p>scripts <a class="reference external" href="src/ur10e_simulator/pyUR/examples/cartesian_example.py">cartesian_example.py</a> and
+<a class="reference external" href="src/ur10e_simulator/pyUR/examples/joints_example.py">joints_example.py</a> show how to control the robot in
+cartesian and joint space, respectively.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="pyur">
+<h1>pyUR<a class="headerlink" href="#pyur" title="Permalink to this heading"></a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="source/pyUR/modules.html">pyUR</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="source/pyUR/pyur.html">pyur module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="source/pyUR/pyur.html#pyur.EndEffector"><code class="docutils literal notranslate"><span class="pre">EndEffector</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/pyur.html#pyur.EndEffector.get_position"><code class="docutils literal notranslate"><span class="pre">EndEffector.get_position()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="source/pyUR/pyur.html#pyur.Joint"><code class="docutils literal notranslate"><span class="pre">Joint</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="source/pyUR/pyur.html#pyur.Link"><code class="docutils literal notranslate"><span class="pre">Link</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="source/pyUR/pyur.html#pyur.pyUR"><code class="docutils literal notranslate"><span class="pre">pyUR</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/pyur.html#pyur.pyUR.compute_skin"><code class="docutils literal notranslate"><span class="pre">pyUR.compute_skin()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/pyur.html#pyur.pyUR.contactPoints"><code class="docutils literal notranslate"><span class="pre">pyUR.contactPoints</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/pyur.html#pyur.pyUR.create_urdf"><code class="docutils literal notranslate"><span class="pre">pyUR.create_urdf()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/pyur.html#pyur.pyUR.dynamicsInfo"><code class="docutils literal notranslate"><span class="pre">pyUR.dynamicsInfo</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/pyur.html#pyur.pyUR.find_joint_id"><code class="docutils literal notranslate"><span class="pre">pyUR.find_joint_id()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/pyur.html#pyur.pyUR.find_link_id"><code class="docutils literal notranslate"><span class="pre">pyUR.find_link_id()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/pyur.html#pyur.pyUR.get_joint_state"><code class="docutils literal notranslate"><span class="pre">pyUR.get_joint_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/pyur.html#pyur.pyUR.get_link_id"><code class="docutils literal notranslate"><span class="pre">pyUR.get_link_id()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/pyur.html#pyur.pyUR.init_robot"><code class="docutils literal notranslate"><span class="pre">pyUR.init_robot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/pyur.html#pyur.pyUR.is_alive"><code class="docutils literal notranslate"><span class="pre">pyUR.is_alive()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/pyur.html#pyur.pyUR.jointInfo"><code class="docutils literal notranslate"><span class="pre">pyUR.jointInfo</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/pyur.html#pyur.pyUR.jointStates"><code class="docutils literal notranslate"><span class="pre">pyUR.jointStates</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/pyur.html#pyur.pyUR.kill_open3d"><code class="docutils literal notranslate"><span class="pre">pyUR.kill_open3d()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/pyur.html#pyur.pyUR.linkInfo"><code class="docutils literal notranslate"><span class="pre">pyUR.linkInfo</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/pyur.html#pyur.pyUR.motion_done"><code class="docutils literal notranslate"><span class="pre">pyUR.motion_done()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/pyur.html#pyur.pyUR.move_cartesian"><code class="docutils literal notranslate"><span class="pre">pyUR.move_cartesian()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/pyur.html#pyur.pyUR.move_position"><code class="docutils literal notranslate"><span class="pre">pyUR.move_position()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/pyur.html#pyur.pyUR.move_velocity"><code class="docutils literal notranslate"><span class="pre">pyUR.move_velocity()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/pyur.html#pyur.pyUR.prepare_log"><code class="docutils literal notranslate"><span class="pre">pyUR.prepare_log()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/pyur.html#pyur.pyUR.print_collision_info"><code class="docutils literal notranslate"><span class="pre">pyUR.print_collision_info()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/pyur.html#pyur.pyUR.run_vhacd"><code class="docutils literal notranslate"><span class="pre">pyUR.run_vhacd()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/pyur.html#pyur.pyUR.stop_robot"><code class="docutils literal notranslate"><span class="pre">pyUR.stop_robot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/pyur.html#pyur.pyUR.toggle_gravity"><code class="docutils literal notranslate"><span class="pre">pyUR.toggle_gravity()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/pyur.html#pyur.pyUR.update_simulation"><code class="docutils literal notranslate"><span class="pre">pyUR.update_simulation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/pyur.html#pyur.pyUR.visualShapeData"><code class="docutils literal notranslate"><span class="pre">pyUR.visualShapeData</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/pyur.html#pyur.pyUR.wait_motion_done"><code class="docutils literal notranslate"><span class="pre">pyUR.wait_motion_done()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="source/pyUR/utils.html">utils module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="source/pyUR/utils.html#utils.Config"><code class="docutils literal notranslate"><span class="pre">Config</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/utils.html#utils.Config.set_attribute"><code class="docutils literal notranslate"><span class="pre">Config.set_attribute()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="source/pyUR/utils.html#utils.CustomFormatter"><code class="docutils literal notranslate"><span class="pre">CustomFormatter</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/utils.html#utils.CustomFormatter.FORMATS"><code class="docutils literal notranslate"><span class="pre">CustomFormatter.FORMATS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/utils.html#utils.CustomFormatter.bold_red"><code class="docutils literal notranslate"><span class="pre">CustomFormatter.bold_red</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/utils.html#utils.CustomFormatter.format"><code class="docutils literal notranslate"><span class="pre">CustomFormatter.format()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/utils.html#utils.CustomFormatter.grey"><code class="docutils literal notranslate"><span class="pre">CustomFormatter.grey</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/utils.html#utils.CustomFormatter.red"><code class="docutils literal notranslate"><span class="pre">CustomFormatter.red</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/utils.html#utils.CustomFormatter.reset"><code class="docutils literal notranslate"><span class="pre">CustomFormatter.reset</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/utils.html#utils.CustomFormatter.yellow"><code class="docutils literal notranslate"><span class="pre">CustomFormatter.yellow</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="source/pyUR/utils.html#utils.Pose"><code class="docutils literal notranslate"><span class="pre">Pose</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="source/pyUR/utils.html#utils.URDF"><code class="docutils literal notranslate"><span class="pre">URDF</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/utils.html#utils.URDF.ROOT_TAGS"><code class="docutils literal notranslate"><span class="pre">URDF.ROOT_TAGS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/utils.html#utils.URDF.dereference"><code class="docutils literal notranslate"><span class="pre">URDF.dereference()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/utils.html#utils.URDF.find_root_tags"><code class="docutils literal notranslate"><span class="pre">URDF.find_root_tags()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/utils.html#utils.URDF.fix_urdf"><code class="docutils literal notranslate"><span class="pre">URDF.fix_urdf()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/utils.html#utils.URDF.make_references"><code class="docutils literal notranslate"><span class="pre">URDF.make_references()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/utils.html#utils.URDF.read"><code class="docutils literal notranslate"><span class="pre">URDF.read()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/utils.html#utils.URDF.write_attr"><code class="docutils literal notranslate"><span class="pre">URDF.write_attr()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/utils.html#utils.URDF.write_urdf"><code class="docutils literal notranslate"><span class="pre">URDF.write_urdf()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="source/pyUR/visualizer.html">visualizer module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="source/pyUR/visualizer.html#visualizer.Visualizer"><code class="docutils literal notranslate"><span class="pre">Visualizer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/visualizer.html#visualizer.Visualizer.MenuCallback"><code class="docutils literal notranslate"><span class="pre">Visualizer.MenuCallback</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/visualizer.html#visualizer.Visualizer.find_xyz_rpy"><code class="docutils literal notranslate"><span class="pre">Visualizer.find_xyz_rpy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/visualizer.html#visualizer.Visualizer.read_info"><code class="docutils literal notranslate"><span class="pre">Visualizer.read_info()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/visualizer.html#visualizer.Visualizer.render"><code class="docutils literal notranslate"><span class="pre">Visualizer.render()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/visualizer.html#visualizer.Visualizer.show_first"><code class="docutils literal notranslate"><span class="pre">Visualizer.show_first()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/visualizer.html#visualizer.Visualizer.show_mesh"><code class="docutils literal notranslate"><span class="pre">Visualizer.show_mesh()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="source/pyUR/gripper.html">gripper module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="source/pyUR/gripper.html#gripper.RG6"><code class="docutils literal notranslate"><span class="pre">RG6</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/gripper.html#gripper.RG6.JOINTS"><code class="docutils literal notranslate"><span class="pre">RG6.JOINTS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/gripper.html#gripper.RG6.SIGNS"><code class="docutils literal notranslate"><span class="pre">RG6.SIGNS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/gripper.html#gripper.RG6.prepare_gripper"><code class="docutils literal notranslate"><span class="pre">RG6.prepare_gripper()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/gripper.html#gripper.RG6.reset_constraints"><code class="docutils literal notranslate"><span class="pre">RG6.reset_constraints()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/gripper.html#gripper.RG6.set_gripper_pose"><code class="docutils literal notranslate"><span class="pre">RG6.set_gripper_pose()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyUR/gripper.html#gripper.RG6.stop"><code class="docutils literal notranslate"><span class="pre">RG6.stop()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="source/pyUR/modules.html#examples">Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="source/pyUR/cartesian_example.html">cartesian_example module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="source/pyUR/cartesian_example.html#cartesian_example.move"><code class="docutils literal notranslate"><span class="pre">move()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="source/pyUR/joints_example.html">joints_example module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="source/pyUR/joints_example.html#joints_example.move"><code class="docutils literal notranslate"><span class="pre">move()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="bullet-ros">
+<h1>bullet_ros<a class="headerlink" href="#bullet-ros" title="Permalink to this heading"></a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="source/bullet_ros/modules.html">bullet_ros</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="source/bullet_ros/main.html">main module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="source/bullet_ros/main.html#main.BulletROS"><code class="docutils literal notranslate"><span class="pre">BulletROS</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="source/bullet_ros/main.html#main.BulletROS.activate_airskin"><code class="docutils literal notranslate"><span class="pre">BulletROS.activate_airskin()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/bullet_ros/main.html#main.BulletROS.activate_airskin_cb"><code class="docutils literal notranslate"><span class="pre">BulletROS.activate_airskin_cb()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/bullet_ros/main.html#main.BulletROS.change_obj_pose"><code class="docutils literal notranslate"><span class="pre">BulletROS.change_obj_pose()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/bullet_ros/main.html#main.BulletROS.grip"><code class="docutils literal notranslate"><span class="pre">BulletROS.grip()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/bullet_ros/main.html#main.BulletROS.move"><code class="docutils literal notranslate"><span class="pre">BulletROS.move()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/bullet_ros/main.html#main.BulletROS.publish_other_objects"><code class="docutils literal notranslate"><span class="pre">BulletROS.publish_other_objects()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/bullet_ros/main.html#main.BulletROS.read"><code class="docutils literal notranslate"><span class="pre">BulletROS.read()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/bullet_ros/main.html#main.BulletROS.read_state"><code class="docutils literal notranslate"><span class="pre">BulletROS.read_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/bullet_ros/main.html#main.BulletROS.send_finger_joint"><code class="docutils literal notranslate"><span class="pre">BulletROS.send_finger_joint()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/bullet_ros/main.html#main.BulletROS.send_skin"><code class="docutils literal notranslate"><span class="pre">BulletROS.send_skin()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="source/bullet_ros/motion_interface.html">motion_interface module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="source/bullet_ros/motion_interface.html#motion_interface.MoveGroupPythonInterface"><code class="docutils literal notranslate"><span class="pre">MoveGroupPythonInterface</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="source/bullet_ros/motion_interface.html#motion_interface.MoveGroupPythonInterface.all_close"><code class="docutils literal notranslate"><span class="pre">MoveGroupPythonInterface.all_close()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/bullet_ros/motion_interface.html#motion_interface.MoveGroupPythonInterface.apply_planning_scene"><code class="docutils literal notranslate"><span class="pre">MoveGroupPythonInterface.apply_planning_scene()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/bullet_ros/motion_interface.html#motion_interface.MoveGroupPythonInterface.close_gripper"><code class="docutils literal notranslate"><span class="pre">MoveGroupPythonInterface.close_gripper()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/bullet_ros/motion_interface.html#motion_interface.MoveGroupPythonInterface.display_trajectory"><code class="docutils literal notranslate"><span class="pre">MoveGroupPythonInterface.display_trajectory()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/bullet_ros/motion_interface.html#motion_interface.MoveGroupPythonInterface.execute_plan"><code class="docutils literal notranslate"><span class="pre">MoveGroupPythonInterface.execute_plan()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/bullet_ros/motion_interface.html#motion_interface.MoveGroupPythonInterface.get_current_state"><code class="docutils literal notranslate"><span class="pre">MoveGroupPythonInterface.get_current_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/bullet_ros/motion_interface.html#motion_interface.MoveGroupPythonInterface.get_ee_pose"><code class="docutils literal notranslate"><span class="pre">MoveGroupPythonInterface.get_ee_pose()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/bullet_ros/motion_interface.html#motion_interface.MoveGroupPythonInterface.go_to_joint_position"><code class="docutils literal notranslate"><span class="pre">MoveGroupPythonInterface.go_to_joint_position()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/bullet_ros/motion_interface.html#motion_interface.MoveGroupPythonInterface.go_to_pose"><code class="docutils literal notranslate"><span class="pre">MoveGroupPythonInterface.go_to_pose()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/bullet_ros/motion_interface.html#motion_interface.MoveGroupPythonInterface.open_gripper"><code class="docutils literal notranslate"><span class="pre">MoveGroupPythonInterface.open_gripper()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/bullet_ros/motion_interface.html#motion_interface.MoveGroupPythonInterface.plan_cartesian_path"><code class="docutils literal notranslate"><span class="pre">MoveGroupPythonInterface.plan_cartesian_path()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/bullet_ros/motion_interface.html#motion_interface.MoveGroupPythonInterface.stop_robot"><code class="docutils literal notranslate"><span class="pre">MoveGroupPythonInterface.stop_robot()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="source/bullet_ros/robot_kinematics_interface.html">robot_kinematics_interface module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="source/bullet_ros/robot_kinematics_interface.html#robot_kinematics_interface.ForwardKinematics"><code class="docutils literal notranslate"><span class="pre">ForwardKinematics</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="source/bullet_ros/robot_kinematics_interface.html#robot_kinematics_interface.ForwardKinematics.closeFK"><code class="docutils literal notranslate"><span class="pre">ForwardKinematics.closeFK()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/bullet_ros/robot_kinematics_interface.html#robot_kinematics_interface.ForwardKinematics.getCurrentFK"><code class="docutils literal notranslate"><span class="pre">ForwardKinematics.getCurrentFK()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/bullet_ros/robot_kinematics_interface.html#robot_kinematics_interface.ForwardKinematics.getFK"><code class="docutils literal notranslate"><span class="pre">ForwardKinematics.getFK()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="source/bullet_ros/robot_kinematics_interface.html#robot_kinematics_interface.InverseKinematics"><code class="docutils literal notranslate"><span class="pre">InverseKinematics</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="source/bullet_ros/robot_kinematics_interface.html#robot_kinematics_interface.InverseKinematics.closeIK"><code class="docutils literal notranslate"><span class="pre">InverseKinematics.closeIK()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/bullet_ros/robot_kinematics_interface.html#robot_kinematics_interface.InverseKinematics.getIK"><code class="docutils literal notranslate"><span class="pre">InverseKinematics.getIK()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="source/bullet_ros/robot_kinematics_interface.html#robot_kinematics_interface.StateValidity"><code class="docutils literal notranslate"><span class="pre">StateValidity</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="source/bullet_ros/robot_kinematics_interface.html#robot_kinematics_interface.StateValidity.close_SV"><code class="docutils literal notranslate"><span class="pre">StateValidity.close_SV()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/bullet_ros/robot_kinematics_interface.html#robot_kinematics_interface.StateValidity.getStateValidity"><code class="docutils literal notranslate"><span class="pre">StateValidity.getStateValidity()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="source/bullet_ros/rg_finger_publisher.html">rg_finger_publisher module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="source/bullet_ros/rg_finger_publisher.html#rg_finger_publisher.send_tf"><code class="docutils literal notranslate"><span class="pre">send_tf()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="source/bullet_ros/modules.html#examples">Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="source/bullet_ros/examples.html">examples module</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to UR10e with AIRSKIN documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="source/pyUR/index.html" class="btn btn-neutral float-right" title="&lt;no title&gt;" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Lukas Rustler.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

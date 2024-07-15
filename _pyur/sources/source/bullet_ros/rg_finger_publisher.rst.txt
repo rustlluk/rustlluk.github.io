@@ -1,0 +1,7 @@
+rg\_finger\_publisher module
+============================
+
+.. automodule:: rg_finger_publisher
+   :members:
+   :undoc-members:
+   :show-inheritance:

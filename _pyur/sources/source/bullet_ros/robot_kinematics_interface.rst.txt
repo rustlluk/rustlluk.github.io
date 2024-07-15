@@ -1,0 +1,7 @@
+robot\_kinematics\_interface module
+===================================
+
+.. automodule:: robot_kinematics_interface
+   :members:
+   :undoc-members:
+   :show-inheritance:

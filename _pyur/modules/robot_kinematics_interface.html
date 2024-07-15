@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>robot_kinematics_interface &mdash; UR10e with AIRSKIN 0.9.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=1bc1ca25"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            UR10e with AIRSKIN
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">pyUR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html#bullet-ros">bullet_ros</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">UR10e with AIRSKIN</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">robot_kinematics_interface</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for robot_kinematics_interface</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Copyright (c) 2018 Robert Bosch GmbH</span>
+<span class="sd">All rights reserved.</span>
+
+<span class="sd">This source code is licensed under the BSD-3-Clause license found in the</span>
+<span class="sd">LICENSE file in the root directory of this source tree.</span>
+
+<span class="sd">@author: Jan Behrens</span>
+
+<span class="sd">This source code is derived from the dmp_gestures project</span>
+<span class="sd">(https://github.com/awesomebytes/dmp_gestures)</span>
+<span class="sd">Copyright (c) 2013, Willow Garage, Inc., licensed under the BSD license,</span>
+<span class="sd">cf. 3rd-party-licenses.txt file in the root directory of this source tree.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Created on 12/08/14</span>
+<span class="sd">@author: Sammy Pfeiffer</span>
+<span class="sd">@email: sammypfeiffer@gmail.com</span>
+<span class="sd">This file contains kinematics related classes to ease</span>
+<span class="sd">the use of MoveIt! kinematics services.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Edited by: Lukas Rustler</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">rospy</span>
+<span class="kn">from</span> <span class="nn">moveit_msgs.srv</span> <span class="kn">import</span> <span class="n">GetPositionFK</span><span class="p">,</span> <span class="n">GetPositionFKRequest</span><span class="p">,</span> <span class="n">GetPositionFKResponse</span><span class="p">,</span> \
+    <span class="n">GetPositionIK</span><span class="p">,</span> <span class="n">GetPositionIKRequest</span><span class="p">,</span> <span class="n">GetPositionIKResponse</span><span class="p">,</span> \
+    <span class="n">GetStateValidity</span><span class="p">,</span> <span class="n">GetStateValidityRequest</span><span class="p">,</span> <span class="n">GetStateValidityResponse</span>
+<span class="kn">from</span> <span class="nn">sensor_msgs.msg</span> <span class="kn">import</span> <span class="n">JointState</span>
+<span class="kn">from</span> <span class="nn">geometry_msgs.msg</span> <span class="kn">import</span> <span class="n">PoseStamped</span><span class="p">,</span> <span class="n">Pose</span><span class="p">,</span> <span class="n">Point</span><span class="p">,</span> <span class="n">Quaternion</span>
+
+<span class="n">DEFAULT_FK_SERVICE</span> <span class="o">=</span> <span class="s2">&quot;/compute_fk&quot;</span>
+<span class="n">DEFAULT_IK_SERVICE</span> <span class="o">=</span> <span class="s2">&quot;/compute_ik&quot;</span>
+<span class="n">DEFAULT_SV_SERVICE</span> <span class="o">=</span> <span class="s2">&quot;/check_state_validity&quot;</span>
+
+
+<div class="viewcode-block" id="ForwardKinematics"><a class="viewcode-back" href="../source/bullet_ros/robot_kinematics_interface.html#robot_kinematics_interface.ForwardKinematics">[docs]</a><span class="k">class</span> <span class="nc">ForwardKinematics</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Simplified interface to ask for forward kinematics&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">robot_name</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;/robot_name&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">robot_name</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="k">global</span> <span class="n">DEFAULT_FK_SERVICE</span>
+            <span class="n">DEFAULT_FK_SERVICE</span> <span class="o">=</span> <span class="s2">&quot;/&quot;</span><span class="o">+</span><span class="n">robot_name</span><span class="o">+</span><span class="n">DEFAULT_FK_SERVICE</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Loading ForwardKinematics class.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fk_srv</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span><span class="n">DEFAULT_FK_SERVICE</span><span class="p">,</span> <span class="n">GetPositionFK</span><span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Connecting to FK service&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fk_srv</span><span class="o">.</span><span class="n">wait_for_service</span><span class="p">()</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Ready for making FK calls&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ForwardKinematics.closeFK"><a class="viewcode-back" href="../source/bullet_ros/robot_kinematics_interface.html#robot_kinematics_interface.ForwardKinematics.closeFK">[docs]</a>    <span class="k">def</span> <span class="nf">closeFK</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fk_srv</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="ForwardKinematics.getFK"><a class="viewcode-back" href="../source/bullet_ros/robot_kinematics_interface.html#robot_kinematics_interface.ForwardKinematics.getFK">[docs]</a>    <span class="k">def</span> <span class="nf">getFK</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fk_link_names</span><span class="p">,</span> <span class="n">joint_names</span><span class="p">,</span> <span class="n">positions</span><span class="p">,</span> <span class="n">frame_id</span><span class="o">=</span><span class="s1">&#39;base_link&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the forward kinematics of a joint configuration</span>
+<span class="sd">        @fk_link_names list of string or string : list of links that we want to get the forward kinematics from</span>
+<span class="sd">        @joint_names list of string : with the joint names to set a position to ask for the FK</span>
+<span class="sd">        @positions list of double : with the position of the joints</span>
+<span class="sd">        @frame_id string : the reference frame to be used&quot;&quot;&quot;</span>
+        <span class="n">gpfkr</span> <span class="o">=</span> <span class="n">GetPositionFKRequest</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">fk_link_names</span><span class="p">)</span> <span class="o">==</span> <span class="nb">type</span><span class="p">(</span><span class="s2">&quot;string&quot;</span><span class="p">):</span>
+            <span class="n">gpfkr</span><span class="o">.</span><span class="n">fk_link_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">fk_link_names</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">gpfkr</span><span class="o">.</span><span class="n">fk_link_names</span> <span class="o">=</span> <span class="n">fk_link_names</span>
+        <span class="n">gpfkr</span><span class="o">.</span><span class="n">robot_state</span><span class="o">.</span><span class="n">joint_state</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">joint_names</span>
+        <span class="n">gpfkr</span><span class="o">.</span><span class="n">robot_state</span><span class="o">.</span><span class="n">joint_state</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">positions</span>
+        <span class="n">gpfkr</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">frame_id</span> <span class="o">=</span> <span class="n">frame_id</span>
+        <span class="n">fk_result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fk_srv</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">gpfkr</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">fk_result</span></div>
+
+<div class="viewcode-block" id="ForwardKinematics.getCurrentFK"><a class="viewcode-back" href="../source/bullet_ros/robot_kinematics_interface.html#robot_kinematics_interface.ForwardKinematics.getCurrentFK">[docs]</a>    <span class="k">def</span> <span class="nf">getCurrentFK</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fk_link_names</span><span class="p">,</span> <span class="n">frame_id</span><span class="o">=</span><span class="s1">&#39;base_link&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the forward kinematics of a set of links in the current configuration&quot;&quot;&quot;</span>
+        <span class="c1"># Subscribe to a joint_states</span>
+        <span class="n">js</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">wait_for_message</span><span class="p">(</span><span class="s1">&#39;/joint_states&#39;</span><span class="p">,</span> <span class="n">JointState</span><span class="p">)</span>
+        <span class="c1"># Call FK service</span>
+        <span class="n">fk_result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getFK</span><span class="p">(</span><span class="n">fk_link_names</span><span class="p">,</span> <span class="n">js</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">js</span><span class="o">.</span><span class="n">position</span><span class="p">,</span> <span class="n">frame_id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">fk_result</span></div></div>
+
+
+<div class="viewcode-block" id="InverseKinematics"><a class="viewcode-back" href="../source/bullet_ros/robot_kinematics_interface.html#robot_kinematics_interface.InverseKinematics">[docs]</a><span class="k">class</span> <span class="nc">InverseKinematics</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Simplified interface to ask for inverse kinematics&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ik_srv</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">robot_name</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;/robot_name&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">robot_name</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="k">global</span> <span class="n">DEFAULT_IK_SERVICE</span>
+            <span class="n">DEFAULT_IK_SERVICE</span> <span class="o">=</span> <span class="s2">&quot;/&quot;</span><span class="o">+</span><span class="n">robot_name</span><span class="o">+</span><span class="n">DEFAULT_IK_SERVICE</span>
+        <span class="k">if</span> <span class="n">ik_srv</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ik_srv</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span><span class="n">DEFAULT_IK_SERVICE</span><span class="p">,</span> <span class="n">GetPositionIK</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ik_srv</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span><span class="n">ik_srv</span><span class="p">,</span> <span class="n">GetPositionIK</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ik_srv</span><span class="o">.</span><span class="n">wait_for_service</span><span class="p">()</span>
+
+<div class="viewcode-block" id="InverseKinematics.closeIK"><a class="viewcode-back" href="../source/bullet_ros/robot_kinematics_interface.html#robot_kinematics_interface.InverseKinematics.closeIK">[docs]</a>    <span class="k">def</span> <span class="nf">closeIK</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ik_srv</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="InverseKinematics.getIK"><a class="viewcode-back" href="../source/bullet_ros/robot_kinematics_interface.html#robot_kinematics_interface.InverseKinematics.getIK">[docs]</a>    <span class="k">def</span> <span class="nf">getIK</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group_name</span><span class="p">,</span> <span class="n">ik_link_name</span><span class="p">,</span> <span class="n">pose</span><span class="p">,</span> <span class="n">avoid_collisions</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">robot_state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+              <span class="n">constraints</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the inverse kinematics for a group with a link a in pose in 3d world.</span>
+<span class="sd">        @group_name string group i.e. right_arm that will perform the IK</span>
+<span class="sd">        @ik_link_name string link that will be in the pose given to evaluate the IK</span>
+<span class="sd">        @pose PoseStamped that represents the pose (with frame_id!) of the link</span>
+<span class="sd">        @avoid_collisions Bool if we want solutions with collision avoidance</span>
+<span class="sd">        @attempts Int number of attempts to get an Ik as it can fail depending on what IK is being used</span>
+<span class="sd">        @robot_state RobotState the robot state where to start searching IK from (optional, current pose will be used</span>
+<span class="sd">        if ignored)&quot;&quot;&quot;</span>
+        <span class="n">gpikr</span> <span class="o">=</span> <span class="n">GetPositionIKRequest</span><span class="p">()</span>
+        <span class="n">gpikr</span><span class="o">.</span><span class="n">ik_request</span><span class="o">.</span><span class="n">group_name</span> <span class="o">=</span> <span class="n">group_name</span>
+        <span class="k">if</span> <span class="n">robot_state</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># current robot state will be used internally otherwise</span>
+            <span class="n">gpikr</span><span class="o">.</span><span class="n">ik_request</span><span class="o">.</span><span class="n">robot_state</span> <span class="o">=</span> <span class="n">robot_state</span>
+        <span class="n">gpikr</span><span class="o">.</span><span class="n">ik_request</span><span class="o">.</span><span class="n">avoid_collisions</span> <span class="o">=</span> <span class="n">avoid_collisions</span>
+        <span class="n">gpikr</span><span class="o">.</span><span class="n">ik_request</span><span class="o">.</span><span class="n">ik_link_name</span> <span class="o">=</span> <span class="n">ik_link_name</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">pose</span><span class="p">)</span> <span class="o">==</span> <span class="nb">type</span><span class="p">(</span><span class="n">PoseStamped</span><span class="p">()):</span>
+            <span class="n">gpikr</span><span class="o">.</span><span class="n">ik_request</span><span class="o">.</span><span class="n">pose_stamped</span> <span class="o">=</span> <span class="n">pose</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span><span class="s2">&quot;pose is not a PoseStamped, it&#39;s: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">pose</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot;, can&#39;t ask for an IK&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="n">constraints</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">gpikr</span><span class="o">.</span><span class="n">ik_request</span><span class="o">.</span><span class="n">constraints</span> <span class="o">=</span> <span class="n">constraints</span>
+        <span class="n">gpikr</span><span class="o">.</span><span class="n">ik_request</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span>
+        <span class="n">ik_result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ik_srv</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">gpikr</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ik_result</span><span class="o">.</span><span class="n">solution</span><span class="o">.</span><span class="n">joint_state</span><span class="o">.</span><span class="n">position</span><span class="p">[:</span><span class="mi">7</span><span class="p">]</span></div></div>
+
+
+<div class="viewcode-block" id="StateValidity"><a class="viewcode-back" href="../source/bullet_ros/robot_kinematics_interface.html#robot_kinematics_interface.StateValidity">[docs]</a><span class="k">class</span> <span class="nc">StateValidity</span><span class="p">():</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Initializing stateValidity class&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sv_srv</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span><span class="n">DEFAULT_SV_SERVICE</span><span class="p">,</span> <span class="n">GetStateValidity</span><span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Connecting to State Validity service&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sv_srv</span><span class="o">.</span><span class="n">wait_for_service</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">rospy</span><span class="o">.</span><span class="n">has_param</span><span class="p">(</span><span class="s1">&#39;/play_motion/approach_planner/planning_groups&#39;</span><span class="p">):</span>
+            <span class="n">list_planning_groups</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s1">&#39;/play_motion/approach_planner/planning_groups&#39;</span><span class="p">)</span>
+            <span class="c1"># Get groups and joints here</span>
+            <span class="c1"># Or just always use both_arms_torso...</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span><span class="s2">&quot;Param &#39;/play_motion/approach_planner/planning_groups&#39; not set. We can&#39;t guess controllers&quot;</span><span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Ready for making Validity calls&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="StateValidity.close_SV"><a class="viewcode-back" href="../source/bullet_ros/robot_kinematics_interface.html#robot_kinematics_interface.StateValidity.close_SV">[docs]</a>    <span class="k">def</span> <span class="nf">close_SV</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sv_srv</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="StateValidity.getStateValidity"><a class="viewcode-back" href="../source/bullet_ros/robot_kinematics_interface.html#robot_kinematics_interface.StateValidity.getStateValidity">[docs]</a>    <span class="k">def</span> <span class="nf">getStateValidity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">robot_state</span><span class="p">,</span> <span class="n">group_name</span><span class="o">=</span><span class="s1">&#39;both_arms_torso&#39;</span><span class="p">,</span> <span class="n">constraints</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Given a RobotState and a group name and an optional Constraints</span>
+<span class="sd">        return the validity of the State&quot;&quot;&quot;</span>
+        <span class="n">gsvr</span> <span class="o">=</span> <span class="n">GetStateValidityRequest</span><span class="p">()</span>
+        <span class="n">gsvr</span><span class="o">.</span><span class="n">robot_state</span> <span class="o">=</span> <span class="n">robot_state</span>
+        <span class="n">gsvr</span><span class="o">.</span><span class="n">group_name</span> <span class="o">=</span> <span class="n">group_name</span>
+        <span class="k">if</span> <span class="n">constraints</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">gsvr</span><span class="o">.</span><span class="n">constraints</span> <span class="o">=</span> <span class="n">constraints</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sv_srv</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">gsvr</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">result</span><span class="o">.</span><span class="n">valid</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Lukas Rustler.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

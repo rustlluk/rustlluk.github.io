@@ -1,0 +1,17 @@
+.. mdinclude:: ../README.md
+
+pyUR
+=============
+
+.. toctree::
+   :maxdepth: 4
+
+   source/pyUR/index
+
+bullet_ros
+=============
+
+.. toctree::
+   :maxdepth: 4
+
+   source/bullet_ros/index

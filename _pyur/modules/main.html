@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>main &mdash; UR10e with AIRSKIN 0.9.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=1bc1ca25"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            UR10e with AIRSKIN
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">pyUR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html#bullet-ros">bullet_ros</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">UR10e with AIRSKIN</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">main</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for main</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span> <span class="nn">rospy</span>
+<span class="kn">from</span> <span class="nn">pyUR.pyur</span> <span class="kn">import</span> <span class="n">pyUR</span>
+<span class="kn">from</span> <span class="nn">bullet_ros.msg</span> <span class="kn">import</span> <span class="n">bullet_to_ros</span>
+<span class="kn">from</span> <span class="nn">bullet_ros.msg</span> <span class="kn">import</span> <span class="n">ros_to_bullet</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">controller_manager_msgs.srv</span> <span class="kn">import</span> <span class="n">ListControllers</span>
+<span class="kn">from</span> <span class="nn">sensor_msgs.msg</span> <span class="kn">import</span> <span class="n">JointState</span>
+<span class="kn">from</span> <span class="nn">std_msgs.msg</span> <span class="kn">import</span> <span class="n">Header</span>
+<span class="kn">from</span> <span class="nn">bullet_ros.srv</span> <span class="kn">import</span> <span class="n">grip</span><span class="p">,</span> <span class="n">gripResponse</span><span class="p">,</span> <span class="n">changeObjPose</span><span class="p">,</span> <span class="n">changeObjPoseResponse</span><span class="p">,</span> <span class="n">activateAirskin</span><span class="p">,</span> <span class="n">activateAirskinResponse</span>
+<span class="kn">from</span> <span class="nn">bullet_ros.msg</span> <span class="kn">import</span> <span class="n">AirskinStatus</span>
+<span class="kn">import</span> <span class="nn">tf</span>
+<span class="kn">from</span> <span class="nn">visualization_msgs.msg</span> <span class="kn">import</span> <span class="n">Marker</span><span class="p">,</span> <span class="n">MarkerArray</span>
+<span class="kn">from</span> <span class="nn">geometry_msgs.msg</span> <span class="kn">import</span> <span class="n">Point</span><span class="p">,</span> <span class="n">Quaternion</span>
+
+
+<div class="viewcode-block" id="BulletROS"><a class="viewcode-back" href="../source/bullet_ros/main.html#main.BulletROS">[docs]</a><span class="k">class</span> <span class="nc">BulletROS</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="s2">&quot;pyUR&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="o">=</span> <span class="n">pyUR</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="s2">&quot;ros.yaml&quot;</span><span class="p">)</span>
+
+        <span class="c1"># UR10e joint names in the correct order</span>
+        <span class="n">joints</span> <span class="o">=</span> <span class="s2">&quot;shoulder_pan_joint;shoulder_lift_joint;elbow_joint;wrist_1_joint;wrist_2_joint;wrist_3_joint&quot;</span>
+
+        <span class="c1"># Get the joint ids of the UR10e joints</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">joint_names</span> <span class="o">=</span> <span class="n">joints</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;;&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">joint_ids</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">joint</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">joint_names</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">joint_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">find_joint_id</span><span class="p">(</span><span class="n">joint</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">joint_names</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">joint_names</span><span class="p">)</span>
+
+        <span class="c1"># Initialize the message to be published</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">msg</span> <span class="o">=</span> <span class="n">bullet_to_ros</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="o">.</span><span class="n">positions</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">joint_ids</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="o">.</span><span class="n">velocities</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">joint_ids</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="o">.</span><span class="n">efforts</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">joint_ids</span><span class="p">)</span>
+
+        <span class="c1"># Initialize the grip service</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grip_service</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span><span class="s2">&quot;/robot/ur_hardware_interface/grip&quot;</span><span class="p">,</span> <span class="n">grip</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">grip</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">MAX_WIDTH</span> <span class="o">=</span> <span class="mi">150</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">MAX_FORCE</span> <span class="o">=</span> <span class="mi">120</span>
+
+        <span class="c1"># Initialize the initial joint angles</span>
+        <span class="n">init_pos</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">j_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">joint_names</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">joint</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">joints</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">j_name</span> <span class="o">==</span> <span class="n">joint</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">initial_joint_angles</span><span class="p">,</span> <span class="n">joint</span><span class="o">.</span><span class="n">name</span><span class="p">):</span>
+                        <span class="n">init_pos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">initial_joint_angles</span><span class="p">,</span> <span class="n">joint</span><span class="o">.</span><span class="n">name</span><span class="p">)))</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">init_pos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                    <span class="k">break</span>
+
+        <span class="c1"># Set the joint names and initial joint angles as parameters</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">set_param</span><span class="p">(</span><span class="s2">&quot;/bullet_ros/joint_names&quot;</span><span class="p">,</span> <span class="n">joints</span><span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">set_param</span><span class="p">(</span><span class="s2">&quot;/bullet_ros/init_pos&quot;</span><span class="p">,</span> <span class="s2">&quot;;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">init_pos</span><span class="p">)))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">move_type</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># 0 - position, 1 - velocity</span>
+
+        <span class="c1"># Initialize the finger joint state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">finger_js</span> <span class="o">=</span> <span class="n">JointState</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">finger_js</span><span class="o">.</span><span class="n">header</span> <span class="o">=</span> <span class="n">Header</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">finger_js</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;finger_joint&quot;</span><span class="p">]</span>
+
+        <span class="c1"># Initialize the joint state publisher for finger joint</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">js_pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="s2">&quot;/finger/joint_states&quot;</span><span class="p">,</span> <span class="n">JointState</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Initialize the skin publisher</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">skin_pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="s2">&quot;/airskin_status&quot;</span><span class="p">,</span> <span class="n">AirskinStatus</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">airskin_msg</span> <span class="o">=</span> <span class="n">AirskinStatus</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">airskin_msg</span><span class="o">.</span><span class="n">pressures</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">11</span>
+
+        <span class="c1"># Initialize the marker publisher for balls in RVIZ</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">marker_array</span> <span class="o">=</span> <span class="n">MarkerArray</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">marker_pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="s2">&quot;/other_objects&quot;</span><span class="p">,</span> <span class="n">MarkerArray</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Initialize the publisher for the bullet to ros message</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="s2">&quot;/bullet_ros/read&quot;</span><span class="p">,</span> <span class="n">bullet_to_ros</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Initialize the controller service</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">controller_srv</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span><span class="s2">&quot;/robot/controller_manager/list_controllers&quot;</span><span class="p">,</span> <span class="n">ListControllers</span><span class="p">)</span>
+
+        <span class="c1"># Initialize the service to change the object pose</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">free_obj_service</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span><span class="s2">&quot;/bullet_ros/change_obj_pose&quot;</span><span class="p">,</span> <span class="n">changeObjPose</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">change_obj_pose</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pad_to_activate</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">skin</span><span class="o">.</span><span class="n">use</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">activate_airskin_service</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span><span class="s2">&quot;/bullet_ros/activate_airskin&quot;</span><span class="p">,</span> <span class="n">activateAirskin</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">activate_airskin_cb</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">airskin_ball_id</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">airskin_pad_id</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">airskin_effort</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">airskin_effort_init</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">airskin_ball_pos</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">follow_pad</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">increase_effort</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># Initialize other variables</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fixed_states</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_pos_cmd</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_skin_time</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_time</span><span class="p">()</span>
+
+        <span class="c1"># Lister to ROS RobotHW interface</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span><span class="s2">&quot;/bullet_ros/write&quot;</span><span class="p">,</span> <span class="n">ros_to_bullet</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">read</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<div class="viewcode-block" id="BulletROS.change_obj_pose"><a class="viewcode-back" href="../source/bullet_ros/main.html#main.BulletROS.change_obj_pose">[docs]</a>    <span class="k">def</span> <span class="nf">change_obj_pose</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Change pose of other than robot object</span>
+
+<span class="sd">        :param request: request fot the pose change</span>
+<span class="sd">        :type request: bullet_ros.srv.changeObjPoseRequest</span>
+<span class="sd">        :return:</span>
+<span class="sd">        :rtype:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Check if the object exists</span>
+        <span class="n">found</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="n">obj_id</span><span class="p">,</span> <span class="n">obj_name</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">other_objects</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">obj_name</span> <span class="o">==</span> <span class="n">request</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
+                <span class="n">found</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">break</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">found</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Object </span><span class="si">{</span><span class="n">request</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">data</span><span class="si">}</span><span class="s2"> not found&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">changeObjPoseResponse</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># Prepare pose based on request</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">position</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">pos</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">pos</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">position</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">orientation</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="n">ori</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ori</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">orientation</span>
+
+        <span class="c1"># Call bullet to change the pose</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">resetBasePositionAndOrientation</span><span class="p">(</span><span class="n">obj_id</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">ori</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">changeObjPoseResponse</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BulletROS.activate_airskin_cb"><a class="viewcode-back" href="../source/bullet_ros/main.html#main.BulletROS.activate_airskin_cb">[docs]</a>    <span class="k">def</span> <span class="nf">activate_airskin_cb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Callback for airskin activation request</span>
+
+<span class="sd">        :param request: request with all the info</span>
+<span class="sd">        :type request: bullet_ros.srv.activateAirskinRequest</span>
+<span class="sd">        :return:</span>
+<span class="sd">        :rtype:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">request</span><span class="o">.</span><span class="n">effort</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span><span class="s2">&quot;Effort must be between 0-1&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">activateAirskinResponse</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># Change 0-1 to -1 - 1 because of some magic</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">airskin_effort</span> <span class="o">=</span> <span class="p">((</span><span class="n">request</span><span class="o">.</span><span class="n">effort</span> <span class="o">-</span> <span class="mi">0</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">0</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">airskin_effort_init</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">airskin_effort</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pad_to_activate</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">pad_id</span>
+
+        <span class="c1"># if any pad to activate</span>
+        <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">pad_id</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="c1"># find ball id (need to be done just for the first time)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">airskin_ball_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">obj_id</span><span class="p">,</span> <span class="n">obj_name</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">other_objects</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">obj_name</span> <span class="o">==</span> <span class="s2">&quot;airskin_ball&quot;</span><span class="p">:</span>
+                        <span class="k">break</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">airskin_ball_id</span> <span class="o">=</span> <span class="n">obj_id</span>
+            <span class="c1"># find pad id</span>
+            <span class="k">for</span> <span class="n">link</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">links</span><span class="p">:</span>
+                <span class="k">if</span> <span class="s2">&quot;airskin&quot;</span> <span class="ow">in</span> <span class="n">link</span><span class="o">.</span><span class="n">name</span> <span class="ow">and</span> <span class="s2">&quot;__&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">link</span><span class="o">.</span><span class="n">name</span> <span class="ow">and</span> <span class="nb">int</span><span class="p">(</span><span class="n">link</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">==</span> <span class="n">request</span><span class="o">.</span><span class="n">pad_id</span><span class="p">:</span>
+                    <span class="c1">#if self.airskin_pad_id is not None and self.airskin_pad_id != link.robot_link_id:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">airskin_ball_pos</span> <span class="o">=</span> <span class="kc">None</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">airskin_pad_id</span> <span class="o">=</span> <span class="n">link</span><span class="o">.</span><span class="n">robot_link_id</span>
+                    <span class="k">break</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">follow_pad</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">follow</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">increase_effort</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">increase_effort</span>
+        <span class="k">return</span> <span class="n">activateAirskinResponse</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BulletROS.activate_airskin"><a class="viewcode-back" href="../source/bullet_ros/main.html#main.BulletROS.activate_airskin">[docs]</a>    <span class="k">def</span> <span class="nf">activate_airskin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function to activate the airskin based on variables that had been set through service</span>
+
+<span class="sd">        :return:</span>
+<span class="sd">        :rtype:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># if current activation</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pad_to_activate</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="c1"># deaction of the activation</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">pad_to_activate</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pad_to_activate</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">airskin_pad_id</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">airskin_effort</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">airskin_effort_init</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">airskin_ball_pos</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">increase_effort</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="c1"># This is just to put the ball out of view of the user</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">resetBasePositionAndOrientation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">airskin_ball_id</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="c1"># Compute new ball position</span>
+        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">follow_pad</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">airskin_ball_pos</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span>
+                <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">increase_effort</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">airskin_effort</span> <span class="o">&lt;</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">airskin_effort_init</span><span class="o">+</span><span class="mf">0.25</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">airskin_effort</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">)):</span>
+
+            <span class="n">linkState</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">getLinkState</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">robot</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">airskin_pad_id</span><span class="p">,</span> <span class="n">computeLinkVelocity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">computeForwardKinematics</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">pos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">linkState</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">linkInfo</span><span class="p">[</span><span class="s2">&quot;WORLDPOS&quot;</span><span class="p">]])</span>
+            <span class="n">ori</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">linkState</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">linkInfo</span><span class="p">[</span><span class="s2">&quot;WORLDORI&quot;</span><span class="p">]])</span>
+            <span class="n">R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+            <span class="n">R</span><span class="p">[:</span><span class="mi">3</span><span class="p">,</span> <span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">getMatrixFromQuaternion</span><span class="p">(</span><span class="n">ori</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+            <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">(([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="mi">1</span><span class="p">)))[:</span><span class="mi">3</span><span class="p">]</span>  <span class="c1"># go against normal of the given link</span>
+            <span class="n">u</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+            <span class="n">u</span> <span class="o">*=</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">airskin_effort</span><span class="p">)</span><span class="o">*</span><span class="mf">0.03</span>
+            <span class="n">pos</span> <span class="o">+=</span> <span class="n">u</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">airskin_ball_pos</span> <span class="o">=</span> <span class="n">pos</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">increase_effort</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">airskin_effort</span> <span class="o">+=</span> <span class="mf">0.02</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">airskin_effort</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">airskin_effort</span><span class="p">])</span>
+        <span class="c1"># Set the ball position (either new or use old one)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">resetBasePositionAndOrientation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">airskin_ball_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">airskin_ball_pos</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="BulletROS.read"><a class="viewcode-back" href="../source/bullet_ros/main.html#main.BulletROS.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function to read the message from the RobotHW interface and send it to the bullet</span>
+
+<span class="sd">        :param msg: msg with velocity and joint angles</span>
+<span class="sd">        :type msg: bullet_ros.msg.ros_to_bullet</span>
+<span class="sd">        :return:</span>
+<span class="sd">        :rtype:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span> <span class="o">=</span> <span class="n">msg</span>
+
+        <span class="c1"># Check which controller is running and based on that select how to move the robot (velocity or position)</span>
+        <span class="n">controller_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller_srv</span><span class="o">.</span><span class="n">call</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">controller_info</span><span class="o">.</span><span class="n">controller</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;joint_group_vel_controller&quot;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;running&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">move_type</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">last_pos_cmd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">cmd</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">move_type</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">move_type</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_pos_cmd</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">last_pos_cmd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">cmd</span><span class="p">):</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">move_type</span> <span class="o">=</span> <span class="mi">1</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">last_pos_cmd</span> <span class="o">=</span> <span class="kc">None</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">move_type</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">move_type</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="k">break</span>
+
+        <span class="c1"># Main loop - &gt; call bullet movement function, update simulation, read new state, activate airskin and send all</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">move</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">update_simulation</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">read_state</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_finger_joint</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">activate_airskin</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">skin</span><span class="o">.</span><span class="n">use</span> <span class="ow">and</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_time</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_skin_time</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">skin</span><span class="o">.</span><span class="n">period</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">send_skin</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">last_skin_time</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_time</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">publish_other_objects</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BulletROS.publish_other_objects"><a class="viewcode-back" href="../source/bullet_ros/main.html#main.BulletROS.publish_other_objects">[docs]</a>    <span class="k">def</span> <span class="nf">publish_other_objects</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function to publish other than robot objects to RVIZ</span>
+
+<span class="sd">        :return:</span>
+<span class="sd">        :rtype:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">marker_id</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">obj_id</span><span class="p">,</span> <span class="n">obj_name</span><span class="p">,</span> <span class="n">is_fixed</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">mesh</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">other_objects</span><span class="p">:</span>
+            <span class="n">pos</span><span class="p">,</span> <span class="n">ori</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">getBasePositionAndOrientation</span><span class="p">(</span><span class="n">obj_id</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">marker_array</span><span class="o">.</span><span class="n">markers</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">other_objects</span><span class="p">):</span>
+                <span class="n">marker</span> <span class="o">=</span> <span class="n">Marker</span><span class="p">()</span>
+                <span class="n">marker</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">marker_id</span>
+                <span class="n">marker_id</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">marker</span><span class="o">.</span><span class="n">ns</span> <span class="o">=</span> <span class="s1">&#39;mesh_marker&#39;</span>
+                <span class="n">marker</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">frame_id</span> <span class="o">=</span> <span class="s2">&quot;base_link&quot;</span>
+                <span class="n">marker</span><span class="o">.</span><span class="n">action</span> <span class="o">=</span> <span class="n">marker</span><span class="o">.</span><span class="n">ADD</span>
+                <span class="n">marker</span><span class="o">.</span><span class="n">scale</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="n">marker</span><span class="o">.</span><span class="n">scale</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="n">marker</span><span class="o">.</span><span class="n">scale</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="n">marker</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">a</span> <span class="o">=</span> <span class="mf">1.0</span>
+                <span class="n">marker</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">r</span> <span class="o">=</span> <span class="n">color</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">marker</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">g</span> <span class="o">=</span> <span class="n">color</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">marker</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="n">color</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+                <span class="n">marker</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">marker</span><span class="o">.</span><span class="n">MESH_RESOURCE</span>
+                <span class="n">marker</span><span class="o">.</span><span class="n">mesh_resource</span> <span class="o">=</span> <span class="s2">&quot;package://bullet_ros/../other_meshes/&quot;</span> <span class="o">+</span> <span class="n">mesh</span>
+                <span class="n">marker</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="o">*</span><span class="n">pos</span><span class="p">)</span>
+                <span class="n">marker</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span> <span class="o">=</span> <span class="n">Quaternion</span><span class="p">(</span><span class="o">*</span><span class="n">ori</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">marker_array</span><span class="o">.</span><span class="n">markers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">marker</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">marker_array</span><span class="o">.</span><span class="n">markers</span><span class="p">[</span><span class="n">marker_id</span><span class="p">]</span><span class="o">.</span><span class="n">action</span> <span class="o">=</span> <span class="n">Marker</span><span class="o">.</span><span class="n">MODIFY</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">marker_array</span><span class="o">.</span><span class="n">markers</span><span class="p">[</span><span class="n">marker_id</span><span class="p">]</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="o">*</span><span class="n">pos</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">marker_array</span><span class="o">.</span><span class="n">markers</span><span class="p">[</span><span class="n">marker_id</span><span class="p">]</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span> <span class="o">=</span> <span class="n">Quaternion</span><span class="p">(</span><span class="o">*</span><span class="n">ori</span><span class="p">)</span>
+                <span class="n">marker_id</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">marker_pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">marker_array</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BulletROS.send_skin"><a class="viewcode-back" href="../source/bullet_ros/main.html#main.BulletROS.send_skin">[docs]</a>    <span class="k">def</span> <span class="nf">send_skin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function to send current airskin values to /airskin_status topic</span>
+
+<span class="sd">        :return:</span>
+<span class="sd">        :rtype:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">noise</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">pad</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">11</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">airskin_msg</span><span class="o">.</span><span class="n">pressures</span><span class="p">[</span><span class="n">pad</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">activated_skin</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">sorted_skin_links</span><span class="p">[</span><span class="n">pad</span><span class="p">]]</span> <span class="o">+</span> <span class="n">noise</span><span class="p">[</span><span class="n">pad</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">skin_pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">airskin_msg</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BulletROS.read_state"><a class="viewcode-back" href="../source/bullet_ros/main.html#main.BulletROS.read_state">[docs]</a>    <span class="k">def</span> <span class="nf">read_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read current robot state to be sent back to RobotGH interface</span>
+
+<span class="sd">        :return:</span>
+<span class="sd">        :rtype:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">getJointStates</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">robot</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">joint_ids</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">j_state</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="o">.</span><span class="n">positions</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">j_state</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="o">.</span><span class="n">velocities</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">j_state</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="o">.</span><span class="n">efforts</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">j_state</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="BulletROS.send_finger_joint"><a class="viewcode-back" href="../source/bullet_ros/main.html#main.BulletROS.send_finger_joint">[docs]</a>    <span class="k">def</span> <span class="nf">send_finger_joint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get state of finger joint and publish it</span>
+
+<span class="sd">        :return:</span>
+<span class="sd">        :rtype:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">getJointState</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">robot</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">gripper</span><span class="o">.</span><span class="n">finger_joint_id</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">finger_js</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">stamp</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">finger_js</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="p">[</span><span class="n">state</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">finger_js</span><span class="o">.</span><span class="n">velocity</span> <span class="o">=</span> <span class="p">[</span><span class="n">state</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">finger_js</span><span class="o">.</span><span class="n">effort</span> <span class="o">=</span> <span class="p">[</span><span class="n">state</span><span class="p">[</span><span class="mi">3</span><span class="p">]]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">js_pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">finger_js</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BulletROS.move"><a class="viewcode-back" href="../source/bullet_ros/main.html#main.BulletROS.move">[docs]</a>    <span class="k">def</span> <span class="nf">move</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Based on move_type (velocity or position) move the robot in the given pose or fix it in place</span>
+
+<span class="sd">        :return:</span>
+<span class="sd">        :rtype:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">move_type</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># Position = just send directly</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">move_position</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">joint_names</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">cmd</span><span class="p">,</span> <span class="n">wait</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">move_type</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="c1"># if all velocity command are not 0 send them to the robot</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">vel_cmd</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">vel_cmd</span><span class="p">))):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">fixed_states</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">move_velocity</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">joint_names</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">vel_cmd</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span> <span class="c1"># all velocities 0</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fixed_states</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># we do not know where to keep the robot</span>
+                    <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">getJointStates</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">robot</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">joint_ids</span><span class="p">)</span>
+                    <span class="n">pos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">joint_ids</span><span class="p">))</span>
+                    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">j_state</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+                        <span class="n">pos</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">j_state</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">fixed_states</span> <span class="o">=</span> <span class="n">pos</span>
+                <span class="c1"># Keep the robot on place</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">move_position</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">joint_names</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fixed_states</span><span class="p">,</span> <span class="n">wait</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BulletROS.grip"><a class="viewcode-back" href="../source/bullet_ros/main.html#main.BulletROS.grip">[docs]</a>    <span class="k">def</span> <span class="nf">grip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Grip request callback</span>
+
+<span class="sd">        :param request: request to close/open the gripper</span>
+<span class="sd">        :type request: bullet_ros/srv/gripRequest</span>
+<span class="sd">        :return:</span>
+<span class="sd">        :rtype:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">request</span><span class="o">.</span><span class="n">width</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">MAX_WIDTH</span><span class="p">):</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span><span class="s2">&quot;Width must be between 0-150&quot;</span><span class="p">)</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">gripResponse</span><span class="p">()</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">success</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">return</span> <span class="n">out</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;</span> <span class="n">request</span><span class="o">.</span><span class="n">force</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">MAX_FORCE</span><span class="p">):</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span><span class="s2">&quot;Force must be between 0-120&quot;</span><span class="p">)</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">gripResponse</span><span class="p">()</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">success</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">return</span> <span class="n">out</span>
+
+        <span class="n">vel_min</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">vel_max</span> <span class="o">=</span> <span class="mi">2</span>
+
+        <span class="c1"># Calculate the velocity based on the force</span>
+        <span class="n">velocity</span> <span class="o">=</span> <span class="p">((</span><span class="n">request</span><span class="o">.</span><span class="n">force</span> <span class="o">-</span> <span class="mi">0</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">120</span> <span class="o">-</span> <span class="mi">0</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="n">vel_max</span> <span class="o">-</span> <span class="n">vel_min</span><span class="p">)</span> <span class="o">+</span> <span class="n">vel_min</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">gripper</span><span class="o">.</span><span class="n">set_gripper_pose</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="n">velocity</span><span class="o">=</span><span class="n">velocity</span><span class="p">,</span> <span class="n">wait</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>  <span class="c1"># This needs to be fixed</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">gripper</span><span class="o">.</span><span class="n">max_force</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">force</span>
+
+        <span class="c1"># wait until the gripper is closed</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="n">rospy</span><span class="o">.</span><span class="n">is_shutdown</span><span class="p">():</span>
+            <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">getJointState</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">robot</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">gripper</span><span class="o">.</span><span class="n">finger_joint_id</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">info</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">jointStates</span><span class="p">[</span><span class="s2">&quot;POSITION&quot;</span><span class="p">]]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">gripper</span><span class="o">.</span><span class="n">joint_ref</span><span class="o">.</span><span class="n">set_point</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">joint_tolerance</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">stop_robot</span><span class="p">([</span><span class="s2">&quot;finger_joint&quot;</span><span class="p">])</span>
+                <span class="k">break</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.05</span><span class="p">)</span>
+
+        <span class="n">out</span> <span class="o">=</span> <span class="n">gripResponse</span><span class="p">()</span>
+        <span class="n">out</span><span class="o">.</span><span class="n">success</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="n">out</span></div></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">BulletROS</span><span class="p">()</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">spin</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Lukas Rustler.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
