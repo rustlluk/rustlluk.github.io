@@ -1,0 +1,7 @@
+joints\_example module
+======================
+
+.. automodule:: joints_example
+   :members:
+   :undoc-members:
+   :show-inheritance:

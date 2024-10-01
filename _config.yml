@@ -308,3 +308,6 @@ collections:
   pyur:
     output: true
     permalink: /:collection/:path/
+  pykuka:
+    output: true
+    permalink: /:collection/:path/

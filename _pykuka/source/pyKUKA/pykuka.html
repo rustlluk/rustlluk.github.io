@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pykuka module &mdash; KUKA simulator 0.9.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=1bc1ca25"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="utils module" href="utils.html" />
+    <link rel="prev" title="pyKUKA" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            KUKA simulator
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">KUKA IIWA 7 R800 python simulator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html#id1">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html#id8">Docker how-to</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../modules.html#pykuka">pyKUKA</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="modules.html">pyKUKA</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">pykuka module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pykuka.EndEffector"><code class="docutils literal notranslate"><span class="pre">EndEffector</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pykuka.Joint"><code class="docutils literal notranslate"><span class="pre">Joint</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pykuka.Link"><code class="docutils literal notranslate"><span class="pre">Link</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pykuka.pyKUKA"><code class="docutils literal notranslate"><span class="pre">pyKUKA</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html">utils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="visualizer.html">visualizer module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gripper.html">gripper module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html#bullet-ros">bullet_ros</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">KUKA simulator</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../modules.html">KUKA IIWA 7 R800 python simulator</a></li>
+          <li class="breadcrumb-item"><a href="index.html">&lt;no title&gt;</a></li>
+          <li class="breadcrumb-item"><a href="modules.html">pyKUKA</a></li>
+      <li class="breadcrumb-item active">pykuka module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/source/pyKUKA/pykuka.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-pykuka">
+<span id="pykuka-module"></span><h1>pykuka module<a class="headerlink" href="#module-pykuka" title="Permalink to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="pykuka.EndEffector">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pykuka.</span></span><span class="sig-name descname"><span class="pre">EndEffector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pykuka.html#EndEffector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pykuka.EndEffector" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Help function for end-effector encapsulation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – name of the end-effector</p></li>
+<li><p><strong>client</strong> (<em>pointer to pyCub instance</em>) – parent client</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pykuka.EndEffector.get_position">
+<span class="sig-name descname"><span class="pre">get_position</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pykuka.html#EndEffector.get_position"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pykuka.EndEffector.get_position" title="Permalink to this definition"></a></dt>
+<dd><p>Function to get current position of the end-effector</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pykuka.Joint">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pykuka.</span></span><span class="sig-name descname"><span class="pre">Joint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">robot_joint_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">joints_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lower_limit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upper_limit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_force</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_velocity</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pykuka.html#Joint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pykuka.Joint" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Help class to encapsulate joint information</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – name of the joint</p></li>
+<li><p><strong>robot_joint_id</strong> (<em>int</em>) – id of the joint in pybullet</p></li>
+<li><p><strong>joints_id</strong> (<em>int</em>) – id of the joint in pycub.joints</p></li>
+<li><p><strong>lower_limit</strong> (<em>float</em>) – lower limit of the joint</p></li>
+<li><p><strong>upper_limit</strong> (<em>float</em>) – upper limit of the joint</p></li>
+<li><p><strong>max_force</strong> (<em>float</em>) – max force of the joint</p></li>
+<li><p><strong>max_velocity</strong> (<em>float</em>) – max velocity of the joint</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pykuka.Link">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pykuka.</span></span><span class="sig-name descname"><span class="pre">Link</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">robot_link_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">urdf_link</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pykuka.html#Link"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pykuka.Link" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Help function to encapsulate link information</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – name of the link</p></li>
+<li><p><strong>robot_link_id</strong> (<em>int</em>) – id of the link in pybullet</p></li>
+<li><p><strong>urdf_link</strong> (<em>int</em>) – id of the link in pycub.urdfs[“robot”].links</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pykuka.pyKUKA">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pykuka.</span></span><span class="sig-name descname"><span class="pre">pyKUKA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'default.yaml'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pykuka.html#pyKUKA"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pykuka.pyKUKA" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BulletClient</span></code></p>
+<p>Client class which inherits from BulletClient and contains the whole simulation functionality</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config</strong> (<em>str</em><em>, </em><em>optional</em><em>, </em><em>default=&quot;default.yaml&quot;</em>) – path to the config file</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pykuka.pyKUKA.compute_skin">
+<span class="sig-name descname"><span class="pre">compute_skin</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pykuka.html#pyKUKA.compute_skin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pykuka.pyKUKA.compute_skin" title="Permalink to this definition"></a></dt>
+<dd><p>Function to compute the skin activations</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pykuka.pyKUKA.contactPoints">
+<span class="sig-name descname"><span class="pre">contactPoints</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'DISTANCE':</span> <span class="pre">8,</span> <span class="pre">'FLAG':</span> <span class="pre">0,</span> <span class="pre">'FORCE':</span> <span class="pre">9,</span> <span class="pre">'FRICTION1':</span> <span class="pre">10,</span> <span class="pre">'FRICTION2':</span> <span class="pre">12,</span> <span class="pre">'FRICTIONDIR1':</span> <span class="pre">11,</span> <span class="pre">'FRICTIONDIR2':</span> <span class="pre">13,</span> <span class="pre">'IDA':</span> <span class="pre">1,</span> <span class="pre">'IDB':</span> <span class="pre">2,</span> <span class="pre">'INDEXA':</span> <span class="pre">3,</span> <span class="pre">'INDEXB':</span> <span class="pre">4,</span> <span class="pre">'NORMAL':</span> <span class="pre">7,</span> <span class="pre">'POSITIONA':</span> <span class="pre">5,</span> <span class="pre">'POSITIONB':</span> <span class="pre">6}</span></em><a class="headerlink" href="#pykuka.pyKUKA.contactPoints" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pykuka.pyKUKA.create_urdf">
+<span class="sig-name descname"><span class="pre">create_urdf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixed</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">suffix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pykuka.html#pyKUKA.create_urdf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pykuka.pyKUKA.create_urdf" title="Permalink to this definition"></a></dt>
+<dd><p>Creates a URDF for the given .obj file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>object_path</strong> (<em>str</em>) – path to the .obj</p></li>
+<li><p><strong>fixed</strong> (<em>bool</em>) – whether the object is fixed in space</p></li>
+<li><p><strong>color</strong> (<em>list</em><em> of </em><em>3 floats</em>) – color of the object</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pykuka.pyKUKA.dynamicsInfo">
+<span class="sig-name descname"><span class="pre">dynamicsInfo</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'BODYTYPE':</span> <span class="pre">10,</span> <span class="pre">'DAMPING':</span> <span class="pre">8,</span> <span class="pre">'FRICTION':</span> <span class="pre">1,</span> <span class="pre">'INERTIAOR':</span> <span class="pre">4,</span> <span class="pre">'INERTIAPOS':</span> <span class="pre">3,</span> <span class="pre">'INTERTIADIAGONAL':</span> <span class="pre">2,</span> <span class="pre">'MARGIN':</span> <span class="pre">11,</span> <span class="pre">'MASS':</span> <span class="pre">0,</span> <span class="pre">'RESTITUTION':</span> <span class="pre">5,</span> <span class="pre">'ROLLINGFRICTION':</span> <span class="pre">6,</span> <span class="pre">'SPINNINGFRICTION':</span> <span class="pre">7,</span> <span class="pre">'STIFFNESS':</span> <span class="pre">9}</span></em><a class="headerlink" href="#pykuka.pyKUKA.dynamicsInfo" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pykuka.pyKUKA.find_joint_id">
+<span class="sig-name descname"><span class="pre">find_joint_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">joint_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pykuka.html#pyKUKA.find_joint_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pykuka.pyKUKA.find_joint_id" title="Permalink to this definition"></a></dt>
+<dd><p>Help function to get indexes from joint name of joint index in self.joints list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>joint_name</strong> (<em>str</em><em> or </em><em>int</em>) – name or index of the link</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>joint id in pybullet and pycub space</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int, int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pykuka.pyKUKA.find_link_id">
+<span class="sig-name descname"><span class="pre">find_link_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mesh_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">robot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">urdf_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'robot'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pykuka.html#pyKUKA.find_link_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pykuka.pyKUKA.find_link_id" title="Permalink to this definition"></a></dt>
+<dd><p>Help function to find link id from mesh name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mesh_name</strong> (<em>str</em>) – name of the mesh (only basename with extension)</p></li>
+<li><p><strong>robot</strong> (<em>int</em><em>, </em><em>optional</em><em>, </em><em>default=None</em>) – robot pybullet id</p></li>
+<li><p><strong>urdf_name</strong> (<em>str</em><em>, </em><em>optional</em><em>, </em><em>default=&quot;robot&quot;</em>) – name of the object in pycub.urdfs</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>id of the link in pybullet space</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pykuka.pyKUKA.get_joint_state">
+<span class="sig-name descname"><span class="pre">get_joint_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">joints</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pykuka.html#pyKUKA.get_joint_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pykuka.pyKUKA.get_joint_state" title="Permalink to this definition"></a></dt>
+<dd><p>Get the state of the specified joints</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>joints</strong> (<em>int</em><em> or </em><em>list</em><em>, </em><em>optional</em><em>, </em><em>default=None</em>) – joint or list of joints to get the state of</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of states of the joints</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pykuka.pyKUKA.get_link_id">
+<span class="sig-name descname"><span class="pre">get_link_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">link_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pykuka.html#pyKUKA.get_link_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pykuka.pyKUKA.get_link_id" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pykuka.pyKUKA.init_robot">
+<span class="sig-name descname"><span class="pre">init_robot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pykuka.html#pyKUKA.init_robot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pykuka.pyKUKA.init_robot" title="Permalink to this definition"></a></dt>
+<dd><p>Load the robot URDF and get its joints’ information</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>robot and its joints</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int or list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pykuka.pyKUKA.is_alive">
+<span class="sig-name descname"><span class="pre">is_alive</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pykuka.html#pyKUKA.is_alive"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pykuka.pyKUKA.is_alive" title="Permalink to this definition"></a></dt>
+<dd><p>Checks whether the engine is still running</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True when running</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pykuka.pyKUKA.jointInfo">
+<span class="sig-name descname"><span class="pre">jointInfo</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'AXIS':</span> <span class="pre">13,</span> <span class="pre">'DAMPING':</span> <span class="pre">6,</span> <span class="pre">'FLAGS':</span> <span class="pre">5,</span> <span class="pre">'FRICTION':</span> <span class="pre">7,</span> <span class="pre">'INDEX':</span> <span class="pre">0,</span> <span class="pre">'LINKNAME':</span> <span class="pre">12,</span> <span class="pre">'LOWERLIMIT':</span> <span class="pre">8,</span> <span class="pre">'MAXFORCE':</span> <span class="pre">10,</span> <span class="pre">'MAXVELOCITY':</span> <span class="pre">11,</span> <span class="pre">'NAME':</span> <span class="pre">1,</span> <span class="pre">'PARENTINDEX':</span> <span class="pre">16,</span> <span class="pre">'PARENTORN':</span> <span class="pre">15,</span> <span class="pre">'PARENTPOS':</span> <span class="pre">14,</span> <span class="pre">'QINDEX':</span> <span class="pre">3,</span> <span class="pre">'TYPE':</span> <span class="pre">2,</span> <span class="pre">'UINDEX':</span> <span class="pre">4,</span> <span class="pre">'UPPERLIMIT':</span> <span class="pre">9}</span></em><a class="headerlink" href="#pykuka.pyKUKA.jointInfo" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pykuka.pyKUKA.jointStates">
+<span class="sig-name descname"><span class="pre">jointStates</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'FORCES':</span> <span class="pre">2,</span> <span class="pre">'POSITION':</span> <span class="pre">0,</span> <span class="pre">'TORQUE':</span> <span class="pre">3,</span> <span class="pre">'VELOCITY':</span> <span class="pre">1}</span></em><a class="headerlink" href="#pykuka.pyKUKA.jointStates" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pykuka.pyKUKA.kill_open3d">
+<span class="sig-name descname"><span class="pre">kill_open3d</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pykuka.html#pyKUKA.kill_open3d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pykuka.pyKUKA.kill_open3d" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pykuka.pyKUKA.linkInfo">
+<span class="sig-name descname"><span class="pre">linkInfo</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'ANGVEL':</span> <span class="pre">7,</span> <span class="pre">'INERTIAORI':</span> <span class="pre">3,</span> <span class="pre">'INERTIAPOS':</span> <span class="pre">2,</span> <span class="pre">'LINVEL':</span> <span class="pre">6,</span> <span class="pre">'URDFORI':</span> <span class="pre">5,</span> <span class="pre">'URDFPOS':</span> <span class="pre">4,</span> <span class="pre">'WORLDORI':</span> <span class="pre">1,</span> <span class="pre">'WORLDPOS':</span> <span class="pre">0}</span></em><a class="headerlink" href="#pykuka.pyKUKA.linkInfo" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pykuka.pyKUKA.motion_done">
+<span class="sig-name descname"><span class="pre">motion_done</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">joints</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_collision</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pykuka.html#pyKUKA.motion_done"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pykuka.pyKUKA.motion_done" title="Permalink to this definition"></a></dt>
+<dd><p>Checks whether the motion is done.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>joints</strong> (<em>int</em><em> or </em><em>list</em><em>, </em><em>optional</em><em>, </em><em>default=None</em>) – joint or list of joints to get the state of</p></li>
+<li><p><strong>check_collision</strong> (<em>bool</em><em>, </em><em>optional</em><em>, </em><em>default=True</em>) – whether to check for collision during motion</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True when motion is done, false otherwise</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pykuka.pyKUKA.move_cartesian">
+<span class="sig-name descname"><span class="pre">move_cartesian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pose</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">velocity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_collision</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pykuka.html#pyKUKA.move_cartesian"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pykuka.pyKUKA.move_cartesian" title="Permalink to this definition"></a></dt>
+<dd><p>Move the robot in cartesian space by computing inverse kinematics and running position control</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pose</strong> (<a class="reference internal" href="utils.html#utils.Pose" title="utils.Pose"><em>utils.Pose</em></a>) – desired pose of the end effector</p></li>
+<li><p><strong>wait</strong> (<em>bool</em><em>, </em><em>optional</em><em>, </em><em>default=True</em>) – whether to wait for movement completion</p></li>
+<li><p><strong>velocity</strong> (<em>float</em><em>, </em><em>optional</em><em>, </em><em>default=1</em>) – joint velocity to move with</p></li>
+<li><p><strong>check_collision</strong> (<em>bool</em><em>, </em><em>optional</em><em>, </em><em>default=True</em>) – whether to check for collisions during motion</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pykuka.pyKUKA.move_position">
+<span class="sig-name descname"><span class="pre">move_position</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">joints</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">positions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">velocity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">set_col_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_collision</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pykuka.html#pyKUKA.move_position"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pykuka.pyKUKA.move_position" title="Permalink to this definition"></a></dt>
+<dd><p>Move the specified joints to the given positions</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>joints</strong> (<em>int</em><em>, </em><em>list</em><em>, </em><em>str</em>) – joint or list of joints to move</p></li>
+<li><p><strong>positions</strong> (<em>float</em><em> or </em><em>list</em>) – position or list of positions to move the joints to</p></li>
+<li><p><strong>wait</strong> (<em>bool</em><em>, </em><em>optional</em><em>, </em><em>default=True</em>) – whether to wait until the motion is done</p></li>
+<li><p><strong>velocity</strong> (<em>float</em><em>, </em><em>optional</em><em>, </em><em>default=1</em>) – velocity to move the joints with</p></li>
+<li><p><strong>set_col_state</strong> (<em>bool</em><em>, </em><em>optional</em><em>, </em><em>default=True</em>) – whether to reset collision state</p></li>
+<li><p><strong>check_collision</strong> (<em>bool</em><em>, </em><em>optional</em><em>, </em><em>default=True</em>) – whether to check for collision during motion</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pykuka.pyKUKA.move_velocity">
+<span class="sig-name descname"><span class="pre">move_velocity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">joints</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">velocities</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pykuka.html#pyKUKA.move_velocity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pykuka.pyKUKA.move_velocity" title="Permalink to this definition"></a></dt>
+<dd><p>Move the specified joints with the specified velocity</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>joints</strong> (<em>int</em><em> or </em><em>list</em>) – joint or list of joints to move</p></li>
+<li><p><strong>velocities</strong> (<em>float</em><em> or </em><em>list</em>) – velocity or list of velocities to move the joints to</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pykuka.pyKUKA.prepare_log">
+<span class="sig-name descname"><span class="pre">prepare_log</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pykuka.html#pyKUKA.prepare_log"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pykuka.pyKUKA.prepare_log" title="Permalink to this definition"></a></dt>
+<dd><p>Prepares the log string</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>log string</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pykuka.pyKUKA.print_collision_info">
+<span class="sig-name descname"><span class="pre">print_collision_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pykuka.html#pyKUKA.print_collision_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pykuka.pyKUKA.print_collision_info" title="Permalink to this definition"></a></dt>
+<dd><p>Help function to print collision info</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>c</strong> (<em>list</em><em>, </em><em>optional</em><em>, </em><em>default=None</em>) – one collision</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pykuka.pyKUKA.run_vhacd">
+<span class="sig-name descname"><span class="pre">run_vhacd</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pykuka.html#pyKUKA.run_vhacd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pykuka.pyKUKA.run_vhacd" title="Permalink to this definition"></a></dt>
+<dd><p>Function to run VHACD on all objects in loaded URDFs, and to create new URDFs with changed collision meshes</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pykuka.pyKUKA.stop_robot">
+<span class="sig-name descname"><span class="pre">stop_robot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">joints</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pykuka.html#pyKUKA.stop_robot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pykuka.pyKUKA.stop_robot" title="Permalink to this definition"></a></dt>
+<dd><p>Stops the robot</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pykuka.pyKUKA.toggle_gravity">
+<span class="sig-name descname"><span class="pre">toggle_gravity</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pykuka.html#pyKUKA.toggle_gravity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pykuka.pyKUKA.toggle_gravity" title="Permalink to this definition"></a></dt>
+<dd><p>Toggles the gravity</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pykuka.pyKUKA.update_simulation">
+<span class="sig-name descname"><span class="pre">update_simulation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sleep_duration</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pykuka.html#pyKUKA.update_simulation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pykuka.pyKUKA.update_simulation" title="Permalink to this definition"></a></dt>
+<dd><p>Updates the simulation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>sleep_duration</strong> (<em>float</em><em>, </em><em>optional</em><em>, </em><em>default=0.01</em>) – duration to sleep before the next simulation step</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pykuka.pyKUKA.visualShapeData">
+<span class="sig-name descname"><span class="pre">visualShapeData</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'COLOR':</span> <span class="pre">7,</span> <span class="pre">'DIMS':</span> <span class="pre">3,</span> <span class="pre">'FILE':</span> <span class="pre">4,</span> <span class="pre">'GEOMTYPE':</span> <span class="pre">2,</span> <span class="pre">'ID':</span> <span class="pre">0,</span> <span class="pre">'LINK':</span> <span class="pre">1,</span> <span class="pre">'ORI':</span> <span class="pre">6,</span> <span class="pre">'POS':</span> <span class="pre">5,</span> <span class="pre">'TEXTURE':</span> <span class="pre">8}</span></em><a class="headerlink" href="#pykuka.pyKUKA.visualShapeData" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pykuka.pyKUKA.wait_motion_done">
+<span class="sig-name descname"><span class="pre">wait_motion_done</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sleep_duration</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_collision</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pykuka.html#pyKUKA.wait_motion_done"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pykuka.pyKUKA.wait_motion_done" title="Permalink to this definition"></a></dt>
+<dd><p>Help function to wait for motion to be done. Can sleep for a specific duration</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sleep_duration</strong> (<em>float</em><em>, </em><em>optional</em><em>, </em><em>default=0.01</em>) – how long to sleep before running simulation step</p></li>
+<li><p><strong>check_collision</strong> (<em>bool</em><em>, </em><em>optional</em><em>, </em><em>default=True</em>) – whether to check for collisions during motion</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules.html" class="btn btn-neutral float-left" title="pyKUKA" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="utils.html" class="btn btn-neutral float-right" title="utils module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Lukas Rustler.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

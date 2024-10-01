@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>gripper &mdash; KUKA simulator 0.9.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=1bc1ca25"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            KUKA simulator
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">KUKA IIWA 7 R800 python simulator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html#id1">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html#id8">Docker how-to</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html#pykuka">pyKUKA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html#bullet-ros">bullet_ros</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">KUKA simulator</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">gripper</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for gripper</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+
+<div class="viewcode-block" id="RG6"><a class="viewcode-back" href="../source/pyKUKA/gripper.html#gripper.RG6">[docs]</a><span class="k">class</span> <span class="nc">RG6</span><span class="p">:</span>
+    <span class="n">JOINTS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;left_inner_knuckle_joint&quot;</span><span class="p">,</span> <span class="s2">&quot;left_inner_finger_joint&quot;</span><span class="p">,</span> <span class="s2">&quot;right_outer_knuckle_joint&quot;</span><span class="p">,</span>
+              <span class="s2">&quot;right_inner_knuckle_joint&quot;</span><span class="p">,</span> <span class="s2">&quot;right_inner_finger_joint&quot;</span><span class="p">]</span>
+    <span class="n">SIGNS</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Class for the RG6</span>
+
+<span class="sd">        :param client: instance of Client, holding info about the scene</span>
+<span class="sd">        :type client: Client</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="o">=</span> <span class="n">client</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">robot</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">constraints</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">finger_joint_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">finger_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prepare_gripper</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;gripper&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">finger_links_ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">_</span><span class="o">.</span><span class="n">robot_link_id</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">links</span> <span class="k">if</span> <span class="s2">&quot;finger&quot;</span> <span class="ow">in</span> <span class="n">_</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_force</span> <span class="o">=</span> <span class="mi">120</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">joint_ref</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">joints</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">find_joint_id</span><span class="p">(</span><span class="s2">&quot;finger_joint&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]]</span>
+
+<div class="viewcode-block" id="RG6.prepare_gripper"><a class="viewcode-back" href="../source/pyKUKA/gripper.html#gripper.RG6.prepare_gripper">[docs]</a>    <span class="k">def</span> <span class="nf">prepare_gripper</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets constraints for joints to works as mimic joint in URDF</span>
+
+<span class="sd">        :return:</span>
+<span class="sd">        :rtype:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># find ids of the 6 articulated joints</span>
+        <span class="n">joints_ids</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">finger_joint_id</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">getNumJoints</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)):</span>
+            <span class="n">j_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">getJointInfo</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">idx</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;UTF-8&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s2">&quot;finger_joint&quot;</span> <span class="o">==</span> <span class="n">j_name</span><span class="p">:</span>
+                <span class="n">finger_joint_id</span> <span class="o">=</span> <span class="n">idx</span>
+            <span class="k">if</span> <span class="n">j_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">JOINTS</span><span class="p">:</span>
+                <span class="n">joints_ids</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">j_name</span><span class="p">,</span> <span class="n">idx</span><span class="p">))</span>
+
+        <span class="k">assert</span> <span class="n">finger_joint_id</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Finger joint not found in the URDF&quot;</span>
+        <span class="n">finger_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">getJointInfo</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">finger_joint_id</span><span class="p">)</span>
+
+        <span class="c1"># Set constraints -&gt; only one joint (finger_joint) is articulated in reality and 5 others should follow it</span>
+        <span class="c1"># Set a gear constraint</span>
+        <span class="n">constraints</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">joint</span> <span class="ow">in</span> <span class="n">joints_ids</span><span class="p">:</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="n">joint</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">SIGNS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">JOINTS</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">joint</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span>
+            <span class="n">constraints</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">createConstraint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">finger_joint_id</span><span class="p">,</span>
+                                                            <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span>
+                                                            <span class="n">jointType</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">JOINT_GEAR</span><span class="p">,</span>
+                                                            <span class="n">jointAxis</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                                                            <span class="n">parentFramePosition</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                                                            <span class="n">childFramePosition</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]))</span>
+
+            <span class="c1"># Some have different direction, because of axes settings etc.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">changeConstraint</span><span class="p">(</span><span class="n">constraints</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">gearRatio</span><span class="o">=-</span><span class="n">s</span><span class="p">,</span>  <span class="c1"># +1 in gear ratio means reverse direction</span>
+                                         <span class="n">maxForce</span><span class="o">=</span><span class="mi">120</span><span class="p">,</span> <span class="n">erp</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">setJointMotorControl2</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">POSITION_CONTROL</span><span class="p">,</span> <span class="n">targetVelocity</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="c1"># self.client.setJointMotorControl2(self.id, finger_joint_id, self.client.POSITION_CONTROL, targetVelocity=0, force=0)</span>
+
+        <span class="k">return</span> <span class="n">constraints</span><span class="p">,</span> <span class="n">finger_joint_id</span><span class="p">,</span> <span class="n">finger_info</span></div>
+
+<div class="viewcode-block" id="RG6.reset_constraints"><a class="viewcode-back" href="../source/pyKUKA/gripper.html#gripper.RG6.reset_constraints">[docs]</a>    <span class="k">def</span> <span class="nf">reset_constraints</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Remove all constraints</span>
+
+<span class="sd">        :return:</span>
+<span class="sd">        :rtype:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">constraints</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">removeConstraint</span><span class="p">(</span><span class="n">c</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RG6.stop"><a class="viewcode-back" href="../source/pyKUKA/gripper.html#gripper.RG6.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">getJointState</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">finger_joint_id</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">setJointMotorControl2</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">finger_joint_id</span><span class="p">,</span>
+                                          <span class="n">controlMode</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">POSITION_CONTROL</span><span class="p">,</span> <span class="n">targetPosition</span><span class="o">=</span><span class="n">position</span><span class="p">,</span>
+                                          <span class="n">force</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">finger_info</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">jointInfo</span><span class="p">[</span><span class="s2">&quot;MAXFORCE&quot;</span><span class="p">]],</span>
+                                          <span class="n">maxVelocity</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">finger_info</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">jointInfo</span><span class="p">[</span><span class="s2">&quot;MAXVELOCITY&quot;</span><span class="p">]])</span></div>
+
+<div class="viewcode-block" id="RG6.set_gripper_pose"><a class="viewcode-back" href="../source/pyKUKA/gripper.html#gripper.RG6.set_gripper_pose">[docs]</a>    <span class="k">def</span> <span class="nf">set_gripper_pose</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">velocity</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">wait</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set goal position of gripper</span>
+
+<span class="sd">        :param position: position of the gripper</span>
+<span class="sd">        :type position: float</span>
+<span class="sd">        :param wait: whether to wait for the motion to finish</span>
+<span class="sd">        :type wait: bool</span>
+<span class="sd">        :return:</span>
+<span class="sd">        :rtype:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">position</span> <span class="o">&lt;=</span> <span class="mi">150</span><span class="p">,</span> <span class="s2">&quot;Gripper width must be between 0 and 150&quot;</span>
+        <span class="n">joints_min</span> <span class="o">=</span> <span class="mf">0.6</span>
+        <span class="n">joint_max</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.6</span>
+
+        <span class="n">position</span> <span class="o">=</span> <span class="p">((</span><span class="n">position</span> <span class="o">-</span> <span class="mi">0</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">150</span> <span class="o">-</span> <span class="mi">0</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="n">joint_max</span> <span class="o">-</span> <span class="n">joints_min</span><span class="p">)</span> <span class="o">+</span> <span class="n">joints_min</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">move_position</span><span class="p">(</span><span class="s2">&quot;finger_joint&quot;</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">velocity</span><span class="o">=</span><span class="n">velocity</span><span class="p">,</span> <span class="n">wait</span><span class="o">=</span><span class="n">wait</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Lukas Rustler.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+cartesian\_example module
+=========================
+
+.. automodule:: cartesian_example
+   :members:
+   :undoc-members:
+   :show-inheritance:

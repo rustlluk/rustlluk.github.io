@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KUKA IIWA 7 R800 python simulator &mdash; KUKA simulator 0.9.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="static/jquery.js?v=5d32c60e"></script>
+        <script src="static/sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="./" id="documentation_options" src="static/documentation_options.js?v=1bc1ca25"></script>
+        <script src="static/doctools.js?v=888ff710"></script>
+        <script src="static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="&lt;no title&gt;" href="source/pyKUKA/index.html" />
+    <link rel="prev" title="Welcome to KUKA simulator documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            KUKA simulator
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">KUKA IIWA 7 R800 python simulator</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#contents">Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#id1">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#run-the-docker-again-after-installation">Run the Docker again after installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">Run</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ros-version">ROS version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#non-ros-version">Non-ROS version</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#id8">Docker how-to</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#faq">FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#docker-installation">Docker Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#parameters-for-deploy-py">Parameters for <code class="docutils literal notranslate"><span class="pre">deploy.py</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#non-docker-installation">Non-docker installation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#pykuka">pyKUKA</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="source/pyKUKA/modules.html">pyKUKA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/pyKUKA/modules.html#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#bullet-ros">bullet_ros</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="source/bullet_ros/modules.html">bullet_ros</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/bullet_ros/modules.html#examples">Examples</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">KUKA simulator</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">KUKA IIWA 7 R800 python simulator</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="sources/modules.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="kuka-iiwa-7-r800-python-simulator">
+<h1>KUKA IIWA 7 R800 python simulator<a class="headerlink" href="#kuka-iiwa-7-r800-python-simulator" title="Permalink to this heading"></a></h1>
+<p>This folder contains necessary files to run the simulation of the KUKA IIWA 7 R800 robot</p>
+<section id="contents">
+<h2>Contents<a class="headerlink" href="#contents" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="#installation">Installation</a></p></li>
+<li><p><a class="reference external" href="#code">Code</a></p></li>
+<li><p><a class="reference external" href="#run">Run</a></p></li>
+<li><p><a class="reference external" href="#docker-how-to">Docker</a></p></li>
+</ul>
+</section>
+</section>
+<section id="id1">
+<h1>Installation<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h1>
+<ul>
+<li><p>Install Docker (see <a class="reference external" href="#docker-how-to">Docker how-to</a>)</p></li>
+<li><p>clone this repository</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">SOME_PATH</span>
+<span class="n">git</span> <span class="n">clone</span> <span class="n">git</span><span class="nd">@gitlab</span><span class="o">.</span><span class="n">fel</span><span class="o">.</span><span class="n">cvut</span><span class="o">.</span><span class="n">cz</span><span class="p">:</span><span class="n">body</span><span class="o">-</span><span class="n">schema</span><span class="o">/</span><span class="n">robots</span><span class="o">/</span><span class="n">kuka</span><span class="o">.</span><span class="n">git</span> <span class="n">kuka_ws</span>
+<span class="n">cd</span> <span class="n">kuka_ws</span> <span class="o">&amp;&amp;</span> <span class="n">git</span> <span class="n">checkout</span> <span class="n">pyKUKA</span>
+</pre></div>
+</div>
+</li>
+<li><p>run the docker (see <a class="reference external" href="#docker-how-to">Docker how-to</a> for more parameters)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">SOME_PATH</span><span class="o">/</span><span class="n">kuka_ws</span><span class="o">/</span><span class="n">Docker</span>
+</pre></div>
+</div>
+<ul>
+<li><p>to build it on your computer (slower variant, can tak hours):</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">./deploy.py</span> <span class="pre">-b</span> <span class="pre">-p</span> <span class="pre">SOME_PATH/kuka_ws</span> <span class="pre">-c</span> <span class="pre">kuka_sim</span></code></p>
+</div></blockquote>
+</li>
+</ul>
+</li>
+<li><p>you should be in docker environment. Run</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">kuka_ws</span>
+<span class="n">catkin</span> <span class="n">config</span> <span class="o">--</span><span class="n">init</span> <span class="o">--</span><span class="n">extend</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">ros</span><span class="o">/</span><span class="n">noetic</span>
+<span class="n">catkin</span> <span class="n">build</span>
+<span class="n">source</span> <span class="n">devel</span><span class="o">/</span><span class="n">setup</span><span class="o">.</span><span class="n">bash</span>
+</pre></div>
+</div>
+</li>
+<li><p>the setup is now completed. <code class="docutils literal notranslate"><span class="pre">catkin</span> <span class="pre">config</span></code> may not work if you initialized
+the workspace before. Run <code class="docutils literal notranslate"><span class="pre">catkin</span> <span class="pre">clean</span> <span class="pre">--yes</span></code> and repeat from <code class="docutils literal notranslate"><span class="pre">catkin</span> <span class="pre">config</span></code></p></li>
+<li><p>To test if everything works:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">roscore</span> <span class="o">&amp;</span>
+<span class="n">rviz</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>you should see RVIZ window running. Close it and run
+<code class="docutils literal notranslate"><span class="pre">pkill</span> <span class="pre">-f</span> <span class="pre">roscore</span></code> to stop the roscore</p></li>
+</ul>
+</li>
+</ul>
+<section id="run-the-docker-again-after-installation">
+<h2>Run the Docker again after installation<a class="headerlink" href="#run-the-docker-again-after-installation" title="Permalink to this heading"></a></h2>
+<ul>
+<li><p>go to the Docker folder and run deploy command again</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">SOME_PATH</span><span class="o">/</span><span class="n">kuka_ws</span><span class="o">/</span><span class="n">Docker</span>
+<span class="o">./</span><span class="n">deploy</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">e</span> <span class="o">-</span><span class="n">c</span> <span class="n">kuka_sim</span>
+</pre></div>
+</div>
+<ul>
+<li><p>the same can be achieved with</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">start</span> <span class="pre">kuka_sim</span> <span class="pre">&amp;&amp;</span> <span class="pre">docker</span> <span class="pre">attach</span> <span class="pre">kuka_sim</span></code></p>
+</div></blockquote>
+</li>
+</ul>
+</li>
+<li><p>to open new terminal in docker</p>
+<ul>
+<li><p>use deploy.py</p>
+<p><code class="docutils literal notranslate"><span class="pre">./deploy.py</span> <span class="pre">-t</span> <span class="pre">-c</span> <span class="pre">kuka_sim</span></code></p>
+</li>
+<li><p>or</p>
+<p><code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">exec</span> <span class="pre">-it</span> <span class="pre">kuka</span> <span class="pre">/bin/bash</span></code></p>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id3">
+<h2>Code<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h2>
+<p>The documentation PDF can be found in <a class="reference external" href="documentation/kuka.pdf">kuka.pdf</a>.<span class="raw-html-m2r"><br></span>
+Online documentation is available at <a class="reference external" href="https://lukasrustler.cz/pykuka/">lukasrustler.cz/pykuka</a>.</p>
+</section>
+<section id="id4">
+<h2>Run<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>The simulator can be run in two mode:</dt><dd><ol class="arabic simple">
+<li><p>ROS version - real-time, high-level planners (MoveIt!, …)</p></li>
+<li><p>Native - much faster than real-time, only low-level control</p></li>
+</ol>
+</dd>
+</dl>
+<section id="ros-version">
+<h3>ROS version<a class="headerlink" href="#ros-version" title="Permalink to this heading"></a></h3>
+<ul>
+<li><p>install necessary things and build the workspace</p>
+<ul class="simple">
+<li><p>see <a class="reference external" href="#Installation">Installation</a></p></li>
+</ul>
+</li>
+<li><p>run the simulator</p>
+<ul>
+<li><p>in the terminal, run</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">roslaunch</span> <span class="n">bullet_ros</span> <span class="n">simulation</span><span class="o">.</span><span class="n">launch</span>
+</pre></div>
+</div>
+</li>
+<li><p>this will start the simulator and RVIZ with the robot
+#### Control the robot</p></li>
+<li><p>to test the connection etc. you can just move the robot in RVIZ and plan
+from there</p></li>
+<li><p>or, see <a class="reference external" href="src/kuka_simulator/bullet_ros/scripts/examples.py">examples.py</a></p></li>
+<li><p>it shows how to control the robot, gripper. How to play trajectories and how
+to get IK without moving</p></li>
+<li><p>the simulated robot provides <code class="docutils literal notranslate"><span class="pre">position_controllers/JointTrajectoryController</span></code> and
+<code class="docutils literal notranslate"><span class="pre">velocity_controllers/JointGroupVelocityController</span></code>, i.e., waypoint controller through moveit or direct assignment
+of joint velocities to the joints</p></li>
+<li><p>the default is <code class="docutils literal notranslate"><span class="pre">PositionJointInterface_trajectory_controller</span></code>. You need to switch with rosservice <code class="docutils literal notranslate"><span class="pre">/controller_manager/switch_controller</span></code>
+before running joint commands</p>
+<ul class="simple">
+<li><p>see <a class="reference external" href="src/kuka_simulator/bullet_ros/scripts/examples.py">examples.py</a> for an example</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="non-ros-version">
+<h3>Non-ROS version<a class="headerlink" href="#non-ros-version" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>install necessary things</p>
+<ul>
+<li><p>see <a class="reference external" href="#Installation">Installation</a></p></li>
+</ul>
+</li>
+<li><p>you can run examples from <a class="reference external" href="src/kuka_simulator/pyKUKA/examples">examples</a> folder</p>
+<ul>
+<li><p>scripts <a class="reference external" href="src/kuka_simulator/pyKUKA/examples/cartesian_example.py">cartesian_example.py</a> and
+<a class="reference external" href="src/kuka_simulator/pyKUKA/examples/joints_example.py">joints_example.py</a> show how to control the robot in
+cartesian and joint space, respectively.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="id8">
+<h1>Docker how-to<a class="headerlink" href="#id8" title="Permalink to this heading"></a></h1>
+<section id="faq">
+<h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>applications do not run on your screen</strong> (or you have some strange screen
+related errors)</p>
+<ul>
+<li><p>in another terminal run <code class="docutils literal notranslate"><span class="pre">xhost</span> <span class="pre">local:docker</span></code></p>
+<ul>
+<li><p>if it does not work, try <code class="docutils literal notranslate"><span class="pre">xhost</span> <span class="pre">+</span></code></p>
+<ul>
+<li><p>if this does not work, nothing can be done</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>you get error of not being in sudo group when running image</strong></p>
+<ul>
+<li><p>check output of <code class="docutils literal notranslate"><span class="pre">id</span> <span class="pre">-u</span></code> command. If the output is not 1000 you have to build the image
+by yourself and can not pull it</p>
+<ul>
+<li><p>this happens when your account is not the first one created on your computer</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>``sudo apt install something`` does not work</strong></p>
+<ul>
+<li><p>you need to run <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt</span> <span class="pre">update</span></code> first after you run the container for the first time</p>
+<ul>
+<li><p>apt things are removed in Dockerfile, so it does not take unnecessary space in the image</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="docker-installation">
+<h2>Docker Installation<a class="headerlink" href="#docker-installation" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p>install <a class="reference external" href="https://docs.docker.com/engine/install/ubuntu/">docker-engine</a>
+(<strong>DO NOT INSTALL DOCKER DESKTOP</strong>), do <a class="reference external" href="https://docs.docker.com/engine/install/linux-postinstall/">post-installation steps</a>
+and (optional) install <a class="reference external" href="https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html">nvidia-docker</a></p></li>
+</ul>
+</section>
+<section id="parameters-for-deploy-py">
+<h2>Parameters for <code class="docutils literal notranslate"><span class="pre">deploy.py</span></code><a class="headerlink" href="#parameters-for-deploy-py" title="Permalink to this heading"></a></h2>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">cd</span></code> to folder with Dockerfile</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">./deploy.py</span></code></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">-b</span></code> or <code class="docutils literal notranslate"><span class="pre">--build</span></code> when building</p>
+<ul>
+<li><p>default: False</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-nv</span></code> or <code class="docutils literal notranslate"><span class="pre">--nvidia</span></code> when you want to use your Nvidia card</p>
+<ul>
+<li><p>you have to use it when creating a new container</p></li>
+<li><p>default: False</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-e</span></code> if you just want to run existing docker without building</p>
+<ul>
+<li><p>default: False</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-p</span></code> or <code class="docutils literal notranslate"><span class="pre">--path</span></code> with path to current folder</p>
+<ul>
+<li><p>default: “”</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">c</span></code> or <code class="docutils literal notranslate"><span class="pre">--container</span></code> with desired name of the new, created container</p>
+<ul>
+<li><p>default: my_new_docker</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">t</span></code> or <code class="docutils literal notranslate"><span class="pre">--terminal</span></code> to run new terminal in running docker session</p>
+<ul>
+<li><p>default: False</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-pu</span></code> or <code class="docutils literal notranslate"><span class="pre">--pull</span></code> to pull the image from our NAS server</p>
+<ul>
+<li><p>default: False</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-pv</span></code> or <code class="docutils literal notranslate"><span class="pre">--python-version</span></code> to specify addition python version to install</p>
+<ul>
+<li><p>default: 3.11</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-pcv</span></code> or <code class="docutils literal notranslate"><span class="pre">--pycharm-version</span></code> to specify version of pycharm to use</p>
+<ul>
+<li><p>default: 2023.2.3</p></li>
+</ul>
+</li>
+</ul>
+<p>Do this on computer where you will run the code. If you have a server
+you have to run it on the server over SSH to make things work
+properly.</p>
+</li>
+</ul>
+</section>
+<section id="non-docker-installation">
+<h2>Non-docker installation<a class="headerlink" href="#non-docker-installation" title="Permalink to this heading"></a></h2>
+<p>This repository contains files to make everything run under ros noetic on Ubuntu 20.04.
+If you want to install it by yourself, see <a class="reference external" href="Docker/Dockerfile">Dockerfile</a> for
+inspiration. Also, use <a class="reference external" href="Docker/pcan_python">pcan_python</a> as it is changed from
+python2 to python 3; and
+<a class="reference external" href="Docker/peak-linux-driver-8.16.0.tar.gz">peak-linux-driver</a> as this is working
+version. There are probably some hacks needed, so see the <a class="reference external" href="Docker/Dockerfile">Dockerfile</a>.</p>
+</section>
+</section>
+<section id="pykuka">
+<h1>pyKUKA<a class="headerlink" href="#pykuka" title="Permalink to this heading"></a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="source/pyKUKA/modules.html">pyKUKA</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="source/pyKUKA/pykuka.html">pykuka module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="source/pyKUKA/pykuka.html#pykuka.EndEffector"><code class="docutils literal notranslate"><span class="pre">EndEffector</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/pykuka.html#pykuka.EndEffector.get_position"><code class="docutils literal notranslate"><span class="pre">EndEffector.get_position()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="source/pyKUKA/pykuka.html#pykuka.Joint"><code class="docutils literal notranslate"><span class="pre">Joint</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="source/pyKUKA/pykuka.html#pykuka.Link"><code class="docutils literal notranslate"><span class="pre">Link</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="source/pyKUKA/pykuka.html#pykuka.pyKUKA"><code class="docutils literal notranslate"><span class="pre">pyKUKA</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/pykuka.html#pykuka.pyKUKA.compute_skin"><code class="docutils literal notranslate"><span class="pre">pyKUKA.compute_skin()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/pykuka.html#pykuka.pyKUKA.contactPoints"><code class="docutils literal notranslate"><span class="pre">pyKUKA.contactPoints</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/pykuka.html#pykuka.pyKUKA.create_urdf"><code class="docutils literal notranslate"><span class="pre">pyKUKA.create_urdf()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/pykuka.html#pykuka.pyKUKA.dynamicsInfo"><code class="docutils literal notranslate"><span class="pre">pyKUKA.dynamicsInfo</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/pykuka.html#pykuka.pyKUKA.find_joint_id"><code class="docutils literal notranslate"><span class="pre">pyKUKA.find_joint_id()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/pykuka.html#pykuka.pyKUKA.find_link_id"><code class="docutils literal notranslate"><span class="pre">pyKUKA.find_link_id()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/pykuka.html#pykuka.pyKUKA.get_joint_state"><code class="docutils literal notranslate"><span class="pre">pyKUKA.get_joint_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/pykuka.html#pykuka.pyKUKA.get_link_id"><code class="docutils literal notranslate"><span class="pre">pyKUKA.get_link_id()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/pykuka.html#pykuka.pyKUKA.init_robot"><code class="docutils literal notranslate"><span class="pre">pyKUKA.init_robot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/pykuka.html#pykuka.pyKUKA.is_alive"><code class="docutils literal notranslate"><span class="pre">pyKUKA.is_alive()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/pykuka.html#pykuka.pyKUKA.jointInfo"><code class="docutils literal notranslate"><span class="pre">pyKUKA.jointInfo</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/pykuka.html#pykuka.pyKUKA.jointStates"><code class="docutils literal notranslate"><span class="pre">pyKUKA.jointStates</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/pykuka.html#pykuka.pyKUKA.kill_open3d"><code class="docutils literal notranslate"><span class="pre">pyKUKA.kill_open3d()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/pykuka.html#pykuka.pyKUKA.linkInfo"><code class="docutils literal notranslate"><span class="pre">pyKUKA.linkInfo</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/pykuka.html#pykuka.pyKUKA.motion_done"><code class="docutils literal notranslate"><span class="pre">pyKUKA.motion_done()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/pykuka.html#pykuka.pyKUKA.move_cartesian"><code class="docutils literal notranslate"><span class="pre">pyKUKA.move_cartesian()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/pykuka.html#pykuka.pyKUKA.move_position"><code class="docutils literal notranslate"><span class="pre">pyKUKA.move_position()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/pykuka.html#pykuka.pyKUKA.move_velocity"><code class="docutils literal notranslate"><span class="pre">pyKUKA.move_velocity()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/pykuka.html#pykuka.pyKUKA.prepare_log"><code class="docutils literal notranslate"><span class="pre">pyKUKA.prepare_log()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/pykuka.html#pykuka.pyKUKA.print_collision_info"><code class="docutils literal notranslate"><span class="pre">pyKUKA.print_collision_info()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/pykuka.html#pykuka.pyKUKA.run_vhacd"><code class="docutils literal notranslate"><span class="pre">pyKUKA.run_vhacd()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/pykuka.html#pykuka.pyKUKA.stop_robot"><code class="docutils literal notranslate"><span class="pre">pyKUKA.stop_robot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/pykuka.html#pykuka.pyKUKA.toggle_gravity"><code class="docutils literal notranslate"><span class="pre">pyKUKA.toggle_gravity()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/pykuka.html#pykuka.pyKUKA.update_simulation"><code class="docutils literal notranslate"><span class="pre">pyKUKA.update_simulation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/pykuka.html#pykuka.pyKUKA.visualShapeData"><code class="docutils literal notranslate"><span class="pre">pyKUKA.visualShapeData</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/pykuka.html#pykuka.pyKUKA.wait_motion_done"><code class="docutils literal notranslate"><span class="pre">pyKUKA.wait_motion_done()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="source/pyKUKA/utils.html">utils module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="source/pyKUKA/utils.html#utils.Config"><code class="docutils literal notranslate"><span class="pre">Config</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/utils.html#utils.Config.set_attribute"><code class="docutils literal notranslate"><span class="pre">Config.set_attribute()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="source/pyKUKA/utils.html#utils.CustomFormatter"><code class="docutils literal notranslate"><span class="pre">CustomFormatter</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/utils.html#utils.CustomFormatter.FORMATS"><code class="docutils literal notranslate"><span class="pre">CustomFormatter.FORMATS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/utils.html#utils.CustomFormatter.bold_red"><code class="docutils literal notranslate"><span class="pre">CustomFormatter.bold_red</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/utils.html#utils.CustomFormatter.format"><code class="docutils literal notranslate"><span class="pre">CustomFormatter.format()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/utils.html#utils.CustomFormatter.grey"><code class="docutils literal notranslate"><span class="pre">CustomFormatter.grey</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/utils.html#utils.CustomFormatter.red"><code class="docutils literal notranslate"><span class="pre">CustomFormatter.red</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/utils.html#utils.CustomFormatter.reset"><code class="docutils literal notranslate"><span class="pre">CustomFormatter.reset</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/utils.html#utils.CustomFormatter.yellow"><code class="docutils literal notranslate"><span class="pre">CustomFormatter.yellow</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="source/pyKUKA/utils.html#utils.Pose"><code class="docutils literal notranslate"><span class="pre">Pose</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="source/pyKUKA/utils.html#utils.URDF"><code class="docutils literal notranslate"><span class="pre">URDF</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/utils.html#utils.URDF.ROOT_TAGS"><code class="docutils literal notranslate"><span class="pre">URDF.ROOT_TAGS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/utils.html#utils.URDF.dereference"><code class="docutils literal notranslate"><span class="pre">URDF.dereference()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/utils.html#utils.URDF.find_root_tags"><code class="docutils literal notranslate"><span class="pre">URDF.find_root_tags()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/utils.html#utils.URDF.fix_urdf"><code class="docutils literal notranslate"><span class="pre">URDF.fix_urdf()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/utils.html#utils.URDF.make_references"><code class="docutils literal notranslate"><span class="pre">URDF.make_references()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/utils.html#utils.URDF.read"><code class="docutils literal notranslate"><span class="pre">URDF.read()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/utils.html#utils.URDF.write_attr"><code class="docutils literal notranslate"><span class="pre">URDF.write_attr()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/utils.html#utils.URDF.write_urdf"><code class="docutils literal notranslate"><span class="pre">URDF.write_urdf()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="source/pyKUKA/visualizer.html">visualizer module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="source/pyKUKA/visualizer.html#visualizer.Visualizer"><code class="docutils literal notranslate"><span class="pre">Visualizer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/visualizer.html#visualizer.Visualizer.MenuCallback"><code class="docutils literal notranslate"><span class="pre">Visualizer.MenuCallback</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/visualizer.html#visualizer.Visualizer.find_xyz_rpy"><code class="docutils literal notranslate"><span class="pre">Visualizer.find_xyz_rpy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/visualizer.html#visualizer.Visualizer.read_info"><code class="docutils literal notranslate"><span class="pre">Visualizer.read_info()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/visualizer.html#visualizer.Visualizer.render"><code class="docutils literal notranslate"><span class="pre">Visualizer.render()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/visualizer.html#visualizer.Visualizer.show_first"><code class="docutils literal notranslate"><span class="pre">Visualizer.show_first()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/visualizer.html#visualizer.Visualizer.show_mesh"><code class="docutils literal notranslate"><span class="pre">Visualizer.show_mesh()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="source/pyKUKA/gripper.html">gripper module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="source/pyKUKA/gripper.html#gripper.RG6"><code class="docutils literal notranslate"><span class="pre">RG6</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/gripper.html#gripper.RG6.JOINTS"><code class="docutils literal notranslate"><span class="pre">RG6.JOINTS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/gripper.html#gripper.RG6.SIGNS"><code class="docutils literal notranslate"><span class="pre">RG6.SIGNS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/gripper.html#gripper.RG6.prepare_gripper"><code class="docutils literal notranslate"><span class="pre">RG6.prepare_gripper()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/gripper.html#gripper.RG6.reset_constraints"><code class="docutils literal notranslate"><span class="pre">RG6.reset_constraints()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/gripper.html#gripper.RG6.set_gripper_pose"><code class="docutils literal notranslate"><span class="pre">RG6.set_gripper_pose()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/pyKUKA/gripper.html#gripper.RG6.stop"><code class="docutils literal notranslate"><span class="pre">RG6.stop()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="source/pyKUKA/modules.html#examples">Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="source/pyKUKA/cartesian_example.html">cartesian_example module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="source/pyKUKA/cartesian_example.html#cartesian_example.move"><code class="docutils literal notranslate"><span class="pre">move()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="source/pyKUKA/joints_example.html">joints_example module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="source/pyKUKA/joints_example.html#joints_example.move"><code class="docutils literal notranslate"><span class="pre">move()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="bullet-ros">
+<h1>bullet_ros<a class="headerlink" href="#bullet-ros" title="Permalink to this heading"></a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="source/bullet_ros/modules.html">bullet_ros</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="source/bullet_ros/main.html">main module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="source/bullet_ros/main.html#main.BulletROS"><code class="docutils literal notranslate"><span class="pre">BulletROS</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="source/bullet_ros/main.html#main.BulletROS.change_obj_pose"><code class="docutils literal notranslate"><span class="pre">BulletROS.change_obj_pose()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/bullet_ros/main.html#main.BulletROS.move"><code class="docutils literal notranslate"><span class="pre">BulletROS.move()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/bullet_ros/main.html#main.BulletROS.publish_other_objects"><code class="docutils literal notranslate"><span class="pre">BulletROS.publish_other_objects()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/bullet_ros/main.html#main.BulletROS.read"><code class="docutils literal notranslate"><span class="pre">BulletROS.read()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/bullet_ros/main.html#main.BulletROS.read_state"><code class="docutils literal notranslate"><span class="pre">BulletROS.read_state()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="source/bullet_ros/motion_interface.html">motion_interface module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="source/bullet_ros/motion_interface.html#motion_interface.MoveGroupPythonInterface"><code class="docutils literal notranslate"><span class="pre">MoveGroupPythonInterface</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="source/bullet_ros/motion_interface.html#motion_interface.MoveGroupPythonInterface.all_close"><code class="docutils literal notranslate"><span class="pre">MoveGroupPythonInterface.all_close()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/bullet_ros/motion_interface.html#motion_interface.MoveGroupPythonInterface.apply_planning_scene"><code class="docutils literal notranslate"><span class="pre">MoveGroupPythonInterface.apply_planning_scene()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/bullet_ros/motion_interface.html#motion_interface.MoveGroupPythonInterface.close_gripper"><code class="docutils literal notranslate"><span class="pre">MoveGroupPythonInterface.close_gripper()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/bullet_ros/motion_interface.html#motion_interface.MoveGroupPythonInterface.display_trajectory"><code class="docutils literal notranslate"><span class="pre">MoveGroupPythonInterface.display_trajectory()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/bullet_ros/motion_interface.html#motion_interface.MoveGroupPythonInterface.execute_plan"><code class="docutils literal notranslate"><span class="pre">MoveGroupPythonInterface.execute_plan()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/bullet_ros/motion_interface.html#motion_interface.MoveGroupPythonInterface.get_current_state"><code class="docutils literal notranslate"><span class="pre">MoveGroupPythonInterface.get_current_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/bullet_ros/motion_interface.html#motion_interface.MoveGroupPythonInterface.get_ee_pose"><code class="docutils literal notranslate"><span class="pre">MoveGroupPythonInterface.get_ee_pose()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/bullet_ros/motion_interface.html#motion_interface.MoveGroupPythonInterface.go_to_joint_position"><code class="docutils literal notranslate"><span class="pre">MoveGroupPythonInterface.go_to_joint_position()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/bullet_ros/motion_interface.html#motion_interface.MoveGroupPythonInterface.go_to_pose"><code class="docutils literal notranslate"><span class="pre">MoveGroupPythonInterface.go_to_pose()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/bullet_ros/motion_interface.html#motion_interface.MoveGroupPythonInterface.open_gripper"><code class="docutils literal notranslate"><span class="pre">MoveGroupPythonInterface.open_gripper()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/bullet_ros/motion_interface.html#motion_interface.MoveGroupPythonInterface.plan_cartesian_path"><code class="docutils literal notranslate"><span class="pre">MoveGroupPythonInterface.plan_cartesian_path()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/bullet_ros/motion_interface.html#motion_interface.MoveGroupPythonInterface.stop_robot"><code class="docutils literal notranslate"><span class="pre">MoveGroupPythonInterface.stop_robot()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="source/bullet_ros/robot_kinematics_interface.html">robot_kinematics_interface module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="source/bullet_ros/robot_kinematics_interface.html#robot_kinematics_interface.ForwardKinematics"><code class="docutils literal notranslate"><span class="pre">ForwardKinematics</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="source/bullet_ros/robot_kinematics_interface.html#robot_kinematics_interface.ForwardKinematics.closeFK"><code class="docutils literal notranslate"><span class="pre">ForwardKinematics.closeFK()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/bullet_ros/robot_kinematics_interface.html#robot_kinematics_interface.ForwardKinematics.getCurrentFK"><code class="docutils literal notranslate"><span class="pre">ForwardKinematics.getCurrentFK()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/bullet_ros/robot_kinematics_interface.html#robot_kinematics_interface.ForwardKinematics.getFK"><code class="docutils literal notranslate"><span class="pre">ForwardKinematics.getFK()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="source/bullet_ros/robot_kinematics_interface.html#robot_kinematics_interface.InverseKinematics"><code class="docutils literal notranslate"><span class="pre">InverseKinematics</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="source/bullet_ros/robot_kinematics_interface.html#robot_kinematics_interface.InverseKinematics.closeIK"><code class="docutils literal notranslate"><span class="pre">InverseKinematics.closeIK()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/bullet_ros/robot_kinematics_interface.html#robot_kinematics_interface.InverseKinematics.getIK"><code class="docutils literal notranslate"><span class="pre">InverseKinematics.getIK()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="source/bullet_ros/robot_kinematics_interface.html#robot_kinematics_interface.StateValidity"><code class="docutils literal notranslate"><span class="pre">StateValidity</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="source/bullet_ros/robot_kinematics_interface.html#robot_kinematics_interface.StateValidity.close_SV"><code class="docutils literal notranslate"><span class="pre">StateValidity.close_SV()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="source/bullet_ros/robot_kinematics_interface.html#robot_kinematics_interface.StateValidity.getStateValidity"><code class="docutils literal notranslate"><span class="pre">StateValidity.getStateValidity()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="source/bullet_ros/modules.html#examples">Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="source/bullet_ros/examples.html">examples module</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to KUKA simulator documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="source/pyKUKA/index.html" class="btn btn-neutral float-right" title="&lt;no title&gt;" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Lukas Rustler.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
