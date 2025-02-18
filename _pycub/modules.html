@@ -1,23 +1,21 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" data-content_root="./">
+<html class="writer-html5" lang="en">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>README &mdash; pyCub  documentation</title>
-      <link rel="stylesheet" type="text/css" href="static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="static/css/theme.css?v=e59714d7" />
 
   
-  <!--[if lt IE 9]>
-    <script src="static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="static/jquery.js?v=5d32c60e"></script>
-        <script src="static/sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="static/documentation_options.js?v=5929fcd5"></script>
-        <script src="static/doctools.js?v=888ff710"></script>
-        <script src="static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="static/jquery.js?v=5d32c60e"></script>
+      <script src="static/sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script data-url_root="./" id="documentation_options" src="static/documentation_options.js?v=b3ba4146"></script>
+      <script src="static/doctools.js?v=888ff710"></script>
+      <script src="static/sphinx_highlight.js?v=4825356b"></script>
     <script src="static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -60,14 +58,13 @@
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#presentation">Presentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="#icub-pybullet">icub_pybullet</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="pycub.html">pyCub</a></li>
 <li class="toctree-l2"><a class="reference internal" href="utils.html">utils</a></li>
 <li class="toctree-l2"><a class="reference internal" href="visualizer.html">visualizer</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="#id6">Examples</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="#id4">examples</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="push_the_ball_cartesian.html">push_the_ball_cartesian</a></li>
 <li class="toctree-l2"><a class="reference internal" href="push_the_ball_pure_joints.html">push_the_ball_pure_joints</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skin_test.html">skin_test</a></li>
@@ -100,10 +97,10 @@
            <div itemprop="articleBody">
              
   <section id="readme">
-<h1>README<a class="headerlink" href="#readme" title="Link to this heading"></a></h1>
+<h1>README<a class="headerlink" href="#readme" title="Permalink to this heading"></a></h1>
 <p>pyCub is iCub humanoid robot simulator written in Python. It uses PyBullet for simulation and Open3D for visualization.</p>
 <section id="known-bugs">
-<h2>Known bugs<a class="headerlink" href="#known-bugs" title="Link to this heading"></a></h2>
+<h2>Known bugs<a class="headerlink" href="#known-bugs" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>visualization with skin dies after ~65k steps</p>
 <ul>
@@ -113,37 +110,42 @@
 </ul>
 </section>
 <section id="installation">
-<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
-<ol class="arabic simple">
-<li><p>Install dependencies</p>
-<ul class="simple">
-<li><p>use Docker</p>
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading"></a></h2>
 <ul>
+<li><p>Requires python3.8 and newer (tested on 3.8 and 3.11)</p></li>
+<li><p>(Recommended) Virtual environment + package install</p>
+<ul>
+<li><p>Pull this repository</p></li>
+<li><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="o">-</span><span class="n">m</span> <span class="n">venv</span> <span class="n">pycub_venv</span>
+<span class="n">source</span> <span class="n">pycub_venv</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
+<span class="n">python3</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">upgrade</span> <span class="n">pip</span>
+<span class="n">python3</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
+<span class="n">python3</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">install</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p>system-wide install + package install</p>
+<ul>
+<li><p>Pull this repository</p></li>
+<li><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">upgrade</span> <span class="n">pip</span>
+<span class="n">python3</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
+<span class="n">python3</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">install</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p>use Docker</p>
+<ul class="simple">
 <li><p>see <a class="reference external" href="#docker">Docker</a> section</p></li>
 </ul>
 </li>
-<li><p>or install python3 (3.8 and higher; tested in 3.11) and <code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">-m</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">pybullet</span> <span class="pre">numpy</span> <span class="pre">scipy</span> <span class="pre">open3d</span></code></p>
-<ul>
-<li><p>open3d 0.16.0 and higher is required</p>
-<ul>
-<li><p>you may need to upgrade pip first: <code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">-m</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">--upgrade</span> <span class="pre">pip</span></code></p></li>
 </ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>Pull this repository</p></li>
-<li><p>try run some example, e.g., <code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">PATH_TO_THE_REPOSITORY/icub_pybullet/examples/push_the_ball_cartesian.py</span></code></p></li>
-<li><p>(optional, but recommended) add <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">PYTHONPATH=$PYTHONPATH:PATH_TO_THE_REPOSITORY/icub_pybullet</span></code> to your <code class="docutils literal notranslate"><span class="pre">~/.bashrc</span></code> file</p>
-<ul class="simple">
-<li><p>this will allow you to run scripts from any location</p></li>
-</ul>
-</li>
-</ol>
 </section>
 <section id="examples">
-<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading"></a></h2>
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="icub_pybullet/examples/push_the_ball_pure_joints.py">push_the_ball_pure_joints.py</a> contains an example that
 shows how to control the robot in joint space</p></li>
@@ -154,7 +156,7 @@ should turn green on the places where contact occurs. You may want to slow the s
 </ul>
 </section>
 <section id="information">
-<h2>Information<a class="headerlink" href="#information" title="Link to this heading"></a></h2>
+<h2>Information<a class="headerlink" href="#information" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>documentation can be found at <a class="reference external" href="https://lukasrustler.cz/pycub">lukasrustler.cz/pycub</a> or in <a class="reference external" href="https://github.com/rustlluk/pyCub/blob/master/documentation/pyCub.pdf">pyCub.pdf</a></p></li>
 <li><p>presentation with description of functionality can be found at <a class="reference external" href="https://lukasrustler.cz/pycub/pyCub_presentation.pdf">pyCub presentation</a></p></li>
@@ -178,9 +180,10 @@ pycub.motion_done() with check_collision=False to ignore collision checks, e.g.,
 of collision state</p></li>
 </ul>
 </li>
-<li><p>until you add <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">PYTHONPATH=$PYTHONPATH:PATH_TO_THE_REPOSITORY/icub_pybullet</span></code> to your <code class="docutils literal notranslate"><span class="pre">~/.bashrc</span></code> file
-(or change PYTHONPATH everytime you open a new terminal) you have to add something like <code class="docutils literal notranslate"><span class="pre">sys.path.append(0,</span> <span class="pre">&quot;PATH_TO_THE_REPOSITORY/icub_pybullet&quot;)</span></code>
-to every file you want to run</p>
+<li><p>when not installing the package with <code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">setup.py</span> <span class="pre">install</span></code> you need to add
+<code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">PYTHONPATH=$PYTHONPATH:PATH_TO_THE_REPOSITORY/icub_pybullet</span></code> to your <code class="docutils literal notranslate"><span class="pre">~/.bashrc</span></code> file
+(or change PYTHONPATH everytime you open a new terminal) you have to add something like
+<code class="docutils literal notranslate"><span class="pre">sys.path.append(0,</span> <span class="pre">&quot;PATH_TO_THE_REPOSITORY/icub_pybullet&quot;)</span></code> to every file you want to run</p>
 <ul>
 <li><p>scripts in <a class="reference external" href="icub_pybullet/examples">examples</a> folder already contain such line, so the examples can be run easily</p></li>
 </ul>
@@ -188,10 +191,10 @@ to every file you want to run</p>
 </ul>
 </section>
 <section id="id2">
-<h2>Docker<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<h2>Docker<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h2>
 <p><a class="reference external" href="https://github.com/rustlluk/easy-docker">https://github.com/rustlluk/easy-docker</a> is utilized to use Docker</p>
 <section id="id3">
-<h3>Installation<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<h3>Installation<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h3>
 <ul>
 <li><p>install <a class="reference external" href="https://docs.docker.com/engine/install/ubuntu/">docker-engine</a>
 (<strong>DO NOT INSTALL DOCKER DESKTOP</strong>), do <a class="reference external" href="https://docs.docker.com/engine/install/linux-postinstall/">post-installation steps</a>
@@ -256,7 +259,7 @@ sudo usermod -aG docker $USER
 </ul>
 </section>
 <section id="docker-pycharm">
-<h3>Docker + PyCharm<a class="headerlink" href="#docker-pycharm" title="Link to this heading"></a></h3>
+<h3>Docker + PyCharm<a class="headerlink" href="#docker-pycharm" title="Permalink to this heading"></a></h3>
 <p>You have two option:</p>
 <ol class="arabic simple">
 <li><p>Either run pycharm from docker</p></li>
@@ -291,7 +294,7 @@ Python -&gt; Edit environment variables -&gt; add DISPLAY with the same value as
 </ul>
 </section>
 <section id="deploy-parameters">
-<h3>Deploy Parameters<a class="headerlink" href="#deploy-parameters" title="Link to this heading"></a></h3>
+<h3>Deploy Parameters<a class="headerlink" href="#deploy-parameters" title="Permalink to this heading"></a></h3>
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">cd</span></code> to folder with Dockerfile</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">./deploy.py</span></code></p>
@@ -351,7 +354,7 @@ properly.</p>
 </ul>
 </section>
 <section id="faq">
-<h3>FAQ<a class="headerlink" href="#faq" title="Link to this heading"></a></h3>
+<h3>FAQ<a class="headerlink" href="#faq" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p><strong>applications do not run on your screen</strong> (or you have some strange screen
 related errors)</p>
@@ -390,106 +393,108 @@ by yourself and can not pull it</p>
 </section>
 </section>
 </section>
-<section id="presentation">
-<h1>Presentation<a class="headerlink" href="#presentation" title="Link to this heading"></a></h1>
-<p>View the <a class="reference external" href="pyCub_presentation.pdf">Presentation with description of functionality</a>.</p>
-</section>
 <section id="icub-pybullet">
-<h1>icub_pybullet<a class="headerlink" href="#icub-pybullet" title="Link to this heading"></a></h1>
+<h1>icub_pybullet<a class="headerlink" href="#icub-pybullet" title="Permalink to this heading"></a></h1>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="pycub.html">pyCub</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="pycub.html#pycub.EndEffector"><code class="docutils literal notranslate"><span class="pre">EndEffector</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="pycub.html#pycub.EndEffector.get_position"><code class="docutils literal notranslate"><span class="pre">EndEffector.get_position()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pycub.html#icub_pybullet.pycub.EndEffector"><code class="docutils literal notranslate"><span class="pre">EndEffector</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pycub.html#icub_pybullet.pycub.EndEffector.get_position"><code class="docutils literal notranslate"><span class="pre">EndEffector.get_position()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="pycub.html#pycub.Joint"><code class="docutils literal notranslate"><span class="pre">Joint</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="pycub.html#pycub.Link"><code class="docutils literal notranslate"><span class="pre">Link</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="pycub.html#pycub.pyCub"><code class="docutils literal notranslate"><span class="pre">pyCub</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="pycub.html#pycub.pyCub.bbox_overlap"><code class="docutils literal notranslate"><span class="pre">pyCub.bbox_overlap()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="pycub.html#pycub.pyCub.compute_skin"><code class="docutils literal notranslate"><span class="pre">pyCub.compute_skin()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="pycub.html#pycub.pyCub.contactPoints"><code class="docutils literal notranslate"><span class="pre">pyCub.contactPoints</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="pycub.html#pycub.pyCub.create_urdf"><code class="docutils literal notranslate"><span class="pre">pyCub.create_urdf()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="pycub.html#pycub.pyCub.dynamicsInfo"><code class="docutils literal notranslate"><span class="pre">pyCub.dynamicsInfo</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="pycub.html#pycub.pyCub.find_joint_id"><code class="docutils literal notranslate"><span class="pre">pyCub.find_joint_id()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="pycub.html#pycub.pyCub.find_link_id"><code class="docutils literal notranslate"><span class="pre">pyCub.find_link_id()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="pycub.html#pycub.pyCub.get_cameraimages"><code class="docutils literal notranslate"><span class="pre">pyCub.get_cameraimages()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="pycub.html#pycub.pyCub.get_joint_state"><code class="docutils literal notranslate"><span class="pre">pyCub.get_joint_state()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="pycub.html#pycub.pyCub.init_robot"><code class="docutils literal notranslate"><span class="pre">pyCub.init_robot()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="pycub.html#pycub.pyCub.is_alive"><code class="docutils literal notranslate"><span class="pre">pyCub.is_alive()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="pycub.html#pycub.pyCub.jointInfo"><code class="docutils literal notranslate"><span class="pre">pyCub.jointInfo</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="pycub.html#pycub.pyCub.jointStates"><code class="docutils literal notranslate"><span class="pre">pyCub.jointStates</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="pycub.html#pycub.pyCub.kill_open3d"><code class="docutils literal notranslate"><span class="pre">pyCub.kill_open3d()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="pycub.html#pycub.pyCub.linkInfo"><code class="docutils literal notranslate"><span class="pre">pyCub.linkInfo</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="pycub.html#pycub.pyCub.motion_done"><code class="docutils literal notranslate"><span class="pre">pyCub.motion_done()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="pycub.html#pycub.pyCub.move_cartesian"><code class="docutils literal notranslate"><span class="pre">pyCub.move_cartesian()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="pycub.html#pycub.pyCub.move_position"><code class="docutils literal notranslate"><span class="pre">pyCub.move_position()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="pycub.html#pycub.pyCub.move_velocity"><code class="docutils literal notranslate"><span class="pre">pyCub.move_velocity()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="pycub.html#pycub.pyCub.prepare_log"><code class="docutils literal notranslate"><span class="pre">pyCub.prepare_log()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="pycub.html#pycub.pyCub.print_collision_info"><code class="docutils literal notranslate"><span class="pre">pyCub.print_collision_info()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="pycub.html#pycub.pyCub.run_vhacd"><code class="docutils literal notranslate"><span class="pre">pyCub.run_vhacd()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="pycub.html#pycub.pyCub.scale_bbox"><code class="docutils literal notranslate"><span class="pre">pyCub.scale_bbox()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="pycub.html#pycub.pyCub.stop_robot"><code class="docutils literal notranslate"><span class="pre">pyCub.stop_robot()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="pycub.html#pycub.pyCub.toggle_gravity"><code class="docutils literal notranslate"><span class="pre">pyCub.toggle_gravity()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="pycub.html#pycub.pyCub.update_simulation"><code class="docutils literal notranslate"><span class="pre">pyCub.update_simulation()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="pycub.html#pycub.pyCub.visualShapeData"><code class="docutils literal notranslate"><span class="pre">pyCub.visualShapeData</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="pycub.html#pycub.pyCub.wait_motion_done"><code class="docutils literal notranslate"><span class="pre">pyCub.wait_motion_done()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pycub.html#icub_pybullet.pycub.Joint"><code class="docutils literal notranslate"><span class="pre">Joint</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pycub.html#icub_pybullet.pycub.Link"><code class="docutils literal notranslate"><span class="pre">Link</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pycub.html#icub_pybullet.pycub.pyCub"><code class="docutils literal notranslate"><span class="pre">pyCub</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pycub.html#icub_pybullet.pycub.pyCub.bbox_overlap"><code class="docutils literal notranslate"><span class="pre">pyCub.bbox_overlap()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycub.html#icub_pybullet.pycub.pyCub.compute_jacobian"><code class="docutils literal notranslate"><span class="pre">pyCub.compute_jacobian()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycub.html#icub_pybullet.pycub.pyCub.compute_skin"><code class="docutils literal notranslate"><span class="pre">pyCub.compute_skin()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycub.html#icub_pybullet.pycub.pyCub.contactPoints"><code class="docutils literal notranslate"><span class="pre">pyCub.contactPoints</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycub.html#icub_pybullet.pycub.pyCub.create_urdf"><code class="docutils literal notranslate"><span class="pre">pyCub.create_urdf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycub.html#icub_pybullet.pycub.pyCub.dynamicsInfo"><code class="docutils literal notranslate"><span class="pre">pyCub.dynamicsInfo</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycub.html#icub_pybullet.pycub.pyCub.find_joint_id"><code class="docutils literal notranslate"><span class="pre">pyCub.find_joint_id()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycub.html#icub_pybullet.pycub.pyCub.find_link_id"><code class="docutils literal notranslate"><span class="pre">pyCub.find_link_id()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycub.html#icub_pybullet.pycub.pyCub.get_all_chains"><code class="docutils literal notranslate"><span class="pre">pyCub.get_all_chains()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycub.html#icub_pybullet.pycub.pyCub.get_cameraimages"><code class="docutils literal notranslate"><span class="pre">pyCub.get_cameraimages()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycub.html#icub_pybullet.pycub.pyCub.get_chains"><code class="docutils literal notranslate"><span class="pre">pyCub.get_chains()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycub.html#icub_pybullet.pycub.pyCub.get_joint_state"><code class="docutils literal notranslate"><span class="pre">pyCub.get_joint_state()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycub.html#icub_pybullet.pycub.pyCub.init_robot"><code class="docutils literal notranslate"><span class="pre">pyCub.init_robot()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycub.html#icub_pybullet.pycub.pyCub.is_alive"><code class="docutils literal notranslate"><span class="pre">pyCub.is_alive()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycub.html#icub_pybullet.pycub.pyCub.jointInfo"><code class="docutils literal notranslate"><span class="pre">pyCub.jointInfo</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycub.html#icub_pybullet.pycub.pyCub.jointStates"><code class="docutils literal notranslate"><span class="pre">pyCub.jointStates</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycub.html#icub_pybullet.pycub.pyCub.kill_open3d"><code class="docutils literal notranslate"><span class="pre">pyCub.kill_open3d()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycub.html#icub_pybullet.pycub.pyCub.linkInfo"><code class="docutils literal notranslate"><span class="pre">pyCub.linkInfo</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycub.html#icub_pybullet.pycub.pyCub.motion_done"><code class="docutils literal notranslate"><span class="pre">pyCub.motion_done()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycub.html#icub_pybullet.pycub.pyCub.move_cartesian"><code class="docutils literal notranslate"><span class="pre">pyCub.move_cartesian()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycub.html#icub_pybullet.pycub.pyCub.move_position"><code class="docutils literal notranslate"><span class="pre">pyCub.move_position()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycub.html#icub_pybullet.pycub.pyCub.move_velocity"><code class="docutils literal notranslate"><span class="pre">pyCub.move_velocity()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycub.html#icub_pybullet.pycub.pyCub.prepare_log"><code class="docutils literal notranslate"><span class="pre">pyCub.prepare_log()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycub.html#icub_pybullet.pycub.pyCub.print_collision_info"><code class="docutils literal notranslate"><span class="pre">pyCub.print_collision_info()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycub.html#icub_pybullet.pycub.pyCub.run_vhacd"><code class="docutils literal notranslate"><span class="pre">pyCub.run_vhacd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycub.html#icub_pybullet.pycub.pyCub.scale_bbox"><code class="docutils literal notranslate"><span class="pre">pyCub.scale_bbox()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycub.html#icub_pybullet.pycub.pyCub.stop_robot"><code class="docutils literal notranslate"><span class="pre">pyCub.stop_robot()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycub.html#icub_pybullet.pycub.pyCub.toggle_gravity"><code class="docutils literal notranslate"><span class="pre">pyCub.toggle_gravity()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycub.html#icub_pybullet.pycub.pyCub.update_simulation"><code class="docutils literal notranslate"><span class="pre">pyCub.update_simulation()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycub.html#icub_pybullet.pycub.pyCub.visualShapeData"><code class="docutils literal notranslate"><span class="pre">pyCub.visualShapeData</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycub.html#icub_pybullet.pycub.pyCub.wait_motion_done"><code class="docutils literal notranslate"><span class="pre">pyCub.wait_motion_done()</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="utils.html">utils</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="utils.html#utils.Config"><code class="docutils literal notranslate"><span class="pre">Config</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="utils.html#utils.Config.set_attribute"><code class="docutils literal notranslate"><span class="pre">Config.set_attribute()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#icub_pybullet.utils.Config"><code class="docutils literal notranslate"><span class="pre">Config</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#icub_pybullet.utils.Config.set_attribute"><code class="docutils literal notranslate"><span class="pre">Config.set_attribute()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="utils.html#utils.CustomFormatter"><code class="docutils literal notranslate"><span class="pre">CustomFormatter</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="utils.html#utils.CustomFormatter.FORMATS"><code class="docutils literal notranslate"><span class="pre">CustomFormatter.FORMATS</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="utils.html#utils.CustomFormatter.bold_red"><code class="docutils literal notranslate"><span class="pre">CustomFormatter.bold_red</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="utils.html#utils.CustomFormatter.format"><code class="docutils literal notranslate"><span class="pre">CustomFormatter.format()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="utils.html#utils.CustomFormatter.grey"><code class="docutils literal notranslate"><span class="pre">CustomFormatter.grey</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="utils.html#utils.CustomFormatter.red"><code class="docutils literal notranslate"><span class="pre">CustomFormatter.red</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="utils.html#utils.CustomFormatter.reset"><code class="docutils literal notranslate"><span class="pre">CustomFormatter.reset</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="utils.html#utils.CustomFormatter.yellow"><code class="docutils literal notranslate"><span class="pre">CustomFormatter.yellow</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#icub_pybullet.utils.CustomFormatter"><code class="docutils literal notranslate"><span class="pre">CustomFormatter</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#icub_pybullet.utils.CustomFormatter.FORMATS"><code class="docutils literal notranslate"><span class="pre">CustomFormatter.FORMATS</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#icub_pybullet.utils.CustomFormatter.bold_red"><code class="docutils literal notranslate"><span class="pre">CustomFormatter.bold_red</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#icub_pybullet.utils.CustomFormatter.format"><code class="docutils literal notranslate"><span class="pre">CustomFormatter.format()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#icub_pybullet.utils.CustomFormatter.grey"><code class="docutils literal notranslate"><span class="pre">CustomFormatter.grey</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#icub_pybullet.utils.CustomFormatter.red"><code class="docutils literal notranslate"><span class="pre">CustomFormatter.red</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#icub_pybullet.utils.CustomFormatter.reset"><code class="docutils literal notranslate"><span class="pre">CustomFormatter.reset</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#icub_pybullet.utils.CustomFormatter.yellow"><code class="docutils literal notranslate"><span class="pre">CustomFormatter.yellow</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="utils.html#utils.Pose"><code class="docutils literal notranslate"><span class="pre">Pose</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="utils.html#utils.URDF"><code class="docutils literal notranslate"><span class="pre">URDF</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="utils.html#utils.URDF.ROOT_TAGS"><code class="docutils literal notranslate"><span class="pre">URDF.ROOT_TAGS</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="utils.html#utils.URDF.dereference"><code class="docutils literal notranslate"><span class="pre">URDF.dereference()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="utils.html#utils.URDF.find_root_tags"><code class="docutils literal notranslate"><span class="pre">URDF.find_root_tags()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="utils.html#utils.URDF.fix_urdf"><code class="docutils literal notranslate"><span class="pre">URDF.fix_urdf()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="utils.html#utils.URDF.make_references"><code class="docutils literal notranslate"><span class="pre">URDF.make_references()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="utils.html#utils.URDF.read"><code class="docutils literal notranslate"><span class="pre">URDF.read()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="utils.html#utils.URDF.write_attr"><code class="docutils literal notranslate"><span class="pre">URDF.write_attr()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="utils.html#utils.URDF.write_urdf"><code class="docutils literal notranslate"><span class="pre">URDF.write_urdf()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#icub_pybullet.utils.Pose"><code class="docutils literal notranslate"><span class="pre">Pose</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#icub_pybullet.utils.Pose.to_string"><code class="docutils literal notranslate"><span class="pre">Pose.to_string()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#icub_pybullet.utils.URDF"><code class="docutils literal notranslate"><span class="pre">URDF</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#icub_pybullet.utils.URDF.ROOT_TAGS"><code class="docutils literal notranslate"><span class="pre">URDF.ROOT_TAGS</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#icub_pybullet.utils.URDF.dereference"><code class="docutils literal notranslate"><span class="pre">URDF.dereference()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#icub_pybullet.utils.URDF.find_root_tags"><code class="docutils literal notranslate"><span class="pre">URDF.find_root_tags()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#icub_pybullet.utils.URDF.fix_urdf"><code class="docutils literal notranslate"><span class="pre">URDF.fix_urdf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#icub_pybullet.utils.URDF.make_references"><code class="docutils literal notranslate"><span class="pre">URDF.make_references()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#icub_pybullet.utils.URDF.read"><code class="docutils literal notranslate"><span class="pre">URDF.read()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#icub_pybullet.utils.URDF.write_attr"><code class="docutils literal notranslate"><span class="pre">URDF.write_attr()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#icub_pybullet.utils.URDF.write_urdf"><code class="docutils literal notranslate"><span class="pre">URDF.write_urdf()</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="visualizer.html">visualizer</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="visualizer.html#visualizer.Visualizer"><code class="docutils literal notranslate"><span class="pre">Visualizer</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="visualizer.html#visualizer.Visualizer.EyeWindow"><code class="docutils literal notranslate"><span class="pre">Visualizer.EyeWindow</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="visualizer.html#visualizer.Visualizer.EyeWindow.MENU_IDS"><code class="docutils literal notranslate"><span class="pre">Visualizer.EyeWindow.MENU_IDS</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="visualizer.html#visualizer.Visualizer.EyeWindow.POSITIONS"><code class="docutils literal notranslate"><span class="pre">Visualizer.EyeWindow.POSITIONS</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="visualizer.html#visualizer.Visualizer.EyeWindow.get_image"><code class="docutils literal notranslate"><span class="pre">Visualizer.EyeWindow.get_image()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="visualizer.html#visualizer.Visualizer.EyeWindow.on_close"><code class="docutils literal notranslate"><span class="pre">Visualizer.EyeWindow.on_close()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="visualizer.html#visualizer.Visualizer.EyeWindow.on_mouse"><code class="docutils literal notranslate"><span class="pre">Visualizer.EyeWindow.on_mouse()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="visualizer.html#visualizer.Visualizer.EyeWindow.save_image"><code class="docutils literal notranslate"><span class="pre">Visualizer.EyeWindow.save_image()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="visualizer.html#visualizer.Visualizer.EyeWindow.saveimages"><code class="docutils literal notranslate"><span class="pre">Visualizer.EyeWindow.saveimages()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="visualizer.html#icub_pybullet.visualizer.Visualizer"><code class="docutils literal notranslate"><span class="pre">Visualizer</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="visualizer.html#icub_pybullet.visualizer.Visualizer.EyeWindow"><code class="docutils literal notranslate"><span class="pre">Visualizer.EyeWindow</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="visualizer.html#icub_pybullet.visualizer.Visualizer.EyeWindow.MENU_IDS"><code class="docutils literal notranslate"><span class="pre">Visualizer.EyeWindow.MENU_IDS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="visualizer.html#icub_pybullet.visualizer.Visualizer.EyeWindow.POSITIONS"><code class="docutils literal notranslate"><span class="pre">Visualizer.EyeWindow.POSITIONS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="visualizer.html#icub_pybullet.visualizer.Visualizer.EyeWindow.get_image"><code class="docutils literal notranslate"><span class="pre">Visualizer.EyeWindow.get_image()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="visualizer.html#icub_pybullet.visualizer.Visualizer.EyeWindow.on_close"><code class="docutils literal notranslate"><span class="pre">Visualizer.EyeWindow.on_close()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="visualizer.html#icub_pybullet.visualizer.Visualizer.EyeWindow.on_mouse"><code class="docutils literal notranslate"><span class="pre">Visualizer.EyeWindow.on_mouse()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="visualizer.html#icub_pybullet.visualizer.Visualizer.EyeWindow.save_image"><code class="docutils literal notranslate"><span class="pre">Visualizer.EyeWindow.save_image()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="visualizer.html#icub_pybullet.visualizer.Visualizer.EyeWindow.saveimages"><code class="docutils literal notranslate"><span class="pre">Visualizer.EyeWindow.saveimages()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="visualizer.html#visualizer.Visualizer.MenuCallback"><code class="docutils literal notranslate"><span class="pre">Visualizer.MenuCallback</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="visualizer.html#visualizer.Visualizer.MenuCallback.input_completed"><code class="docutils literal notranslate"><span class="pre">Visualizer.MenuCallback.input_completed()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="visualizer.html#visualizer.Visualizer.MenuCallback.save_image"><code class="docutils literal notranslate"><span class="pre">Visualizer.MenuCallback.save_image()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="visualizer.html#visualizer.Visualizer.MenuCallback.wait_for_dialog_completion"><code class="docutils literal notranslate"><span class="pre">Visualizer.MenuCallback.wait_for_dialog_completion()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="visualizer.html#icub_pybullet.visualizer.Visualizer.MenuCallback"><code class="docutils literal notranslate"><span class="pre">Visualizer.MenuCallback</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="visualizer.html#icub_pybullet.visualizer.Visualizer.MenuCallback.input_completed"><code class="docutils literal notranslate"><span class="pre">Visualizer.MenuCallback.input_completed()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="visualizer.html#icub_pybullet.visualizer.Visualizer.MenuCallback.save_image"><code class="docutils literal notranslate"><span class="pre">Visualizer.MenuCallback.save_image()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="visualizer.html#icub_pybullet.visualizer.Visualizer.MenuCallback.wait_for_dialog_completion"><code class="docutils literal notranslate"><span class="pre">Visualizer.MenuCallback.wait_for_dialog_completion()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="visualizer.html#visualizer.Visualizer.find_xyz_rpy"><code class="docutils literal notranslate"><span class="pre">Visualizer.find_xyz_rpy()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="visualizer.html#visualizer.Visualizer.read_info"><code class="docutils literal notranslate"><span class="pre">Visualizer.read_info()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="visualizer.html#visualizer.Visualizer.render"><code class="docutils literal notranslate"><span class="pre">Visualizer.render()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="visualizer.html#visualizer.Visualizer.show_first"><code class="docutils literal notranslate"><span class="pre">Visualizer.show_first()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="visualizer.html#visualizer.Visualizer.show_mesh"><code class="docutils literal notranslate"><span class="pre">Visualizer.show_mesh()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="visualizer.html#icub_pybullet.visualizer.Visualizer.find_xyz_rpy"><code class="docutils literal notranslate"><span class="pre">Visualizer.find_xyz_rpy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="visualizer.html#icub_pybullet.visualizer.Visualizer.read_info"><code class="docutils literal notranslate"><span class="pre">Visualizer.read_info()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="visualizer.html#icub_pybullet.visualizer.Visualizer.render"><code class="docutils literal notranslate"><span class="pre">Visualizer.render()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="visualizer.html#icub_pybullet.visualizer.Visualizer.show_first"><code class="docutils literal notranslate"><span class="pre">Visualizer.show_first()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="visualizer.html#icub_pybullet.visualizer.Visualizer.show_mesh"><code class="docutils literal notranslate"><span class="pre">Visualizer.show_mesh()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -497,19 +502,24 @@ by yourself and can not pull it</p>
 </ul>
 </div>
 </section>
-<section id="id6">
-<h1>Examples<a class="headerlink" href="#id6" title="Link to this heading"></a></h1>
+<section id="id4">
+<h1>examples<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h1>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="push_the_ball_cartesian.html">push_the_ball_cartesian</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="push_the_ball_cartesian.html#push_the_ball_cartesian.push_the_ball"><code class="docutils literal notranslate"><span class="pre">push_the_ball()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="push_the_ball_cartesian.html#icub_pybullet.examples.push_the_ball_cartesian.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="push_the_ball_cartesian.html#icub_pybullet.examples.push_the_ball_cartesian.push_the_ball"><code class="docutils literal notranslate"><span class="pre">push_the_ball()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="push_the_ball_pure_joints.html">push_the_ball_pure_joints</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="push_the_ball_pure_joints.html#push_the_ball_pure_joints.push_the_ball"><code class="docutils literal notranslate"><span class="pre">push_the_ball()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="push_the_ball_pure_joints.html#icub_pybullet.examples.push_the_ball_pure_joints.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="push_the_ball_pure_joints.html#icub_pybullet.examples.push_the_ball_pure_joints.push_the_ball"><code class="docutils literal notranslate"><span class="pre">push_the_ball()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="skin_test.html">skin_test</a></li>
+<li class="toctree-l1"><a class="reference internal" href="skin_test.html">skin_test</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="skin_test.html#icub_pybullet.examples.skin_test.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </div>
 </section>
@@ -525,7 +535,7 @@ by yourself and can not pull it</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Lukas Rustler.</p>
+    <p>&#169; Copyright 2023, Lukas Rustler.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

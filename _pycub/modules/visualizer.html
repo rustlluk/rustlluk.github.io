@@ -44,9 +44,8 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../modules.html">README</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../modules.html#presentation">Presentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../modules.html#icub-pybullet">icub_pybullet</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../modules.html#id6">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html#id4">examples</a></li>
 </ul>
 
         </div>
@@ -79,6 +78,7 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">open3d.visualization.gui</span> <span class="k">as</span> <span class="nn">gui</span>
 <span class="kn">import</span> <span class="nn">open3d.visualization.rendering</span> <span class="k">as</span> <span class="nn">rendering</span>
+<span class="kn">import</span> <span class="nn">cv2</span>
 
 
 <div class="viewcode-block" id="Visualizer">
@@ -341,7 +341,6 @@
         <span class="k">for</span> <span class="n">ew</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">eye_windows</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
             <span class="n">ew</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">look_at</span><span class="p">(</span><span class="n">ew</span><span class="o">.</span><span class="n">center</span> <span class="o">+</span> <span class="n">ew</span><span class="o">.</span><span class="n">dir</span><span class="p">,</span> <span class="n">ew</span><span class="o">.</span><span class="n">center</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
             <span class="n">ew</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">post_redraw</span><span class="p">()</span>
-            <span class="n">ew</span><span class="o">.</span><span class="n">get_image</span><span class="p">()</span>
             <span class="k">if</span> <span class="n">ew</span><span class="o">.</span><span class="n">save_images_bool</span><span class="p">:</span>
                 <span class="n">ew</span><span class="o">.</span><span class="n">save_images</span><span class="p">()</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">gui</span><span class="o">.</span><span class="n">run_one_tick</span><span class="p">():</span>
@@ -429,8 +428,9 @@
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">return</span> <span class="mi">0</span>
             <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="n">im</span> <span class="o">=</span> <span class="n">o3d</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">Image</span><span class="p">((</span><span class="mi">255</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">im</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">))</span>
-            <span class="n">o3d</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">write_image</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="n">im</span><span class="p">)</span>
+                <span class="n">cv2</span><span class="o">.</span><span class="n">imwrite</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">im</span><span class="p">)</span><span class="o">*</span><span class="mi">255</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">o3d</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">write_image</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="n">im</span><span class="p">)</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;File saved to </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="kc">None</span></div>
@@ -520,7 +520,6 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">dir</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">img_counter</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">save_images_bool</span> <span class="o">=</span> <span class="kc">False</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">last_image</span> <span class="o">=</span> <span class="kc">None</span>
 
             <span class="k">for</span> <span class="n">menu_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">MENU_IDS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">eye</span><span class="p">]:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">file_menu</span><span class="o">.</span><span class="n">set_enabled</span><span class="p">(</span><span class="n">menu_id</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
@@ -558,38 +557,22 @@
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">EventCallbackResult</span><span class="o">.</span><span class="n">CONSUMED</span></div>
 
 
-<div class="viewcode-block" id="Visualizer.EyeWindow.get_image">
-<a class="viewcode-back" href="../visualizer.html#visualizer.Visualizer.EyeWindow.get_image">[docs]</a>
-        <span class="k">def</span> <span class="nf">get_image</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">vis</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">render_to_image</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_image</span><span class="p">)</span></div>
-
-
 <div class="viewcode-block" id="Visualizer.EyeWindow.save_images">
 <a class="viewcode-back" href="../visualizer.html#visualizer.Visualizer.EyeWindow.save_images">[docs]</a>
         <span class="k">def</span> <span class="nf">save_images</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            Function to save stream of images to file</span>
-
-<span class="sd">            &quot;&quot;&quot;</span>
             <span class="n">p</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">file_dir</span><span class="p">,</span> <span class="s2">&quot;..&quot;</span><span class="p">,</span> <span class="s2">&quot;images&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">eye</span><span class="p">,</span> <span class="s2">&quot;RGB&quot;</span><span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
                 <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
             <span class="n">p</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">img_counter</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;.png&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">img_counter</span> <span class="o">+=</span> <span class="mi">1</span>
-            <span class="n">o3d</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">write_image</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_image</span><span class="p">)</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">vis</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">render_to_image</span><span class="p">(</span><span class="k">lambda</span> <span class="n">im</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_image</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">p</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="Visualizer.EyeWindow.save_image">
 <a class="viewcode-back" href="../visualizer.html#visualizer.Visualizer.EyeWindow.save_image">[docs]</a>
-        <span class="k">def</span> <span class="nf">save_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">im</span><span class="p">):</span>
-<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            Callback to get images from open3d</span>
-<span class="sd">            </span>
-<span class="sd">            :param im: the image to be saves</span>
-<span class="sd">            :type im: o3d.geometry.Image</span>
-<span class="sd">            &quot;&quot;&quot;</span>
-
-            <span class="bp">self</span><span class="o">.</span><span class="n">last_image</span> <span class="o">=</span> <span class="n">im</span></div>
+        <span class="nd">@staticmethod</span>
+        <span class="k">def</span> <span class="nf">save_image</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+            <span class="n">o3d</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">write_image</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">im</span><span class="p">)</span></div>
 </div>
 </div>
 
@@ -602,7 +585,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Lukas Rustler.</p>
+    <p>&#169; Copyright 2023, Lukas Rustler.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

@@ -44,9 +44,8 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../modules.html">README</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../modules.html#presentation">Presentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../modules.html#icub-pybullet">icub_pybullet</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../modules.html#id6">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html#id4">examples</a></li>
 </ul>
 
         </div>
@@ -209,12 +208,15 @@
                 <span class="c1"># if &quot;leg&quot; not in pc_path:</span>
                 <span class="c1">#     continue</span>
                 <span class="n">pc</span> <span class="o">=</span> <span class="n">o3d</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_point_cloud</span><span class="p">(</span><span class="n">pc_path</span><span class="p">)</span>
-                <span class="k">if</span> <span class="s2">&quot;foot&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">pc_path</span><span class="p">:</span>
-                    <span class="n">pc</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="n">pc</span><span class="o">.</span><span class="n">get_center</span><span class="p">())</span>
                 <span class="n">skin_part</span> <span class="o">=</span> <span class="n">skin_config</span><span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">pc_path</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]]</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">skin_point_clouds</span><span class="p">[</span><span class="n">skin_part</span><span class="p">]</span> <span class="o">=</span> <span class="n">pc</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">skin</span><span class="p">[</span><span class="n">skin_part</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">pc</span><span class="o">.</span><span class="n">points</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">pc</span><span class="o">.</span><span class="n">normals</span><span class="p">)]</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">skin_activations</span><span class="p">[</span><span class="n">skin_part</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">pc</span><span class="o">.</span><span class="n">points</span><span class="p">),</span> <span class="p">))</span>
+
+                <span class="c1"># self.neighbour_links[link.robot_joint_id] = []</span>
+                <span class="c1"># for c in close_points:</span>
+                <span class="c1">#     self.neighbour_links[link.robot_joint_id].append(c[4])</span>
+                <span class="c1"># self.neighbour_links[link.robot_joint_id] = np.unique(self.neighbour_links[link.robot_joint_id])</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">log</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">file_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;pycub_file_logger&quot;</span><span class="p">)</span>
@@ -238,22 +240,6 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">collision_during_motion</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">steps_done</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">toggle_gravity</span><span class="p">()</span>
-
-<div class="viewcode-block" id="pyCub.get_camera_images">
-<a class="viewcode-back" href="../pycub.html#pycub.pyCub.get_camera_images">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_camera_images</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets the images from enabled eye cameras</span>
-
-<span class="sd">        :return: list of numpy arrays</span>
-<span class="sd">        :rtype: list</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">images</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">ew</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">visualizer</span><span class="o">.</span><span class="n">eye_windows</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
-            <span class="n">images</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">ew</span><span class="o">.</span><span class="n">last_image</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">images</span></div>
-
 
 <div class="viewcode-block" id="pyCub.kill_open3d">
 <a class="viewcode-back" href="../pycub.html#pycub.pyCub.kill_open3d">[docs]</a>
@@ -412,7 +398,7 @@
         <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">links_to_test</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">ll</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">links</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">l</span> <span class="o">==</span> <span class="n">ll</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
-                    <span class="n">bboxes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scale_bbox</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getAABB</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">robot</span><span class="p">,</span> <span class="n">ll</span><span class="o">.</span><span class="n">robot_link_id</span><span class="p">),</span> <span class="mf">0.8</span><span class="p">))</span>
+                    <span class="n">bboxes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scale_bbox</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getAABB</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">robot</span><span class="p">,</span> <span class="n">ll</span><span class="o">.</span><span class="n">robot_joint_id</span><span class="p">),</span> <span class="mf">0.8</span><span class="p">))</span>
                     <span class="k">break</span>
 
         <span class="k">for</span> <span class="n">fo_id</span><span class="p">,</span> <span class="n">fo</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">free_objects</span><span class="p">):</span>
@@ -436,7 +422,7 @@
                 <span class="k">if</span> <span class="n">link</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">skin_part</span><span class="p">:</span>
                     <span class="k">break</span>
 
-            <span class="n">linkState</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getLinkState</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">robot</span><span class="p">,</span> <span class="n">link</span><span class="o">.</span><span class="n">robot_link_id</span><span class="p">,</span>
+            <span class="n">linkState</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getLinkState</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">robot</span><span class="p">,</span> <span class="n">link</span><span class="o">.</span><span class="n">robot_joint_id</span><span class="p">,</span>
                                           <span class="n">computeLinkVelocity</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">computeForwardKinematics</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
             <span class="n">ori</span> <span class="o">=</span> <span class="n">linkState</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">linkInfo</span><span class="p">[</span><span class="s2">&quot;URDFORI&quot;</span><span class="p">]]</span>
             <span class="n">pos</span> <span class="o">=</span> <span class="n">linkState</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">linkInfo</span><span class="p">[</span><span class="s2">&quot;URDFPOS&quot;</span><span class="p">]]</span>
@@ -465,7 +451,7 @@
                 <span class="n">points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">points</span><span class="p">,</span> <span class="n">points_</span><span class="p">))</span>
                 <span class="n">normals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">normals</span><span class="p">,</span> <span class="n">normals_</span><span class="p">))</span>
 
-            <span class="n">temp</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">link</span><span class="o">.</span><span class="n">robot_link_id</span><span class="p">,</span> <span class="n">skin_part</span><span class="p">,</span> <span class="n">points_</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+            <span class="n">temp</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">link</span><span class="o">.</span><span class="n">robot_joint_id</span><span class="p">,</span> <span class="n">skin_part</span><span class="p">,</span> <span class="n">points_</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
         <span class="k">if</span> <span class="n">points</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">contacts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rayTestBatch</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">points</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">skin</span><span class="o">.</span><span class="n">radius</span><span class="o">*</span><span class="n">normals</span><span class="p">,</span>
                                          <span class="n">numThreads</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">skin</span><span class="o">.</span><span class="n">num_cores</span><span class="p">)</span>
@@ -817,12 +803,12 @@
                         <span class="n">body_b</span> <span class="o">=</span> <span class="n">name</span>
                         <span class="k">break</span>
             <span class="k">for</span> <span class="n">link</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">links</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">link</span><span class="o">.</span><span class="n">robot_link_id</span> <span class="o">==</span> <span class="n">c</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">contactPoints</span><span class="p">[</span><span class="s1">&#39;INDEXA&#39;</span><span class="p">]]:</span>
+                <span class="k">if</span> <span class="n">link</span><span class="o">.</span><span class="n">robot_joint_id</span> <span class="o">==</span> <span class="n">c</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">contactPoints</span><span class="p">[</span><span class="s1">&#39;INDEXA&#39;</span><span class="p">]]:</span>
                     <span class="k">break</span>
             <span class="n">link_a</span> <span class="o">=</span> <span class="n">link</span><span class="o">.</span><span class="n">name</span>
             <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">contactPoints</span><span class="p">[</span><span class="s1">&#39;IDB&#39;</span><span class="p">]]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">robot</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">link</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">links</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="n">link</span><span class="o">.</span><span class="n">robot_link_id</span> <span class="o">==</span> <span class="n">c</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">contactPoints</span><span class="p">[</span><span class="s1">&#39;INDEXB&#39;</span><span class="p">]]:</span>
+                    <span class="k">if</span> <span class="n">link</span><span class="o">.</span><span class="n">robot_joint_id</span> <span class="o">==</span> <span class="n">c</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">contactPoints</span><span class="p">[</span><span class="s1">&#39;INDEXB&#39;</span><span class="p">]]:</span>
                         <span class="k">break</span>
                 <span class="n">link_b</span> <span class="o">=</span> <span class="n">link</span><span class="o">.</span><span class="n">name</span>
             <span class="k">else</span><span class="p">:</span>
@@ -881,19 +867,19 @@
 <div class="viewcode-block" id="Link">
 <a class="viewcode-back" href="../pycub.html#pycub.Link">[docs]</a>
 <span class="k">class</span> <span class="nc">Link</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">robot_link_id</span><span class="p">,</span> <span class="n">urdf_link</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">robot_joint_id</span><span class="p">,</span> <span class="n">urdf_link</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Help function to encapsulate link information</span>
 
 <span class="sd">        :param name: name of the link</span>
 <span class="sd">        :type name: str</span>
-<span class="sd">        :param robot_link_id: id of the link in pybullet</span>
-<span class="sd">        :type robot_link_id: int</span>
+<span class="sd">        :param robot_joint_id: id of the link in pybullet</span>
+<span class="sd">        :type robot_joint_id: int</span>
 <span class="sd">        :param urdf_link: id of the link in pycub.urdfs[&quot;robot&quot;].links</span>
 <span class="sd">        :type urdf_link: int</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">robot_link_id</span> <span class="o">=</span> <span class="n">robot_link_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">robot_joint_id</span> <span class="o">=</span> <span class="n">robot_joint_id</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">urdf_link</span> <span class="o">=</span> <span class="n">urdf_link</span></div>
 
 
@@ -938,7 +924,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Lukas Rustler.</p>
+    <p>&#169; Copyright 2023, Lukas Rustler.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

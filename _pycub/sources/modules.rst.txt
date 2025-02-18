@@ -1,17 +1,5 @@
 .. mdinclude:: ../README.md
 
-.. only:: html
-
-    Presentation
-    =============
-    View the `Presentation with description of functionality <pyCub_presentation.pdf>`_.
-
-.. only:: latex
-
-    Presentation
-    =============
-    View the `Presentation with description of functionality <https://lukasrustler.cz/pycub/pyCub_presentation.pdf>`_.
-
 icub_pybullet
 =============
 
@@ -22,7 +10,7 @@ icub_pybullet
    utils
    visualizer
 
-Examples
+examples
 =============
 
 .. toctree::

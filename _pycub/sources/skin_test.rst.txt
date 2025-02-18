@@ -1,7 +1,7 @@
 skin\_test
-=================
+=================================
 
-.. automodule:: skin_test
+.. automodule:: icub_pybullet.examples.skin_test
    :members:
    :undoc-members:
    :show-inheritance:
