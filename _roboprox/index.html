@@ -313,29 +313,68 @@
         }
 
         // Function to generate YAML output with comments
-        function generateOutput() {
-            let yamlOutput = '# This structure is in YAML format. You only need to fill in the values on rows **without** # - those are comments\n';
-            yamlOutput += '# Each record is preceded with key:, such as PUBLISHER:. Your data follows in a presented form.\n';
-            yamlOutput += '# Each colon : needs to be followed by space\n';
-            yamlOutput += '# Text values need to be put between quotation marks; see TYP_LICENCE\n';
-            yamlOutput += '# Records within {} and [] brackets need to be separated with comma and space; see GROUP\n';
-            yamlOutput += '# Check the correctness of the format here https://jsonformatter.org/yaml-validator\n';
-            yamlOutput += '#\n';
+// Function to generate YAML output with comments
+// Function to generate YAML output with comments
+function generateOutput() {
+    let yamlOutput = '# This structure is in YAML format. You only need to fill in the values on rows **without** # - those are comments\n';
+    yamlOutput += '# Each record is preceded with key:, such as PUBLISHER:. Your data follows in a presented form.\n';
+    yamlOutput += '# Each colon : needs to be followed by space\n';
+    yamlOutput += '# Text values need to be put between quotation marks; see TYP_LICENCE\n';
+    yamlOutput += '# Records within {} and [] brackets need to be separated with comma and space; see GROUP\n';
+    yamlOutput += '# Check the correctness of the format here https://jsonformatter.org/yaml-validator\n';
+    yamlOutput += '#\n';
 
-            for (const key in yamlTemplate) {
-                const field = yamlTemplate[key];
-                const value = document.getElementById(key).value;
+    // Iterate over the YAML template fields
+    for (const key in yamlTemplate) {
+        const field = yamlTemplate[key];
+        let value = document.getElementById(key).value.trim(); // Trim any leading/trailing whitespace
 
-                // If the field value contains {} or [] or only numbers, don't wrap it in quotes
-                if (value.match(/^\{.*\}$/) || value.match(/^\[.*\]$/) || !isNaN(value)) {
-                    yamlOutput += `# ${field.comment}\n${key}: ${value}\n`;
-                } else {
-                    yamlOutput += `# ${field.comment}\n${key}: "${value}"\n`;
-                }
-            }
-
-            document.getElementById('output').textContent = yamlOutput;
+        // If REGISTRACNI_CISLA_OSTATNICH_PROJEKTU is empty, save as []
+        if (key === 'REGISTRACNI_CISLA_OSTATNICH_PROJEKTU' && value === '') {
+            value = '[]';  // Empty array
         }
+
+
+        // Check if the value looks like an object (e.g., {key1:value1, key2:value2})
+        if (value.match(/^\{.*\}$/)) {
+            // If it looks like an object, format the object
+            value = value.trim()
+                         .replace(/^\{/, '{ ')  // Add space after '{'
+                         .replace(/\}$/, ' }')  // Add space before '}'
+                         .replace(/,/g, ', ')   // Ensure comma separation has a single space
+                         .replace(/:\s*/g, ': ') // Ensure space after colon
+                         .replace(/\s+/g, ' ');  // Remove extra spaces
+        }
+
+        // Check if the value looks like an array (e.g., [item1, item2])
+        if (value.match(/^\[.*\]$/)) {
+            // If it looks like an array, format the array without spaces
+            value = value.trim()
+                         .replace(/,/g, ', ')    // Ensure comma separation has a single space
+                         .replace(/\s+/g, ' ');  // Remove extra spaces
+        }
+
+        // If POMERNA_CAST_PRO_ROBOPROX is entered, ensure it's treated as a number
+        if (key === 'POMERNA_CAST_PRO_ROBOPROX' && value !== '') {
+            value = Number(value);
+            if (isNaN(value)) {
+                value = 100; // Default to 0 if it's not a valid number
+            }
+        }
+
+        // If the value is an object or array or a valid number, do not wrap it in quotes
+        if (!isNaN(value) || value.match(/^\{.*\}$/) || value.match(/^\[.*\]$/)) {
+            yamlOutput += `# ${field.comment}\n${key}: ${value}\n`;
+        } else {
+            // Otherwise, wrap the value in quotes
+            yamlOutput += `# ${field.comment}\n${key}: "${value}"\n`;
+        }
+    }
+
+    // Display the YAML output in the output div
+    document.getElementById('output').textContent = yamlOutput;
+}
+
 
         // Function to download YAML file
         function downloadYAML() {
