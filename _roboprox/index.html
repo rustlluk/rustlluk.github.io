@@ -17,12 +17,13 @@
         /* Navigation Bar */
         header {
             background-color: #102C47; /* Updated Blue color */
-            padding: 10px 0;
+            padding: 20px 0;
             text-align: center;
+            margin-bottom: 30px; /* Adds space between header and form */
         }
 
         header h1 {
-            font-size: 2em;
+            font-size: 2.5em;
             color: white;
             margin: 0;
         }
@@ -30,7 +31,7 @@
         /* Main Container */
         .container {
             max-width: 900px;
-            margin: 30px auto;
+            margin: 0 auto;
             padding: 30px;
             background-color: white;
             border-radius: 10px;
@@ -140,6 +141,16 @@
     </header>
 
     <div class="container">
+        <!-- Header comment formatted like the input field comments -->
+        <div id="yaml-header" class="comment">
+            This structure is in YAML format. You only need to fill in the values on rows **without** # - those are comments<br>
+            Each record is preceded with key:, such as PUBLISHER:. Your data follows in a presented form.<br>
+            Each colon : needs to be followed by space<br>
+            Text values need to be put between quotation marks; see TYP_LICENCE<br>
+            Records within {} and [] brackets need to be separated with comma and space; see GROUP<br>
+            Check the correctness of the format here https://jsonformatter.org/yaml-validator<br><br>
+        </div>
+
         <div id="form-container">
             <!-- Form Fields will be populated here -->
         </div>
@@ -217,19 +228,20 @@
                 "comment": "License, select: CC-BY / CC-BY-ND / CC-BY-NC / CC-BY-NC-ND, JINA otherwise"
             },
             "VCASNE_SDILENI_VYSLEDKU_TYP": {
-                "type": "text",
+                "type": "dropdown",
+                "options": ["preprint", "pre-registration"],
                 "value": "preprint",
                 "comment": "Type of the open access - fill in either preprint, or pre-registration"
             },
             "TRVALA_URL_OPEN_ACCESS_PREPRINT": {
                 "type": "text",
                 "value": "https://doi.org/10.48550/arXiv.2409.05889",
-                "comment": "Open access persistent URL (e.g., arxiv) of the preprint or pre-registration"
+                "comment": "Open access persistent URL (e.g., arxiv) of the preprint or pre-registration, of the submitted version of the result, OR if not relevant, fill in 'NR'"
             },
             "PERSISTENTNI_OTEVRENE_RECENZNI_RIZENI": {
                 "type": "text",
                 "value": "NR",
-                "comment": "Persistent URL of the open peer review process if it applies"
+                "comment": "Persistent URL of the open peer review process if it applies, OR if not relevant, fill in 'NR'"
             },
             "PERZISTENTNI_IDENTIFIKATOR_MISTA_ULOZENI_DAT": {
                 "type": "text",
@@ -239,7 +251,7 @@
             "CITIZEN_SCIENCE": {
                 "type": "text",
                 "value": "NR",
-                "comment": "Describe citizen science involvement"
+                "comment": "Describe citizen science (how The public, end-users, academia and industry, public authorities, non-profit organisations, etc. were involved in the research)"
             },
             "RICAIP_EQUIPMENT": {
                 "type": "text",
