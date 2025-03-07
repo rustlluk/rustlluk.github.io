@@ -5,4 +5,4 @@ categories:
 author_profile: false
 ---
 
-<meta http-equiv="refresh" content="0; url=https://lukasrustler.cz/adaptive-sensitivity/" />
+<meta http-equiv="refresh" content="0; url=https://lukasrustler.cz/adaptive-sensitivity/"/>
