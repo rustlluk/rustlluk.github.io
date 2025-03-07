@@ -302,6 +302,9 @@ defaults:
       show_date: true
 
 collections:
+  roboprox:
+    output: true
+    permalink: /:collection/:path/
   pycub:
     output: true
     permalink: /:collection/:path/

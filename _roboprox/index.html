@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roboprox Note Generator</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+
+        /* Navigation Bar */
+        header {
+            background-color: #102C47; /* Updated Blue color */
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2em;
+            color: white;
+            margin: 0;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 30px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container {
+            margin-bottom: 20px;
+        }
+
+        .label {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+            color: #102C47; /* Updated Blue color */
+        }
+
+        .comment {
+            font-style: italic;
+            color: #888;
+            margin-top: 5px;
+            font-size: 0.9em;
+        }
+
+        .input-field, .textarea-field, .dropdown-field {
+            width: 100%;
+            padding: 12px;
+            font-size: 1em;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .input-field:focus, .textarea-field:focus, .dropdown-field:focus {
+            border-color: #102C47; /* Updated Blue color */
+            outline: none;
+        }
+
+        .textarea-field {
+            height: 120px;
+        }
+
+        /* Button Styling */
+        .button-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .button-container button {
+            padding: 12px 25px;
+            font-size: 1.1em;
+            margin: 10px;
+            background-color: #102C47; /* Updated Blue color */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .button-container button:hover {
+            background-color: #0A1F2A; /* Darker blue for hover effect */
+        }
+
+        /* Output Styling */
+        .output {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            font-family: 'Courier New', Courier, monospace;
+            color: #333;
+            word-wrap: break-word;
+        }
+
+        /* Footer Styling */
+        footer {
+            background-color: #102C47; /* Updated Blue color */
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 0.9em;
+            margin-top: 30px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .button-container button {
+                width: 100%;
+                padding: 15px;
+                font-size: 1.2em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Roboprox Note Generator</h1>
+    </header>
+
+    <div class="container">
+        <div id="form-container">
+            <!-- Form Fields will be populated here -->
+        </div>
+
+        <div class="button-container">
+            <button onclick="generateOutput()">Generate YAML Output</button>
+            <button onclick="downloadYAML()">Download YAML</button>
+        </div>
+
+        <div id="output" class="output"></div>
+    </div>
+
+    <script>
+        const yamlTemplate = {
+            "PUBLISHER": {
+                "type": "text",
+                "value": "Elsevier B.V.",
+                "comment": "Publisher - please fill directly into the note, cannot be retrieved from V3S directly"
+            },
+            "RANKS": {
+                "type": "dropdown",
+                "options": ["Q1AISorSJR", "Q2AISorSJR", "ConfA", "NONE"],
+                "value": "Q1AISorSJR",
+                "comment": "Select Q1AISorSJR if journal paper ranks in Q1 of WOS AIS or SJR, Q2AISorSJR if Q2 of WOS AIS or SJR, ConfA if the conference ranks in CORE A/A* or Qualis A1/A2 or ERA A, else NONE"
+            },
+            "VECNA_NAVAZNOST_NA_ROBOPROX": {
+                "type": "textarea",
+                "value": "The paper showcases the power of continuum multi-physics modeling in understanding and predicting corrosion processes that initiate at the atomistic scale. In this regard, it connects the modeling and simulation activities in RA4 and RA5 (particularly RO 4.1 – Simulations with RO 5.3 – Design and manipulation of 2D materials).",
+                "comment": "Write two sentences. The first sentence (at most 200 characters in English) highlights the result. The first sentence will also be used by PR on LinkedIn when VYBRAT_Z_Q1AISorSJR_Q2AISorSJR_ConfA_NONE is not NONE. The second sentence (at most 200 characters in English) describes a connection to research objective RO x.y."
+            },
+            "CONTACT_PERSON_EMAIL": {
+                "type": "text",
+                "value": " ….@cvut.cz",
+                "comment": "Contact researcher’s email associated with the result"
+            },
+            "GROUPS_AND_THEIR_PERCENTAGE": {
+                "type": "text",
+                "value": "{ G04: 100 }",
+                "comment": "The researcher decides a share of the result among Roboprox Groups, e.g., { G11: 80, G12: 20 } means group G11 participated 80 % and G12 20 %."
+            },
+            "MILESTONES_AND_THEIR_PERCENTAGE": {
+                "type": "text",
+                "value": "{ 4.1.1: 80, 5.3.1: 20 }",
+                "comment": "The researcher decides a share of the result among Roboprox Milestones, e.g., { 11.1.1: 60, 11.1.3: 40 }, means milestone 11.1.1 of RO 11.1 in the project proposal participated 60 %."
+            },
+            "GRADE_METODIKA_17": {
+                "type": "text",
+                "value": "NONE",
+                "comment": "Fill the grade when awarded in Metodika17+, otherwise NONE"
+            },
+            "DATUM_DOSAZENI": {
+                "type": "text",
+                "value": "20.8.2024",
+                "comment": "Acceptance date - when the review process was finished with a positive result."
+            },
+            "POMERNA_CAST_PRO_ROBOPROX": {
+                "type": "text",
+                "value": "100",
+                "comment": "When the result has several OP JAK or OP VVV projects in acknowledgments, then indicate the percentage of the result for ROBOPROX, otherwise 100"
+            },
+            "REGISTRACNI_CISLA_OSTATNICH_PROJEKTU": {
+                "type": "text",
+                "value": "[]",
+                "comment": "List of codes (e.g., [\"ABCD\", \"EFGH\"]) of the other relevant OP JAK and OP VVV projects"
+            },
+            "TRVALA_URL_OPEN_ACCESS_ACCEPTED": {
+                "type": "text",
+                "value": "https://dspace.cvut.cz/handle/10467/118564",
+                "comment": "Open access DOI or persistent URL (e.g., arxiv) of the accepted version"
+            },
+            "TYP_LICENCE": {
+                "type": "dropdown",
+                "options": ["CC-BY", "CC-BY-ND", "CC-BY-NC", "CC-BY-NC-ND", "JINA"],
+                "value": "CC-BY",
+                "comment": "License, select: CC-BY / CC-BY-ND / CC-BY-NC / CC-BY-NC-ND, JINA otherwise"
+            },
+            "VCASNE_SDILENI_VYSLEDKU_TYP": {
+                "type": "text",
+                "value": "preprint",
+                "comment": "Type of the open access - fill in either preprint, or pre-registration"
+            },
+            "TRVALA_URL_OPEN_ACCESS_PREPRINT": {
+                "type": "text",
+                "value": "https://doi.org/10.48550/arXiv.2409.05889",
+                "comment": "Open access persistent URL (e.g., arxiv) of the preprint or pre-registration"
+            },
+            "PERSISTENTNI_OTEVRENE_RECENZNI_RIZENI": {
+                "type": "text",
+                "value": "NR",
+                "comment": "Persistent URL of the open peer review process if it applies"
+            },
+            "PERZISTENTNI_IDENTIFIKATOR_MISTA_ULOZENI_DAT": {
+                "type": "text",
+                "value": "No data was used for the research described in the article.",
+                "comment": "DOI or persistent URL for the uploaded research data"
+            },
+            "CITIZEN_SCIENCE": {
+                "type": "text",
+                "value": "NR",
+                "comment": "Describe citizen science involvement"
+            },
+            "RICAIP_EQUIPMENT": {
+                "type": "text",
+                "value": "NR",
+                "comment": "What RICAIP project equipment was used to achieve the result"
+            }
+        };
+
+        // Function to generate the form fields dynamically
+        function generateForm() {
+            const container = document.getElementById('form-container');
+            for (const key in yamlTemplate) {
+                const field = yamlTemplate[key];
+
+                const formGroup = document.createElement('div');
+                formGroup.classList.add('form-container');
+
+                const label = document.createElement('div');
+                label.classList.add('label');
+                label.textContent = key;
+                formGroup.appendChild(label);
+
+                let input;
+
+                if (field.type === 'dropdown') {
+                    input = document.createElement('select');
+                    input.classList.add('dropdown-field');
+                    field.options.forEach(option => {
+                        const opt = document.createElement('option');
+                        opt.value = option;
+                        opt.textContent = option;
+                        input.appendChild(opt);
+                    });
+                } else if (field.type === 'textarea') {
+                    input = document.createElement('textarea');
+                    input.classList.add('textarea-field');
+                    input.value = field.value;
+                } else {
+                    input = document.createElement('input');
+                    input.classList.add('input-field');
+                    input.type = 'text';
+                    input.value = field.value;
+                }
+
+                input.id = key;
+                formGroup.appendChild(input);
+
+                const comment = document.createElement('div');
+                comment.classList.add('comment');
+                comment.textContent = field.comment;
+                formGroup.appendChild(comment);
+
+                container.appendChild(formGroup);
+            }
+        }
+
+        // Function to generate YAML output with comments
+        function generateOutput() {
+            let yamlOutput = '# This structure is in YAML format. You only need to fill in the values on rows **without** # - those are comments\n';
+            yamlOutput += '# Each record is preceded with key:, such as PUBLISHER:. Your data follows in a presented form.\n';
+            yamlOutput += '# Each colon : needs to be followed by space\n';
+            yamlOutput += '# Text values need to be put between quotation marks; see TYP_LICENCE\n';
+            yamlOutput += '# Records within {} and [] brackets need to be separated with comma and space; see GROUP\n';
+            yamlOutput += '# Check the correctness of the format here https://jsonformatter.org/yaml-validator\n';
+            yamlOutput += '#\n';
+
+            for (const key in yamlTemplate) {
+                const field = yamlTemplate[key];
+                const value = document.getElementById(key).value;
+
+                // If the field value contains {} or [] or only numbers, don't wrap it in quotes
+                if (value.match(/^\{.*\}$/) || value.match(/^\[.*\]$/) || !isNaN(value)) {
+                    yamlOutput += `# ${field.comment}\n${key}: ${value}\n`;
+                } else {
+                    yamlOutput += `# ${field.comment}\n${key}: "${value}"\n`;
+                }
+            }
+
+            document.getElementById('output').textContent = yamlOutput;
+        }
+
+        // Function to download YAML file
+        function downloadYAML() {
+            const blob = new Blob([document.getElementById('output').textContent], { type: 'application/x-yaml' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'output.yaml';
+            link.click();
+        }
+
+        // Initialize the form on page load
+        window.onload = generateForm;
+    </script>
+
+</body>
+</html>
