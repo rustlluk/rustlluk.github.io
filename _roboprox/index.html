@@ -133,6 +133,7 @@
             }
         }
     </style>
+
 </head>
 <body>
 
@@ -158,10 +159,13 @@
         <div class="button-container">
             <button onclick="generateOutput()">Generate YAML Output</button>
             <button onclick="downloadYAML()">Download YAML</button>
+            <button onclick="loadYAML()">Load YAML</button> <!-- New Button to Load YAML -->
         </div>
 
         <div id="output" class="output"></div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script> <!-- YAML Parsing Library -->
 
     <script>
         const yamlTemplate = {
@@ -341,6 +345,65 @@
             link.download = 'output.yaml';
             link.click();
         }
+
+        // Function to load YAML file and populate form fields
+        function loadYAML() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.yaml, .yml';
+            input.onchange = async (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+
+                const reader = new FileReader();
+                reader.onload = (fileEvent) => {
+                    try {
+                        let yamlData = fileEvent.target.result;
+
+                        // Strip comments from the YAML string before parsing
+                        yamlData = yamlData.replace(/#.*$/gm, '').trim();  // Removes lines starting with #
+
+                        // Parse the YAML content without comments
+                        const parsedData = jsyaml.load(yamlData);
+
+                        // Populate the form with the parsed YAML data
+                        populateForm(parsedData);
+                    } catch (err) {
+                        alert("Error loading YAML file: " + err.message);
+                    }
+                };
+                reader.readAsText(file);
+            };
+            input.click();
+        }
+
+        // Populate form fields with YAML data
+        function populateForm(data) {
+        for (const key in data) {
+            const value = data[key];
+            const field = document.getElementById(key);
+
+            if (field) {
+                // Check if the value is an object or an array
+                if (Array.isArray(value)) {
+                    // Convert array to string with proper YAML formatting
+                    field.value = `[${value.join(', ')}]`;
+                } else if (typeof value === 'object' && value !== null) {
+                    // Convert object to string with proper YAML formatting
+                    let objectStr = '{ ';
+                    for (const objKey in value) {
+                        objectStr += `${objKey}: ${value[objKey]}, `;
+                    }
+                    objectStr = objectStr.replace(/, $/, '');  // Remove trailing comma and space
+                    objectStr += ' }';
+                    field.value = objectStr;
+                } else {
+                    // For simple types (strings, numbers), just set the value directly
+                    field.value = value;
+                }
+            }
+        }
+    }
 
         // Initialize the form on page load
         window.onload = generateForm;
