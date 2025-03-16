@@ -308,6 +308,9 @@ collections:
   pycub:
     output: true
     permalink: /:collection/:path/
+  pycub_documentation:
+    output: true
+    permalink: /:collection/:path/
   pyur:
     output: true
     permalink: /:collection/:path/
