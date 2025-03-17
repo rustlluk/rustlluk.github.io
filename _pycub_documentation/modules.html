@@ -51,8 +51,9 @@
 <li class="toctree-l2"><a class="reference internal" href="#faq">FAQ</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#docker">Docker</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#native-version">Native Version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vnc-version">VNC Version</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#docker-pycharm">Docker + PyCharm</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id5">Native Version:</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">Native Version:</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#deploy-parameters">Deploy Parameters</a></li>
@@ -68,7 +69,7 @@
 <li class="toctree-l2"><a class="reference internal" href="visualizer.html">visualizer</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="#id6">examples</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="#id7">examples</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="push_the_ball_cartesian.html">push_the_ball_cartesian</a></li>
 <li class="toctree-l2"><a class="reference internal" href="push_the_ball_pure_joints.html">push_the_ball_pure_joints</a></li>
 <li class="toctree-l2"><a class="reference internal" href="skin_test.html">skin_test</a></li>
@@ -172,7 +173,7 @@ should turn green on the places where contact occurs. You may want to slow the s
 <section id="information">
 <h2>Information<a class="headerlink" href="#information" title="Permalink to this heading"></a></h2>
 <ul class="simple">
-<li><p>documentation can be found at <a class="reference external" href="https://lukasrustler.cz/pycub_documentation">lukasrustler.cz/pycub_documentation</a> or in <a class="reference external" href="lukasrustler.cz/pycub_documentation/pyCub.pdf">pyCub.pdf</a></p></li>
+<li><p>documentation can be found at <a class="reference external" href="https://lukasrustler.cz/pycub_documentation">https://lukasrustler.cz/pycub_documentation</a> or in <a class="reference external" href="https://lukasrustler.cz/pycub_documentation/pycub.pdf">pycub.pdf</a></p></li>
 <li><p>presentation with description of functionality can be found at <a class="reference external" href="https://lukasrustler.cz/pycub_documentation/pyCub_presentation.pdf">pyCub presentation</a></p></li>
 <li><p>simulator code is in <a class="reference external" href="icub_pybullet/pycub.py">pycub.py</a></p>
 <ul>
@@ -252,10 +253,14 @@ should turn green on the places where contact occurs. You may want to slow the s
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">deploy</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">c</span> <span class="n">pycub</span> <span class="o">-</span><span class="n">t</span>
 </pre></div>
 </div>
-<p>### VNC Version</p>
 </li>
 </ul>
 </li>
+</ul>
+</section>
+<section id="vnc-version">
+<h3>VNC Version<a class="headerlink" href="#vnc-version" title="Permalink to this heading"></a></h3>
+<ul>
 <li><p>this version works also on Windows and MacOS because it uses VNC server to show the GUI, i.e., the output will be
 shown on <a class="reference external" href="http://localhost:6080">http://localhost:6080</a></p>
 <ol class="arabic simple">
@@ -266,7 +271,7 @@ shown on <a class="reference external" href="http://localhost:6080">http://local
 <li><p><strong>perform</strong> <a class="reference external" href="https://docs.docker.com/engine/install/linux-postinstall/">post-installation steps</a></p></li>
 </ul>
 <ol class="arabic">
-<li><p>The same as for <a class="reference external" href="#vnc-version">VNC Version</a>, but use  <code class="docutils literal notranslate"><span class="pre">-vnc</span></code> option, e.g., to pull and run the image</p>
+<li><p>The same as for <a class="reference external" href="#native-version">Native Version</a>, but use  <code class="docutils literal notranslate"><span class="pre">-vnc</span></code> option, e.g., to pull and run the image</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="n">cd</span> <span class="n">PATH_TO_THE_REPOSITORY</span><span class="o">/</span><span class="n">Docker</span>
 <span class="o">./</span><span class="n">deploy</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">p</span> <span class="n">PATH_TO_THE_REPOSITORY</span> <span class="o">-</span><span class="n">c</span> <span class="n">pycub</span> <span class="o">-</span><span class="n">pu</span> <span class="o">-</span><span class="n">vnc</span>
 </pre></div>
@@ -280,8 +285,8 @@ shown on <a class="reference external" href="http://localhost:6080">http://local
 </section>
 <section id="docker-pycharm">
 <h3>Docker + PyCharm<a class="headerlink" href="#docker-pycharm" title="Permalink to this heading"></a></h3>
-<section id="id5">
-<h4>Native Version:<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h4>
+<section id="id6">
+<h4>Native Version:<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h4>
 <p>You have two option:</p>
 <ol class="arabic simple">
 <li><p>Either run pycharm from docker</p></li>
@@ -508,8 +513,8 @@ by yourself and can not pull it</p>
 </ul>
 </div>
 </section>
-<section id="id6">
-<h1>examples<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h1>
+<section id="id7">
+<h1>examples<a class="headerlink" href="#id7" title="Permalink to this heading"></a></h1>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="push_the_ball_cartesian.html">push_the_ball_cartesian</a><ul>
