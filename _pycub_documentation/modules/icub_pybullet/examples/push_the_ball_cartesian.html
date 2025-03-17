@@ -76,16 +76,20 @@
 
 <span class="sd">:Author: Lukas Rustler</span>
 <span class="sd">&quot;&quot;&quot;</span>
-
 <span class="kn">from</span><span class="w"> </span><span class="nn">icub_pybullet.pycub</span><span class="w"> </span><span class="kn">import</span> <span class="n">pyCub</span><span class="p">,</span> <span class="n">Pose</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">NoReturn</span>
 
 
-<div class="viewcode-block" id="push_the_ball"><a class="viewcode-back" href="../../../push_the_ball_cartesian.html#icub_pybullet.examples.push_the_ball_cartesian.push_the_ball">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">push_the_ball</span><span class="p">(</span><span class="n">client</span><span class="p">):</span>
+<div class="viewcode-block" id="push_the_ball"><a class="viewcode-back" href="../../../push_the_ball_cartesian.html#icub_pybullet.examples.push_the_ball_cartesian.push_the_ball">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">push_the_ball</span><span class="p">(</span><span class="n">client</span><span class="p">:</span> <span class="n">pyCub</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Function to move the ball with cartesian control. The robot is moved 15cm lower and 10cm closer and the moved left to</span>
-<span class="sd">    push the ball.</span>
+<span class="sd">    Example function to move the ball with cartesian control.</span>
 
+<span class="sd">    :param client: instance of pyCub</span>
+<span class="sd">    :type client: icub_pybullet.pycub.pyCub</span>
+<span class="sd">    :return:</span>
+<span class="sd">    :rtype:</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="c1"># Get current pose</span>
     <span class="n">cur_pose</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">end_effector</span><span class="o">.</span><span class="n">get_position</span><span class="p">()</span>
 
@@ -99,10 +103,13 @@
 
     <span class="c1"># get current pose</span>
     <span class="n">pose</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">end_effector</span><span class="o">.</span><span class="n">get_position</span><span class="p">()</span>
+
     <span class="c1"># assign straight to it to move hand left</span>
     <span class="n">pose</span><span class="o">.</span><span class="n">pos</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-=</span> <span class="mf">0.2</span>
+
     <span class="c1"># move; do not wait for completion; and move a bit faster</span>
     <span class="n">client</span><span class="o">.</span><span class="n">move_cartesian</span><span class="p">(</span><span class="n">pose</span><span class="p">,</span> <span class="n">wait</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">velocity</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
     <span class="c1"># wait manually</span>
     <span class="k">while</span> <span class="ow">not</span> <span class="n">client</span><span class="o">.</span><span class="n">motion_done</span><span class="p">():</span>
         <span class="n">client</span><span class="o">.</span><span class="n">update_simulation</span><span class="p">()</span>
@@ -114,7 +121,13 @@
 
     <span class="n">client</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Moved the ball!&quot;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../../push_the_ball_cartesian.html#icub_pybullet.examples.push_the_ball_cartesian.main">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../../push_the_ball_cartesian.html#icub_pybullet.examples.push_the_ball_cartesian.main">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">NoReturn</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Main function to run the example</span>
+
+<span class="sd">    :return:</span>
+<span class="sd">    :rtype:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># load the robot with correct world/config</span>
     <span class="n">client</span> <span class="o">=</span> <span class="n">pyCub</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="s2">&quot;with_ball.yaml&quot;</span><span class="p">)</span>
 

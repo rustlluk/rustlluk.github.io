@@ -72,14 +72,21 @@
              
   <h1>Source code for icub_pybullet.examples.skin_test</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Script to the test the skin sensors.</span>
+<span class="sd">Script to the test the skin sensors. Balls falling to the skin and turning activated point to green should be seen.</span>
 
 <span class="sd">:Author: Lukas Rustler</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">icub_pybullet.pycub</span><span class="w"> </span><span class="kn">import</span> <span class="n">pyCub</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">NoReturn</span>
 
 
-<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../../skin_test.html#icub_pybullet.examples.skin_test.main">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../../skin_test.html#icub_pybullet.examples.skin_test.main">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">NoReturn</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Main function to run the example</span>
+
+<span class="sd">    :return:</span>
+<span class="sd">    :rtype:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">client</span> <span class="o">=</span> <span class="n">pyCub</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="s2">&quot;skin_test.yaml&quot;</span><span class="p">)</span>
 
     <span class="k">while</span> <span class="n">client</span><span class="o">.</span><span class="n">is_alive</span><span class="p">():</span>

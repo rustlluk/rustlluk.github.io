@@ -79,12 +79,21 @@
 <span class="sd">:Author: Lukas Rustler</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">icub_pybullet.pycub</span><span class="w"> </span><span class="kn">import</span> <span class="n">pyCub</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">NoReturn</span>
 
 
-<div class="viewcode-block" id="push_the_ball"><a class="viewcode-back" href="../../../push_the_ball_pure_joints.html#icub_pybullet.examples.push_the_ball_pure_joints.push_the_ball">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">push_the_ball</span><span class="p">(</span><span class="n">client</span><span class="p">):</span>
+<div class="viewcode-block" id="push_the_ball"><a class="viewcode-back" href="../../../push_the_ball_pure_joints.html#icub_pybullet.examples.push_the_ball_pure_joints.push_the_ball">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">push_the_ball</span><span class="p">(</span><span class="n">client</span><span class="p">:</span> <span class="n">pyCub</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Function to push the ball from the table</span>
+<span class="sd">    Example function to push the ball from the table with joint control.</span>
+
+<span class="sd">    :param client: instance of pyCub</span>
+<span class="sd">    :type client: icub_pybullet.pycub.pyCub</span>
+<span class="sd">    :return:</span>
+<span class="sd">    :rtype:</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="c1"># move torso pitch so the robot bends over the table</span>
     <span class="n">client</span><span class="o">.</span><span class="n">move_position</span><span class="p">(</span><span class="s2">&quot;torso_pitch&quot;</span><span class="p">,</span> <span class="mf">0.325</span><span class="p">)</span>
 
@@ -103,7 +112,13 @@
     <span class="n">client</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Moved the ball!&quot;</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../../push_the_ball_pure_joints.html#icub_pybullet.examples.push_the_ball_pure_joints.main">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../../push_the_ball_pure_joints.html#icub_pybullet.examples.push_the_ball_pure_joints.main">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">NoReturn</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Main function to run the example</span>
+
+<span class="sd">    :return:</span>
+<span class="sd">    :rtype:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># load the robot with correct world/config</span>
     <span class="n">client</span> <span class="o">=</span> <span class="n">pyCub</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="s2">&quot;with_ball.yaml&quot;</span><span class="p">)</span>
 
