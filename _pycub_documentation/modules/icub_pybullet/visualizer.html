@@ -42,8 +42,9 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../modules.html">README</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html#exercises">Exercises</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../modules.html#icub-pybullet">icub_pybullet</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../modules.html#id7">examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html#id7">Examples</a></li>
 </ul>
 
         </div>
@@ -71,7 +72,13 @@
            <div itemprop="articleBody">
              
   <h1>Source code for icub_pybullet.visualizer</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">webbrowser</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Visualization utils for pyCub simulator</span>
+
+<span class="sd">:Author: Lukas Rustler</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">webbrowser</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">open3d</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">o3d</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -79,14 +86,15 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">open3d.visualization.rendering</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">rendering</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
 
+
 <div class="viewcode-block" id="Visualizer"><a class="viewcode-back" href="../../visualizer.html#icub_pybullet.visualizer.Visualizer">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">Visualizer</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Class to help with custom rendering&quot;&quot;&quot;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">:</span> <span class="n">pyCub</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 
-<span class="sd">        :param client: Pointer to the PyCub class instance</span>
-<span class="sd">        :type client: int</span>
+<span class="sd">        :param client: pyCub instance</span>
+<span class="sd">        :type client: pyCub</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="o">=</span> <span class="n">client</span>
 
@@ -335,15 +343,16 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">show_mesh</span><span class="p">()</span>
 
         <span class="k">for</span> <span class="n">obj_id</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">fixed</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">other_objects</span><span class="p">:</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">fixed</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">read_info</span><span class="p">(</span><span class="n">obj_id</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">show_mesh</span><span class="p">()</span>
+            <span class="c1"># if not fixed:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">read_info</span><span class="p">(</span><span class="n">obj_id</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">show_mesh</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">post_redraw</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">ew</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">eye_windows</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
             <span class="n">ew</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">look_at</span><span class="p">(</span><span class="n">ew</span><span class="o">.</span><span class="n">center</span> <span class="o">+</span> <span class="n">ew</span><span class="o">.</span><span class="n">dir</span><span class="p">,</span> <span class="n">ew</span><span class="o">.</span><span class="n">center</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
             <span class="n">ew</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">post_redraw</span><span class="p">()</span>
             <span class="n">ew</span><span class="o">.</span><span class="n">get_image</span><span class="p">()</span>
+            <span class="n">ew</span><span class="o">.</span><span class="n">get_depth_image</span><span class="p">()</span>
             <span class="k">if</span> <span class="n">ew</span><span class="o">.</span><span class="n">save_images_bool</span><span class="p">:</span>
                 <span class="n">ew</span><span class="o">.</span><span class="n">save_images</span><span class="p">()</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">gui</span><span class="o">.</span><span class="n">run_one_tick</span><span class="p">():</span>
@@ -354,7 +363,7 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Class to handle menu callbacks.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">menu_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">menu_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Visualizer</span><span class="p">):</span>
 <span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Initialize the MenuCallback class.</span>
 
@@ -497,14 +506,14 @@
         <span class="n">MENU_IDS</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;l_eye&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span> <span class="s2">&quot;r_eye&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">9</span><span class="p">]}</span>
         <span class="n">POSITIONS</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;l_eye&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">320</span><span class="p">,</span> <span class="mi">560</span><span class="p">],</span> <span class="s2">&quot;r_eye&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">560</span><span class="p">]}</span>
 
-        <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eye</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eye</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Visualizer</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Class to handle windows for eye rendering</span>
 
 <span class="sd">            :param eye: name of the eye</span>
 <span class="sd">            :type eye: str</span>
 <span class="sd">            :param parent: The parent class (Visualizer).</span>
-<span class="sd">            :type parent: int</span>
+<span class="sd">            :type parent: Visualizer</span>
 <span class="sd">            &quot;&quot;&quot;</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">eye</span> <span class="o">=</span> <span class="n">eye</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">link_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eye</span> <span class="o">+</span> <span class="s2">&quot;_pupil&quot;</span>
@@ -531,6 +540,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">img_counter</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">save_images_bool</span> <span class="o">=</span> <span class="kc">False</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">last_image</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">last_depth_image</span> <span class="o">=</span> <span class="kc">None</span>
 
             <span class="k">for</span> <span class="n">menu_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">MENU_IDS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">eye</span><span class="p">]:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">file_menu</span><span class="o">.</span><span class="n">set_enabled</span><span class="p">(</span><span class="n">menu_id</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
@@ -571,6 +581,15 @@
 <span class="sd">            &quot;&quot;&quot;</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">vis</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">render_to_image</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_image</span><span class="p">)</span></div>
 
+<div class="viewcode-block" id="Visualizer.EyeWindow.get_depth_image"><a class="viewcode-back" href="../../visualizer.html#icub_pybullet.visualizer.Visualizer.EyeWindow.get_depth_image">[docs]</a>        <span class="k">def</span><span class="w"> </span><span class="nf">get_depth_image</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Small function to get image from open3d</span>
+
+<span class="sd">            :return:</span>
+<span class="sd">            :rtype:</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">vis</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">render_to_depth_image</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_depth_image</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="Visualizer.EyeWindow.save_images"><a class="viewcode-back" href="../../visualizer.html#icub_pybullet.visualizer.Visualizer.EyeWindow.save_images">[docs]</a>        <span class="k">def</span><span class="w"> </span><span class="nf">save_images</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Function to save stream of images to file</span>
@@ -591,7 +610,20 @@
 <span class="sd">            :type im: o3d.geometry.Image</span>
 <span class="sd">            &quot;&quot;&quot;</span>
 
-            <span class="bp">self</span><span class="o">.</span><span class="n">last_image</span> <span class="o">=</span> <span class="n">im</span></div></div></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">last_image</span> <span class="o">=</span> <span class="n">im</span></div>
+
+<div class="viewcode-block" id="Visualizer.EyeWindow.save_depth_image"><a class="viewcode-back" href="../../visualizer.html#icub_pybullet.visualizer.Visualizer.EyeWindow.save_depth_image">[docs]</a>        <span class="k">def</span><span class="w"> </span><span class="nf">save_depth_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">im</span><span class="p">:</span> <span class="n">o3d</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">Image</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Callback to get images from open3d</span>
+
+<span class="sd">            :param im: the image to be saves</span>
+<span class="sd">            :type im: o3d.geometry.Image</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">last_depth_image</span> <span class="o">=</span> <span class="n">im</span></div>
+
+<div class="viewcode-block" id="Visualizer.EyeWindow.unproject"><a class="viewcode-back" href="../../visualizer.html#icub_pybullet.visualizer.Visualizer.EyeWindow.unproject">[docs]</a>        <span class="k">def</span><span class="w"> </span><span class="nf">unproject</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">vis</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">unproject</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">size</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">size</span><span class="o">.</span><span class="n">height</span><span class="p">)</span></div></div></div>
 </pre></div>
 
            </div>
@@ -601,7 +633,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023, Lukas Rustler.</p>
+    <p>&#169; Copyright 2025, Lukas Rustler.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

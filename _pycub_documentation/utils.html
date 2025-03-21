@@ -45,6 +45,7 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="modules.html">README</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html#exercises">Exercises</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html#icub-pybullet">icub_pybullet</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="pycub.html">pyCub</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">utils</a><ul>
@@ -82,7 +83,7 @@
 <li class="toctree-l2"><a class="reference internal" href="visualizer.html">visualizer</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="modules.html#id4">examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html#id7">Examples</a></li>
 </ul>
 
         </div>
@@ -112,6 +113,12 @@
              
   <section id="module-icub_pybullet.utils">
 <span id="utils"></span><h1>utils<a class="headerlink" href="#module-icub_pybullet.utils" title="Permalink to this heading"></a></h1>
+<p>Utils for pyCub simulator</p>
+<dl class="field-list simple">
+<dt class="field-odd">Author<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Lukas Rustler</p>
+</dd>
+</dl>
 <dl class="py class">
 <dt class="sig sig-object py" id="icub_pybullet.utils.Config">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">icub_pybullet.utils.</span></span><span class="sig-name descname"><span class="pre">Config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="modules/icub_pybullet/utils.html#Config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#icub_pybullet.utils.Config" title="Permalink to this definition"></a></dt>
@@ -165,7 +172,7 @@ use one of %-formatting, <code class="xref py py-meth docutils literal notransla
 </div>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="icub_pybullet.utils.CustomFormatter.FORMATS">
-<span class="sig-name descname"><span class="pre">FORMATS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{10:</span> <span class="pre">'\x1b[38;20m%(module)s</span> <span class="pre">%(levelname)s:</span> <span class="pre">%(message)s\x1b[0m',</span> <span class="pre">20:</span> <span class="pre">'\x1b[38;20m%(module)s</span> <span class="pre">%(levelname)s:</span> <span class="pre">%(message)s\x1b[0m',</span> <span class="pre">30:</span> <span class="pre">'\x1b[33;20m%(module)s</span> <span class="pre">%(levelname)s:</span> <span class="pre">%(message)s\x1b[0m',</span> <span class="pre">40:</span> <span class="pre">'\x1b[31;20m%(module)s</span> <span class="pre">%(levelname)s:</span> <span class="pre">%(message)s\x1b[0m',</span> <span class="pre">50:</span> <span class="pre">'\x1b[31;1m%(module)s</span> <span class="pre">%(levelname)s:</span> <span class="pre">%(message)s\x1b[0m'}</span></em><a class="headerlink" href="#icub_pybullet.utils.CustomFormatter.FORMATS" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">FORMATS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{10:</span> <span class="pre">'\x1b[97;10m%(module)s</span> <span class="pre">%(levelname)s:</span> <span class="pre">%(message)s\x1b[0m',</span> <span class="pre">20:</span> <span class="pre">'\x1b[97;10m%(module)s</span> <span class="pre">%(levelname)s:</span> <span class="pre">%(message)s\x1b[0m',</span> <span class="pre">30:</span> <span class="pre">'\x1b[33;20m%(module)s</span> <span class="pre">%(levelname)s:</span> <span class="pre">%(message)s\x1b[0m',</span> <span class="pre">40:</span> <span class="pre">'\x1b[31;20m%(module)s</span> <span class="pre">%(levelname)s:</span> <span class="pre">%(message)s\x1b[0m',</span> <span class="pre">50:</span> <span class="pre">'\x1b[31;1m%(module)s</span> <span class="pre">%(levelname)s:</span> <span class="pre">%(message)s\x1b[0m'}</span></em><a class="headerlink" href="#icub_pybullet.utils.CustomFormatter.FORMATS" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -189,7 +196,7 @@ it is formatted using formatException() and appended to the message.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="icub_pybullet.utils.CustomFormatter.grey">
-<span class="sig-name descname"><span class="pre">grey</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[38;20m'</span></em><a class="headerlink" href="#icub_pybullet.utils.CustomFormatter.grey" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">grey</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[97;10m'</span></em><a class="headerlink" href="#icub_pybullet.utils.CustomFormatter.grey" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -272,7 +279,7 @@ If changes were made, write the new URDF to a file.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="icub_pybullet.utils.URDF.read">
-<span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">el</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Element</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Element</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="modules/icub_pybullet/utils.html#URDF.read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#icub_pybullet.utils.URDF.read" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">el:</span> <span class="pre">&lt;module</span> <span class="pre">'xml.etree.ElementTree'</span> <span class="pre">from</span> <span class="pre">'/usr/lib/python3.8/xml/etree/ElementTree.py'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent:</span> <span class="pre">&lt;module</span> <span class="pre">'xml.etree.ElementTree'</span> <span class="pre">from</span> <span class="pre">'/usr/lib/python3.8/xml/etree/ElementTree.py'&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="modules/icub_pybullet/utils.html#URDF.read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#icub_pybullet.utils.URDF.read" title="Permalink to this definition"></a></dt>
 <dd><p>Recursive function to read the URDF file. When there are no children, it reads the attributes and saves them.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -321,7 +328,7 @@ If changes were made, write the new URDF to a file.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023, Lukas Rustler.</p>
+    <p>&#169; Copyright 2025, Lukas Rustler.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
