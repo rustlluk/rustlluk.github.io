@@ -1,7 +1,0 @@
-pyCub
-============
-
-.. automodule:: icub_pybullet.pycub
-   :members:
-   :undoc-members:
-   :show-inheritance:
