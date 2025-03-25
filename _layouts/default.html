@@ -13,8 +13,8 @@
     {% include head.html %}
     {% include head/custom.html %}
     <script>
-  if (window.location.pathname.startsWith("/pycub")) {
-    window.location.href = window.location.origin + window.location.pathname.replace("/pycub", "/pyCub");
+  if (window.location.pathname.includes("/pycub/")) {
+    window.location.href = window.location.origin + window.location.pathname.replace("/pycub/", "/pyCub/");
   }
 </script>
   </head>
