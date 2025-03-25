@@ -2,19 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="0;url=/pyCub{{ page.url }}">
     <title>Redirecting...</title>
     <script type="text/javascript">
-        // Get the current path from the URL
-        var currentPath = window.location.pathname;
-
-        // Replace '/pycub' with '/pyCub' to create the new path
-        var newPath = currentPath.replace('/pycub', '/pyCub');
-
-        // Redirect to the new path
-        window.location.href = newPath;
+        // Ensure the current path starts with "/pycub"
+        if (window.location.pathname.startsWith('/pycub')) {
+            // Replace "/pycub" with "/pyCub"
+            var newPath = window.location.pathname.replace('/pycub', '/pyCub');
+            window.location.href = newPath;
+        }
     </script>
 </head>
 <body>
-    <p>If you are not redirected, <a href="/pyCub">click here</a>.</p>
+    <p>If you are not redirected, <a href="/pyCub{{ page.url }}">click here</a>.</p>
 </body>
 </html>
