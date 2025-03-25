@@ -12,7 +12,23 @@
   <head>
     {% include head.html %}
     {% include head/custom.html %}
-</script>
+  <script>
+  // Define the word to replace and its replacement
+  const wordToReplace = "/pycub/";
+  const replacementWord = "/pyCub/";
+
+  // Get the current URL
+  let currentUrl = window.location.href;
+
+  // Check if the URL contains the word
+  if (currentUrl.includes(wordToReplace)) {
+    // Replace the word in the URL
+    let newUrl = currentUrl.replace(wordToReplace, replacementWord);
+
+    // Redirect to the new URL
+    window.location.href = newUrl;
+  }
+ </script>
   </head>
 
   <body class="layout--{{ page.layout | default: layout.layout }}{% if page.classes or layout.classes %}{{ page.classes | default: layout.classes | join: ' ' | prepend: ' ' }}{% endif %}">
