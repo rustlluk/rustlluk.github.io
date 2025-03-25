@@ -17,14 +17,25 @@
     const replacementWord = "/pyCub/";
     let currentUrl = window.location.href;
 
-    // Check if the current URL contains the word
+    const hasTrailingSlash = currentUrl.endsWith('/');
+    // Check if the URL does not end with a slash "/"
+    if (!hasTrailingSlash) {
+      // Add a trailing slash if it's missing
+      currentUrl += '/';
+    }
+
+    // Check if the current URL contains the word "/pycub/"
     if (currentUrl.includes(wordToReplace)) {
-      // Replace the word in the URL
+      // Replace "/pycub/" with "/pyCub/"
       let newUrl = currentUrl.replace(wordToReplace, replacementWord);
 
+       if (!hasTrailingSlash)  {
+          newUrl = newUrl.slice(0, -1);
+       }
       // Redirect to the new URL
       window.location.href = newUrl;
     }
+
   </script>
 </body>
 </html>
