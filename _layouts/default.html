@@ -12,6 +12,11 @@
   <head>
     {% include head.html %}
     {% include head/custom.html %}
+    <script>
+  if (window.location.pathname.startsWith("/pycub")) {
+    window.location.href = window.location.origin + window.location.pathname.replace("/pycub", "/pyCub");
+  }
+</script>
   </head>
 
   <body class="layout--{{ page.layout | default: layout.layout }}{% if page.classes or layout.classes %}{{ page.classes | default: layout.classes | join: ' ' | prepend: ' ' }}{% endif %}">
