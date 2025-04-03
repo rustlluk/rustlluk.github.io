@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <!-- Meta tags for social media banners, these should be filled in appropriatly as they are your "business card" -->
+  <!-- Replace the content tag with appropriate information -->
+  <meta name="description" content="Webpage of RGB-D comparison paper.">
+  <meta property="og:title" content="Empirical Comparison of Four Stereoscopic Depth Sensing Cameras for Robotics Applications"/>
+  <meta property="og:description" content="Webpage of RGB-D comparison paper."/>
+  <meta property="og:url" content="https://lukasrustler.cz/rgbd-comparsion"/>
+
+  <!-- Keywords for your paper to be indexed by-->
+  <meta name="keywords" content="rgb-d, depth sensing, camera, comparison, robotics, stereo camera, depth camera,
+   3D reconstruction, 3D perception, 3D vision, computer vision, machine learning, deep learning, neural networks,
+    artificial intelligence"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <title>Empirical Comparison of Four Stereoscopic Depth Sensing Cameras for Robotics Applications</title>
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+  rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/bulma-slider.min.js"></script>
+  <script src="static/js/index.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <link rel="stylesheet" href="static/css/markdown.css">
+
+</head>
+<body>
+
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-widescreen">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">Empirical Comparison of Four Stereoscopic Depth Sensing Cameras for Robotics Applications</h1>
+            <div class="is-size-5 publication-authors">
+              <!-- Paper authors -->
+              <span class="author-block">
+                <a href="https://www.lukasrustler.cz" target="_blank">Lukas Rustler</a><sup>*</sup>,</span>
+                <span class="author-block">
+                  Vojtech Volprecht<sup>*</sup>,</span>
+                  <span class="author-block">
+                    <a href="https://sites.google.com/site/matejhof/" target="_blank">Matej Hoffmann</a>
+                  </span>
+                  </div>
+
+                  <div class="is-size-5 publication-authors">
+                    <span class="author-block">Department of Cybernetics, Faculty of Electrical Engineering, Czech Technical University in Prague<br></span>
+                    <span class="eql-cntrb"><small><br><sup>*</sup>Indicates Equal Contribution</small></span>
+                  </div>
+
+                  <div class="column has-text-centered">
+                    <div class="publication-links">
+                         <!-- Arxiv PDF link -->
+                      <span class="link-block">
+                        <a href="https://arxiv.org/abs/2501.07421" target="_blank"
+                        class="external-link button is-normal is-rounded is-dark">
+                        <span class="icon">
+                          <i class="fas fa-file-pdf"></i>
+                        </span>
+                        <span>Paper</span>
+                      </a>
+                    </span>
+
+                    <span class="link-block">
+                      <a href="https://osf.io/f2seb/files/osfstorage" target="_blank"
+                      class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="fas fa-database"></i>
+                      </span>
+                      <span>Data</span>
+                    </a>
+                  </span>
+
+                <!-- ArXiv abstract Link -->
+                <span class="link-block">
+                  <a href="https://arxiv.org/abs/2501.07421" target="_blank"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop is-centered has-text-centered">
+    <div class="hero-body">
+      <img src="static/images/setup.png" alt="RGB-D camera setup" class="teaser-image" style="width: 50%;">
+    </div>
+  </div>
+</section>
+<!-- End teaser video -->
+
+<!-- Paper abstract -->
+<section class="section hero is-light">
+  <div class="container is-max-widescreen">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Depth sensing is an essential technology in robotics and many other fields. Many depth sensing (or RGB-D)
+            cameras are available on the market and selecting the best one for your application can be challenging.
+            In this work, we tested four stereoscopic RGB-D cameras that sense the distance by using two images from
+            slightly different views. We empirically compared four cameras (Intel RealSense D435, Intel RealSense D455,
+            StereoLabs ZED 2, and Luxonis OAK-D Pro) in three scenarios: (i) planar surface perception, (ii) plastic
+            doll perception, (iii)  household object perception (YCB dataset). We recorded and evaluated more than
+            3,000 RGB-D frames for each camera. For table-top robotics scenarios with distance to objects up to
+            one meter, the best performance is provided by the D435 camera that is able to perceive with an error
+            under 1 cm in all of the tested scenarios. For longer distances, the other three models perform better,
+            making them more suitable for some mobile robotics applications. OAK-D Pro additionally offers integrated
+            AI modules (e.g., object and human keypoint detection). ZED 2 is overall the best camera which is able to
+            keep the error under 3 cm even at 4 meters. However, it is not a standalone device and requires a computer
+            with a GPU for depth data acquisition. All data (more than 12,000 RGB-D frames) are publicly available
+            at https://rustlluk.github.io/rgbd-comparison.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End paper abstract -->
+
+  <section class="section" id="data_section">
+    <div class="container is-max-widescreen">
+          <h2 class="title is-3 has-text-centered">Data</h2>
+    <div class="columns is-centered">
+    <div id="markdownContentData">Loading...</div>
+    <script>
+        fetch('static/data.md') // Replace with your markdown file path
+            .then(response => response.text()) // Get the file content as text
+            .then(markdown => {
+                document.getElementById("markdownContentData").innerHTML = marked.parse(markdown);
+            })
+            .catch(error => console.error("Error loading Markdown:", error));
+    </script>
+    </div>
+    </div>
+</section>
+
+  <section class="section" id="additional_results_section">
+    <div class="container is-max-widescreen">
+          <h2 class="title is-3 has-text-centered">Additional Results  </h2>
+    <div class="columns is-centered">
+    <div id="markdownContentAdditionalResults">Loading...</div>
+    <script>
+        fetch('static/additional_results.md') // Replace with your markdown file path
+            .then(response => response.text()) // Get the file content as text
+            .then(markdown => {
+                document.getElementById("markdownContentAdditionalResults").innerHTML = marked.parse(markdown);
+            })
+            .catch(error => console.error("Error loading Markdown:", error));
+    </script>
+    </div>
+    </div>
+</section>
+<!--BibTex citation -->
+  <section class="section" id="BibTeX">
+    <div class="container is-max-widescreen content">
+      <h2 class="title">BibTeX</h2>
+      <pre><code>@misc{rustler2025empiricalcomparisonstereoscopicdepth,
+      title={Empirical Comparison of Four Stereoscopic Depth Sensing Cameras for Robotics Applications},
+      author={Lukas Rustler and Vojtech Volprecht and Matej Hoffmann},
+      year={2025},
+      eprint={2501.07421},
+      archivePrefix={arXiv},
+      primaryClass={cs.RO},
+      url={https://arxiv.org/abs/2501.07421}}
+      </code></pre>
+    </div>
+</section>
+<!--End BibTex citation -->
+
+
+  <footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+
+          <p>
+            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+            You are free to borrow the source code of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license"  href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Statcounter tracking code -->
+  
+<!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
+
+    <!-- End of Statcounter Code -->
+
+  </body>
+  </html>
