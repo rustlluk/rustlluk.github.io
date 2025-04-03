@@ -305,6 +305,9 @@ collections:
   roboprox:
     output: true
     permalink: /:collection/:path/
+  rgbd_comparison:
+    output: true
+    permalink: /:collection/:path/
   pycub:
     output: true
     permalink: /:collection/:path/
