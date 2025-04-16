@@ -1,3 +1,4 @@
+- **16.4.2025** Our paper [*Empirical Comparison of Four Stereoscopic Depth Sensing Cameras for Robotics Applications*](https://lukasrustler.cz/rgbd-comparison) got accepted to IEEE Access!
 - **5.3.2025** Check our new preprint! [*Adaptive Collision Sensitivity for Efficient and Safe Human-Robot Collaboration*](https://lukasrustler.cz/adaptive-sensitivity/)
 - **22.- 24.11.2024** I attended the [2024 IEEE-RAS International Conference on Humanoid Robots](https://2024.ieee-humanoids.org/) in Nancy, France.
   And presented our paper [*Adaptive Electronic Skin Sensitivity for Safe Human-Robot Interaction*](https://ieeexplore.ieee.org/abstract/document/10769602/).
