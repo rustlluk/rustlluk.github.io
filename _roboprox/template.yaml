@@ -21,6 +21,8 @@ GROUPS_AND_THEIR_PERCENTAGE: { G04: 100 }
 MILESTONES_AND_THEIR_PERCENTAGE: { 4.1.1: 80, 5.3.1: 20 }
 # Fill the grade when awarded in Metodika17+, otherwise NONE
 GRADE_METODIKA_17: "NONE"
+# Submission date - when the review process started.
+DATUM_PODANI: "5.12.2022"
 # Acceptance date - when the review process was finished with a positive result.
 DATUM_DOSAZENI: "20.8.2024"
 # When the result has several OP JAK or OP VVV projects in acknowledgments, then indicate the percentage of the result for ROBOPROX, otherwise 100

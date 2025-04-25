@@ -205,6 +205,11 @@
                 "value": "NONE",
                 "comment": "Fill the grade when awarded in Metodika17+, otherwise NONE"
             },
+            "DATUM_PODANI": {
+                "type": "text",
+                "value": "5.12.2022",
+                "comment": "Submission date - when the review process started."
+            },
             "DATUM_DOSAZENI": {
                 "type": "text",
                 "value": "20.8.2024",
@@ -446,6 +451,21 @@ function generateOutput() {
 
         // Initialize the form on page load
         window.onload = generateForm;
+    document.getElementById('output').addEventListener('keydown', function (e) {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'a') {
+        e.preventDefault();
+
+        const selection = window.getSelection();
+        const range = document.createRange();
+        range.selectNodeContents(this);
+
+        selection.removeAllRanges();
+        selection.addRange(range);
+    }
+});
+
+// Make the output div focusable
+    document.getElementById('output').setAttribute('tabindex', '0');
     </script>
 
 </body>
