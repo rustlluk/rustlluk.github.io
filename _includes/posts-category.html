@@ -1,6 +1,11 @@
+{% assign display_type = "list" %}
+{% if include.taxonomy == "projects" %}
+  {% assign display_type = "grid" %}
+{% endif %}
+
 {%- for post in site.categories[include.taxonomy] -%}
   {%- unless post.hidden -%}
-    {% include archive-single.html %}
+    {% include archive-single.html type="grid" %}
   {%- endunless -%}
 {%- endfor -%}
 
