@@ -1,7 +1,7 @@
 ---
 title: "Other Lab Projects"
 categories:
-  - research
+  - projects
 author_profile: false
 ---
 
