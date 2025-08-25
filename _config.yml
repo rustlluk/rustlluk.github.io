@@ -308,6 +308,9 @@ collections:
   rgbd-comparison:
     output: true
     permalink: /:collection/:path/
+  nntl:
+    output: true
+    permalink: /:collection/:path/
   pycub:
     output: true
     permalink: /:collection/:path/
