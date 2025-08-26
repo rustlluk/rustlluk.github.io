@@ -1,0 +1,43 @@
+
+[id^="markdownContent"] {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background: #f9f9f9; /* Light background */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+[id^="markdownContent"] h1 {
+    font-size: 2em;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 5px;
+}
+
+[id^="markdownContent"] h2 {
+    font-size: 1.75em;
+    color: #333;
+    margin-top: 20px;
+}
+
+[id^="markdownContent"] h3 {
+    font-size: 1.5em;
+    color: #555;
+}
+
+[id^="markdownContent"] p {
+    font-size: 1.1em;
+}
+
+[id^="markdownContent"] code {
+    background: #eee;
+    padding: 3px 6px;
+    border-radius: 5px;
+}
+
+[id^="markdownContent"] ul {
+    padding-left: 20px;
+}
+
+[id^="markdownContent"] li {
+    margin-bottom: 5px;
+}
