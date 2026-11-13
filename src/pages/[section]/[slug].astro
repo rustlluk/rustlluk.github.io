@@ -1,0 +1,57 @@
+---
+import Base from '../../layouts/Base.astro';
+import { render } from 'astro:content';
+import { getPosts } from '../../lib/posts.js';
+
+export async function getStaticPaths() {
+  return (await getPosts()).map((post) => ({
+    params: { section: post.category, slug: post.slug },
+    props: { post },
+  }));
+}
+const { post } = Astro.props;
+const data = post.data;
+const { Content } = await render(post);
+const [year, month, day] = post.date.split('-');
+const disqusIdentifier = `/${post.category}/${year}/${month}/${day}/${post.slug}`;
+const disqusUrl = new URL(post.href, Astro.site).href;
+const links = [
+  ['Paper', data['paper-link']],
+  ['arXiv', data['arxiv-link']],
+  ['Code', data['code-link']],
+  ['Data', data['data-link']],
+  ['Documentation', data['docs-link']],
+  ['Demo', data['demo-link']],
+].filter(([, url]) => url);
+---
+<Base title={data.title}>
+  {data.redirect && <meta slot="head" http-equiv="refresh" content={`0; url=${data.redirect}`} />}
+  <article class="page-section article">
+    <a class="back-link" href={`/${post.category}/`}>← Back to {post.category}</a>
+    <p class="eyebrow">{data.venue || post.category}</p>
+    <h1>{data.title}</h1>
+    {data.redirect && <p class="page-intro">This page has moved. <a href={data.redirect}>Continue to {data.title} ↗</a></p>}
+    {data.authors && <p class="page-intro">{data.authors}</p>}
+    {data.header?.teaser && <img class="article-image" src={data.header.teaser} alt="" />}
+    {links.length > 0 && <div class="social-links article-links">{links.map(([label, url]) => <a href={url}>{label} ↗</a>)}</div>}
+    {data.abstract && <section class="abstract"><h2>Abstract</h2><p>{data.abstract}</p></section>}
+    <div class="prose"><Content /></div>
+    {data.bibtex && <section class="citation"><h2>Citation</h2><pre><code>{data.bibtex}</code></pre></section>}
+    {data['video-id'] && <section><h2>Video</h2><div class="video"><iframe src={`https://www.youtube-nocookie.com/embed/${data['video-id']}`} title="YouTube video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div></section>}
+    {!data.redirect && <section aria-label="Comments">
+      <h2>Comments</h2>
+      <div id="disqus_thread"></div>
+      <script is:inline define:vars={{ disqusIdentifier, disqusUrl }}>
+        var disqus_config = function () {
+          this.page.url = disqusUrl;
+          this.page.identifier = disqusIdentifier;
+        };
+        var disqusScript = document.createElement('script');
+        disqusScript.src = 'https://lukasrustler-cz.disqus.com/embed.js';
+        disqusScript.setAttribute('data-timestamp', String(Date.now()));
+        document.head.appendChild(disqusScript);
+      </script>
+      <noscript>Enable JavaScript to view comments powered by Disqus.</noscript>
+    </section>}
+  </article>
+</Base>

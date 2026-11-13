@@ -1,0 +1,19 @@
+---
+import Base from '../layouts/Base.astro';
+import { getPosts } from '../lib/posts.js';
+const posts = await getPosts();
+const tags = [...new Set(posts.flatMap((post) => post.data.tags || []))].sort();
+---
+<Base title="Posts by tag">
+  <section class="page-section">
+    <p class="eyebrow">Archive</p>
+    <h1>Posts by tag<span>.</span></h1>
+    {tags.length === 0 && <p class="page-intro">There are no tagged posts yet.</p>}
+    {tags.map((tag) => (
+      <section class="archive-group" id={tag}>
+        <h2>{tag}</h2>
+        <ul>{posts.filter((post) => post.data.tags?.includes(tag)).map((post) => <li><a href={post.href}>{post.data.title}</a></li>)}</ul>
+      </section>
+    ))}
+  </section>
+</Base>

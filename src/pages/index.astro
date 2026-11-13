@@ -1,0 +1,59 @@
+---
+import Base from '../layouts/Base.astro';
+import PostCard from '../components/PostCard.astro';
+import { postsIn } from '../lib/posts.js';
+import { Content as News } from '../content/news.md';
+const featured = (await postsIn('research')).slice(0, 4);
+---
+<Base title="Robotics research">
+  <section class="hero">
+    <p class="eyebrow">Hi, I'm Lukáš Rustler</p>
+    <div class="hero-grid">
+      <h1>Robotics<br /><span>researcher.</span></h1>
+      <div class="hero-intro">
+        <p>Exploring how robots can perceive, interact with, and safely work alongside people.</p>
+        <div class="social-links">
+          <a href="mailto:lukas.rustler@fel.cvut.cz">Email ↗</a>
+          <a href="https://github.com/rustlluk">GitHub ↗</a>
+          <a href="https://scholar.google.com/citations?user=Au8deJkAAAAJ&amp;hl=en">Scholar ↗</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section about">
+    <div>
+      <p class="eyebrow">A little about me</p>
+      <h2>Research with<br /><span>a human touch.</span></h2>
+      <p>I am a Ph.D. student at the Department of Cybernetics, Czech Technical University in Prague, supervised by <a href="https://sites.google.com/site/matejhof/">Matěj Hoffmann</a>. My interests include active multimodal perception for grasping and manipulation, safe human-robot interaction, and multimodal calibration.</p>
+      <div class="topics"><span>Robot perception</span><span>Human-robot interaction</span><span>Multimodal calibration</span></div>
+    </div>
+    <img class="portrait" src="/assets/images/me.jpg" alt="Lukáš Rustler" />
+  </section>
+
+  <section class="section">
+    <div class="section-heading">
+      <div><p class="eyebrow">Selected work</p><h2>Research</h2></div>
+      <a class="text-link" href="/research/">All publications ↗</a>
+    </div>
+    <div class="card-grid">{featured.map((post) => <PostCard post={post} />)}</div>
+    <div class="work-links">
+      <a href="/projects/"><span>01</span> Student projects <span>↗</span></a>
+      <a href="/other/"><span>02</span> Other projects <span>↗</span></a>
+    </div>
+  </section>
+
+  <section class="section news">
+    <p class="eyebrow">Updates</p>
+    <h2>Latest news</h2>
+    <div class="prose news-content"><News /></div>
+  </section>
+
+  <section class="section contact" id="contact">
+    <p class="eyebrow">Let's talk</p>
+    <h2>Get in touch<span>.</span></h2>
+    <p>Have a question or an idea related to robotics? Feel free to reach out.</p>
+    <a class="contact-link" href="mailto:lukas.rustler@fel.cvut.cz">lukas.rustler@fel.cvut.cz ↗</a>
+    <p class="muted">Prague, Czech Republic</p>
+  </section>
+</Base>

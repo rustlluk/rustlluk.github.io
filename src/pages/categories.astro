@@ -1,0 +1,19 @@
+---
+import Base from '../layouts/Base.astro';
+import { postsIn } from '../lib/posts.js';
+const categories = await Promise.all(['research', 'projects', 'other'].map(async (category) => ({
+  category, posts: await postsIn(category),
+})));
+---
+<Base title="Posts by category">
+  <section class="page-section">
+    <p class="eyebrow">Archive</p>
+    <h1>Posts by category<span>.</span></h1>
+    {categories.map(({ category, posts }) => (
+      <section class="archive-group">
+        <h2><a href={`/${category}/`}>{category}</a></h2>
+        <ul>{posts.map((post) => <li><a href={post.href}>{post.data.title}</a></li>)}</ul>
+      </section>
+    ))}
+  </section>
+</Base>

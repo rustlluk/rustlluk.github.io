@@ -15,8 +15,9 @@ Gemfile.lock
 # Node.js and NPM
 node_modules
 npm-debug.log*
-package-lock.json
 codekit-config.json
+dist/
+.astro/
 
 # macOS
 .DS_Store
@@ -28,3 +29,4 @@ codekit-config.json
 _asset_bundler_cache
 _site
 *.idea*
+*skills*

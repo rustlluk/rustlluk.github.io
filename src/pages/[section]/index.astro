@@ -1,0 +1,23 @@
+---
+import Base from '../../layouts/Base.astro';
+import PostCard from '../../components/PostCard.astro';
+import { postsIn } from '../../lib/posts.js';
+
+export function getStaticPaths() {
+  return [
+    { params: { section: 'research' }, props: { title: 'Research', label: 'Publications', description: 'Publications on human-robot interaction, active perception, multimodal calibration, and related topics in robotics.' } },
+    { params: { section: 'projects' }, props: { title: 'Student projects', label: 'Projects', description: 'Student projects and opportunities in the lab.' } },
+    { params: { section: 'other' }, props: { title: 'Other projects', label: 'Projects', description: 'Other tools and projects.' } },
+  ];
+}
+const { title, label, description } = Astro.props;
+const entries = await postsIn(Astro.params.section);
+---
+<Base title={title} description={description}>
+  <section class="page-section">
+    <p class="eyebrow">{label}</p>
+    <h1>{title}<span>.</span></h1>
+    <p class="page-intro">{description}</p>
+    <div class="card-grid">{entries.map((post) => <PostCard post={post} />)}</div>
+  </section>
+</Base>

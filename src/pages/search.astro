@@ -1,0 +1,37 @@
+---
+import Base from '../layouts/Base.astro';
+import { getPosts } from '../lib/posts.js';
+const posts = await getPosts();
+---
+<Base title="Search">
+  <section class="page-section">
+    <p class="eyebrow">Explore</p>
+    <h1>Search<span>.</span></h1>
+    <p class="page-intro">Search the titles of publications and projects.</p>
+    <label for="search">Search titles</label>
+    <input class="search-input" id="search" type="search" placeholder="Search..." autocomplete="off" />
+    <p id="search-count" class="muted" aria-live="polite"></p>
+    <ul class="search-results">
+      {posts.map((post) => <li data-search-title={post.data.title.toLowerCase()}><a href={post.href}>{post.data.title}</a><span>{post.data.venue || post.category}</span></li>)}
+    </ul>
+  </section>
+  <script>
+    const input = document.querySelector('#search');
+    const results = [...document.querySelectorAll('[data-search-title]')];
+    const count = document.querySelector('#search-count');
+    if (input instanceof HTMLInputElement && count) {
+      const filter = () => {
+        const query = input.value.trim().toLowerCase();
+        let visible = 0;
+        for (const result of results) {
+          if (!(result instanceof HTMLElement)) continue;
+          result.hidden = !result.dataset.searchTitle?.includes(query);
+          if (!result.hidden) visible++;
+        }
+        count.textContent = `${visible} result${visible === 1 ? '' : 's'}`;
+      };
+      input.addEventListener('input', filter);
+      filter();
+    }
+  </script>
+</Base>

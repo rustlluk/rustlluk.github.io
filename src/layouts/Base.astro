@@ -1,0 +1,57 @@
+---
+import '../styles/global.css';
+
+const { title = 'Robotics research', description = 'Robotics research and projects by Lukáš Rustler.' } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title} | Lukáš Rustler</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:title" content={`${title} | Lukáš Rustler`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:type" content="website" />
+    <slot name="head" />
+    <link rel="alternate" type="application/atom+xml" title="Lukáš Rustler" href="/feed.xml" />
+    {import.meta.env.PROD && (
+      <>
+        <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-57FQ03NW03"></script>
+        <script is:inline>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-57FQ03NW03');
+        </script>
+      </>
+    )}
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <a class="brand" href="/">Lukáš Rustler<span>.</span></a>
+      <nav aria-label="Main navigation">
+        <a href="/">About</a>
+        <a href="/research/">Research</a>
+        <a href="/projects/">Student projects</a>
+        <a href="/other/">Other</a>
+        <a href="/search/">Search</a>
+        <a href="/#contact">Contact</a>
+      </nav>
+    </header>
+    <main id="main"><slot /></main>
+    <footer class="site-footer">
+      <span>© {new Date().getFullYear()} Lukáš Rustler</span>
+      <div class="footer-links">
+        <a href="mailto:lukas.rustler@fel.cvut.cz">Email</a>
+        <a href="https://github.com/rustlluk">GitHub</a>
+        <a href="https://scholar.google.com/citations?user=Au8deJkAAAAJ&amp;hl=en">Google Scholar</a>
+        <a href="https://instagram.com/rustlik">Instagram</a>
+      </div>
+    </footer>
+  </body>
+</html>
