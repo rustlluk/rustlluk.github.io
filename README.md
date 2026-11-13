@@ -71,7 +71,7 @@ redirect: "/my-project/"
 ---
 ```
 
-Place a locally hosted site in `public/my-project/` with an `index.html`, or use an external destination such as `https://example.com/my-project/`. The entry appears in the Research listing and `/research/my-paper/` redirects to the destination. The page includes a meta-refresh and a clickable link as a fallback. Avoid linking a redirect to itself.
+Place a locally hosted site in `public/my-project/` with an `index.html`, or use an external destination such as `https://example.com/my-project/`. The Research listing links directly to the destination, while `/research/my-paper/` remains available for existing links via a meta-refresh and a clickable fallback. GitHub Pages serves this as an HTML page, not an HTTP redirect. Avoid linking a redirect to itself.
 
 The existing standalone `/roboprox/` redirect is served from `public/roboprox/`.
 

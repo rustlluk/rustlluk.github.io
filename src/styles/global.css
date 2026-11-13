@@ -24,6 +24,8 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 .brand span, h1 span, h2 span { color: var(--accent); }
 nav, .footer-links { display: flex; flex-wrap: wrap; gap: 26px; }
 nav a, .footer-links a { color: var(--muted); font-size: .88rem; text-decoration: none; }
+.footer-links a, .social-links a { display: inline-flex; align-items: center; gap: .5rem; }
+.link-icon { width: 1em; height: 1em; flex: none; fill: currentColor; }
 .hero { padding: 125px 0 120px; }
 .eyebrow { color: var(--accent); font-size: .8rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
 .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 45px; align-items: center; }
@@ -55,10 +57,6 @@ h3 { font-weight: 600; }
 .card-authors { color: var(--muted); line-height: 1.6; font-size: .9rem; }
 .card-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; padding-top: 12px; }
 .card-links a { padding: .5rem .7rem; font-size: .78rem; }
-.work-links { margin-top: 40px; }
-.work-links a { display: flex; justify-content: space-between; gap: 20px; padding: 23px 0; border-bottom: 1px solid var(--line); font-size: 1.2rem; text-decoration: none; }
-.work-links a span:first-child { color: var(--accent); font-size: .8rem; }
-.work-links a span:last-child { margin-left: auto; }
 .news-content ul { list-style: none; padding: 0; }
 .news-content li { padding: 16px 0; border-bottom: 1px solid var(--line); }
 .news-content strong { color: #dfdfdf; }

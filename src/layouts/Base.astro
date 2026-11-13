@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import SocialLink from '../components/SocialLink.astro';
 
 const { title = 'Robotics research', description = 'Robotics research and projects by Lukáš Rustler.' } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
@@ -37,20 +38,17 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
       <nav aria-label="Main navigation">
         <a href="/">About</a>
         <a href="/research/">Research</a>
-        <a href="/projects/">Student projects</a>
-        <a href="/other/">Other</a>
-        <a href="/search/">Search</a>
-        <a href="/#contact">Contact</a>
       </nav>
     </header>
     <main id="main"><slot /></main>
     <footer class="site-footer">
       <span>© {new Date().getFullYear()} Lukáš Rustler</span>
       <div class="footer-links">
-        <a href="mailto:lukas.rustler@fel.cvut.cz">Email</a>
-        <a href="https://github.com/rustlluk">GitHub</a>
-        <a href="https://scholar.google.com/citations?user=Au8deJkAAAAJ&amp;hl=en">Google Scholar</a>
-        <a href="https://instagram.com/rustlik">Instagram</a>
+        <SocialLink href="mailto:lukas.rustler@fel.cvut.cz" label="Email" icon="email" />
+        <SocialLink href="https://github.com/rustlluk" label="GitHub" icon="github" />
+        <SocialLink href="https://scholar.google.com/citations?user=Au8deJkAAAAJ&amp;hl=en" label="Google Scholar" icon="scholar" />
+        <SocialLink href="https://www.linkedin.com/in/luk%C3%A1%C5%A1-rustler-2a52091b6/" label="LinkedIn" icon="linkedin" />
+        <SocialLink href="https://instagram.com/rustlik" label="Instagram" icon="instagram" />
       </div>
     </footer>
   </body>

@@ -12,7 +12,7 @@ const posts = await getPosts();
     <input class="search-input" id="search" type="search" placeholder="Search..." autocomplete="off" />
     <p id="search-count" class="muted" aria-live="polite"></p>
     <ul class="search-results">
-      {posts.map((post) => <li data-search-title={post.data.title.toLowerCase()}><a href={post.href}>{post.data.title}</a><span>{post.data.venue || post.category}</span></li>)}
+      {posts.map((post) => <li data-search-title={post.data.title.toLowerCase()}><a href={post.data.redirect || post.href}>{post.data.title}</a><span>{post.data.venue || post.category}</span></li>)}
     </ul>
   </section>
   <script>

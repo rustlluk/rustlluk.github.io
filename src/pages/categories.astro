@@ -12,7 +12,7 @@ const categories = await Promise.all(['research', 'projects', 'other'].map(async
     {categories.map(({ category, posts }) => (
       <section class="archive-group">
         <h2><a href={`/${category}/`}>{category}</a></h2>
-        <ul>{posts.map((post) => <li><a href={post.href}>{post.data.title}</a></li>)}</ul>
+        <ul>{posts.map((post) => <li><a href={post.data.redirect || post.href}>{post.data.title}</a></li>)}</ul>
       </section>
     ))}
   </section>

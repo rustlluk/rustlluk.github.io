@@ -12,10 +12,10 @@ const links = [
 <article class="card">
   {data.header?.teaser && <img class="card-image" src={data.header.teaser} alt="" loading="lazy" />}
   <span class="eyebrow">{data.venue || (post.category === 'research' ? 'Publication' : 'Project')}</span>
-  <h3><a href={post.href}>{data.title}</a></h3>
+  <h3><a href={data.redirect || post.href}>{data.title}</a></h3>
   {data.authors && <p class="card-authors">{data.authors}</p>}
   <div class="card-links">
-    <a href={post.href}>Details <span aria-hidden="true">↗</span></a>
+    <a href={data.redirect || post.href}>Details <span aria-hidden="true">↗</span></a>
     {links.map(([label, url]) => <a href={url}>{label} <span aria-hidden="true">↗</span></a>)}
   </div>
 </article>

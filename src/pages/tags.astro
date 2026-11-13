@@ -12,7 +12,7 @@ const tags = [...new Set(posts.flatMap((post) => post.data.tags || []))].sort();
     {tags.map((tag) => (
       <section class="archive-group" id={tag}>
         <h2>{tag}</h2>
-        <ul>{posts.filter((post) => post.data.tags?.includes(tag)).map((post) => <li><a href={post.href}>{post.data.title}</a></li>)}</ul>
+        <ul>{posts.filter((post) => post.data.tags?.includes(tag)).map((post) => <li><a href={post.data.redirect || post.href}>{post.data.title}</a></li>)}</ul>
       </section>
     ))}
   </section>
