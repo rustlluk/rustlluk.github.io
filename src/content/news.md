@@ -1,5 +1,12 @@
 ---
 ---
+- **15.-18.9.2026** Our paper [*Simulating Infant First-Person Sensorimotor Experience via Motion Retargeting from Babies to Humanoids*](https://arxiv.org/abs/2604.27583) was published in the ICDL 2026 proceedings.
+- **26.8.2026** Our paper [*Robot in a Crib: How a Playing Robot Helps Us Understand Sensorimotor Contingency Learning*](https://doi.org/10.1126/scirobotics.aed4106) was published in *Science Robotics*.
+- **29.7.2026** Our paper [*Adaptive Collision Sensitivity for Efficient and Safe Human-Robot Collaboration*](/adaptive-sensitivity/) was published in *Advanced Intelligent Systems*.
+- **1.-5.6.2026** I presented our paper [*No Need to Look! Locating and Grasping Objects by a Robot Arm Covered with Sensitive Skin*](https://rustlluk.github.io/nntl) at ICRA 2026 in Vienna, Austria.
+- **15.-17.4.2026** I presented our paper [*Learning with pyCub: A Simulation and Exercise Framework for Humanoid Robotics*](https://rustlluk.github.io/pyCub/) at RiE 2026 in Wolfenbüttel, Germany.
+- **22.11.2024** Our paper [*Adaptive Electronic Skin Sensitivity for Safe Human-Robot Interaction*](https://github.com/ctu-vras/adaptive-skin) was published in the Humanoids 2024 proceedings.
+- **14.10.2024** Our paper [*Interactive Learning of Physical Object Properties Through Robot Manipulation and Database of Object Measurements*](https://ieeexplore.ieee.org/document/10802249) was published in the IROS 2024 proceedings.
 - **16.4.2025** Our paper [*Empirical Comparison of Four Stereoscopic Depth Sensing Cameras for Robotics Applications*](https://lukasrustler.cz/rgbd-comparison) got accepted to IEEE Access!
 - **5.3.2025** Check our new preprint! [*Adaptive Collision Sensitivity for Efficient and Safe Human-Robot Collaboration*](https://lukasrustler.cz/adaptive-sensitivity/)
 - **22.- 24.11.2024** I attended the [2024 IEEE-RAS International Conference on Humanoid Robots](https://2024.ieee-humanoids.org/) in Nancy, France.

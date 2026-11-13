@@ -18,6 +18,12 @@ test('redirect pages include HTML fallbacks and are excluded from the sitemap', 
   for (const [path, target] of [
     ['research/rgbd-comparison/index.html', '/rgbd-comparison/'],
     ['research/adaptive-sensitivity/index.html', '/adaptive-sensitivity/'],
+    ['research/interactive-object-properties/index.html', 'https://ieeexplore.ieee.org/document/10802249'],
+    ['research/adaptive-electronic-skin/index.html', 'https://github.com/ctu-vras/adaptive-skin'],
+    ['research/learning-with-pycub-paper/index.html', 'https://rustlluk.github.io/pyCub/'],
+    ['research/no-need-to-look/index.html', 'https://rustlluk.github.io/nntl'],
+    ['research/robot-in-a-crib/index.html', 'https://doi.org/10.1126/scirobotics.aed4106'],
+    ['research/simulating-infant-sensorimotor/index.html', 'https://arxiv.org/abs/2604.27583'],
     ['roboprox/index.html', 'https://roboprox-v3s.iid.ciirc.cvut.cz/'],
   ]) {
     const page = await read(path);
@@ -37,6 +43,16 @@ test('site links to redirect destinations directly', async () => {
   }
   const feed = await read('feed.xml');
   assert.ok(feed.includes('<link href="https://lukasrustler.cz/adaptive-sensitivity/"/>'));
+  const homepage = await read('index.html');
+  for (const href of [
+    'https://arxiv.org/abs/2604.27583',
+    'https://doi.org/10.1126/scirobotics.aed4106',
+    '/adaptive-sensitivity/',
+    'https://rustlluk.github.io/nntl',
+    'https://rustlluk.github.io/pyCub/',
+    'https://github.com/ctu-vras/adaptive-skin',
+    'https://ieeexplore.ieee.org/document/10802249',
+  ]) assert.ok(homepage.includes(`href="${href}"`));
 });
 
 test('main navigation and homepage omit project and utility links', async () => {
